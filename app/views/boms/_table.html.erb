@@ -16,7 +16,7 @@
       <tr>
         <td><%= link_to bom.id, bom_path(bom) %></td>
         <td><%= bom.product.name %></td>
-        <td><%= bom.subproduct.name %></td>
+        <td><%= bom.subproduct.name if !bom.subproduct.nil? %></td>
         <td><%= bom.group_id %></td>
         <td><%= bom.qty %></td>
         <td><%= bom.active %></td>
