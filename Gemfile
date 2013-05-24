@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.9'
+gem 'rails', '3.2.11'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -26,13 +26,16 @@ end
 gem 'jquery-rails'
 
 group :development, :test do
-	gem 'rspec-rails'
-	gem 'cucumber-rails'
-	gem 'better_errors'
-	gem 'binding_of_caller'
-	gem 'meta_request'
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  gem 'launchy'
+  gem 'database_cleaner'
+  gem 'guard-rspec'
+  gem 'capybara'
+  gem 'launchy'
+  gem 'faker'
+  gem 'populator'
 end
-
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
