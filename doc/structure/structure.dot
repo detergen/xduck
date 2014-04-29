@@ -1,0 +1,57 @@
+digraph xDuck {
+	ranksep=1;
+	ratio = auto;
+	node [style=filled];
+	{rank=same; stock users orders log customers products;} 
+ 
+	xduck -> stock
+	xduck -> users
+	xduck -> orders
+	xduck -> customers
+	xduck -> products
+	xduck -> log
+
+	activities -> leads
+	activities -> "sale orders"
+	activities -> payments
+	activities -> abuses
+	activities -> "delivery orders"
+	activities -> services
+
+	assembling -> pricelists
+
+	customers -> "accounts info"
+	customers -> contacts
+	customers -> articules
+	customers -> places
+	customers -> pricelists
+	customers -> orders
+
+	goods -> BOMs
+	goods -> packings
+	goods -> articules
+	goods -> pricelists 
+
+    
+	orders -> activities
+
+	packings -> pricelists
+
+	products -> goods 
+	products -> services 
+	
+	services -> shipping 
+	services -> assembling 
+
+	stock -> places
+	stock -> goods
+
+	shipping -> pricelists
+
+	users -> ACLs
+	users -> contacts
+
+
+
+}
+
