@@ -4,6 +4,6 @@ class Product < ActiveRecord::Base
   validates :name, :articul, :presence => true
   validates :name, :articul, :uniqueness => true
 
-  has_many :boms, :dependent => :restrict
+  has_many :boms, :dependent => :delete_all
 
 end
