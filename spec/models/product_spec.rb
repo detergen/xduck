@@ -21,7 +21,7 @@ describe Product do
 
   it "is invalid without uniq name" do
 	  FactoryGirl.create(:product, name: "table", articul: "78555stol")
-	  FactoryGirl.build(:product, name: "table", articul: "7855stol").should_not be_valid
+	  FactoryGirl.build(:product, name: "table", articul: "855stol").should_not be_valid
   end
 
 end

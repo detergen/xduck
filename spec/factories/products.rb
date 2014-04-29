@@ -1,6 +1,10 @@
 FactoryGirl.define do
   factory :product do |f|
-    f.name "Stol"
-    f.articul "stl1"
+	  sequence :name do |n|
+		  "Barrel#{n}"
+	  end
+	  sequence :articul do |n|
+		  "brl#{n}"
+	  end
   end
 end
