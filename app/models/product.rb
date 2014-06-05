@@ -1,6 +1,6 @@
 class Product < ActiveRecord::Base
   resourcify
-  attr_accessible :active, :articul, :forsale, :name, :note
+#  attr_accessible :active, :articul, :forsale, :name, :note
 
   validates :name, :articul, :presence => true
   validates :name, :articul, :uniqueness => true
