@@ -21,3 +21,6 @@ http://railscasts.com/episodes?utf8=%E2%9C%93&search=devise
 ## Права 
 gem cancan
 
+
+# Загрузка продуктов
+rails runner [-e envname] lib/import_products.rb lib/Book1.csv
