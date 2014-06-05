@@ -9,7 +9,6 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-<<<<<<< HEAD
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20140602233855) do
@@ -110,29 +109,11 @@ ActiveRecord::Schema.define(version: 20140602233855) do
   end
 
   create_table "products", force: true do |t|
-=======
-# It's strongly recommended to check this file into your version control system.
-
-ActiveRecord::Schema.define(:version => 20140603092521) do
-
-  create_table "boms", :force => true do |t|
-    t.integer  "product_id"
-    t.integer  "subproduct_id"
-    t.integer  "group_id"
-    t.decimal  "qty",           :precision => 10, :scale => 0
-    t.boolean  "active"
-    t.datetime "created_at",                                   :null => false
-    t.datetime "updated_at",                                   :null => false
-  end
-
-  create_table "products", :force => true do |t|
->>>>>>> 1200571a19aad4a8b8271d24fdce6e7a0dc09450
     t.string   "name"
     t.string   "articul"
     t.boolean  "active"
     t.boolean  "forsale"
     t.text     "note"
-<<<<<<< HEAD
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -173,11 +154,4 @@ ActiveRecord::Schema.define(:version => 20140603092521) do
 
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
 
-=======
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
-    t.string   "sizes",      :limit => 30
-  end
-
->>>>>>> 1200571a19aad4a8b8271d24fdce6e7a0dc09450
 end

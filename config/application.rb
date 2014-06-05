@@ -66,11 +66,7 @@ module Xduck
     # This will create an empty whitelist of attributes available for mass-assignment for all models
     # in your app. As such, your models will need to explicitly whitelist or blacklist accessible
     # parameters by using an attr_accessible or attr_protected declaration.
-<<<<<<< HEAD
-    # config.active_record.whitelist_attributes = true
-=======
     config.active_record.whitelist_attributes = true
->>>>>>> 1200571a19aad4a8b8271d24fdce6e7a0dc09450
 
     # Enable the asset pipeline
     config.assets.enabled = true
