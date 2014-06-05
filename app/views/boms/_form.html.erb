@@ -1,0 +1,52 @@
+<%= form_for @bom, :html => { :class => 'form-horizontal' } do |f| %>
+
+  <div class="control-group">
+    <%= f.label :product_id, :class => 'control-label' %>
+    <%= f.label :name, :class => 'control-label' %>
+    <div class="controls">
+
+		<% if :product_id? %>
+			<%= f.hidden_field :product_id, :value => params[:product_id] %>
+		<% else %>
+			<%= f.collection_select :product_id, Product.all, :id, :name%>
+		<% end %>
+
+
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :subproduct_id, :class => 'control-label' %>
+    <div class="controls">
+		<%= f.collection_select :subproduct_id, Product.all, :id, :name%>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :group_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :group_id, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :qty, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :qty, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :active, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.check_box :active, :class => 'check_box' %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+
+		<% if  !params[:product_id].nil? %>
+			<%= link_to t('.cancel', :default => t("helpers.links.cancel")), product_path(params[:product_id]), :class => 'btn' %>
+		<% else %>
+			<%= link_to t('.cancel', :default => t("helpers.links.cancel")), boms_path, :class => 'btn' %>
+		<% end %>
+  </div>
+<% end %>

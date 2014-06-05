@@ -1,0 +1,45 @@
+<%- model_class = Bom -%>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:product_id) %></th>
+      <th><%= model_class.human_attribute_name(:subproduct_id) %></th>
+      <th><%= model_class.human_attribute_name(:group_id) %></th>
+      <th><%= model_class.human_attribute_name(:qty) %></th>
+      <th><%= model_class.human_attribute_name(:active) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @boms.each do |bom| %>
+      <tr>
+        <td><%= link_to bom.id, bom_path(bom) %></td>
+        <td><%= bom.product.name %></td>
+        <td><%= bom.subproduct.name if !bom.subproduct.nil? %></td>
+        <td><%= bom.group_id %></td>
+        <td><%= bom.qty %></td>
+        <td><%= bom.active %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_bom_path(bom), :class => 'btn btn-mini' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      bom_path(bom),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<% if @product.nil?  %>
+	<% path_to = new_bom_path %>
+<% else %>
+	<% path_to = new_bom_path(:product_id=>@product.id) %>
+<% end %>
+
+	<%= link_to t('.new', :default => t("helpers.links.new")), path_to, :class => 'btn btn-primary' %>
+
