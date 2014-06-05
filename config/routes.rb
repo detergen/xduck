@@ -1,4 +1,5 @@
 Xduck::Application.routes.draw do
+<<<<<<< HEAD
 devise_scope :user do
   get "/users/sign_in" => "devise/sessions#new"
   delete "users/sign_out" => "devise/sessions#destroy"
@@ -13,6 +14,14 @@ end
   #resources :products
   #resources :boms
 #  root :to => “articles#index”
+=======
+  get "home/index"
+
+  root :to => "home#index"
+  resources :products
+  resources :boms
+
+>>>>>>> 1200571a19aad4a8b8271d24fdce6e7a0dc09450
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
