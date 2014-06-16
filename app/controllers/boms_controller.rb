@@ -1,4 +1,7 @@
 class BomsController < ApplicationController
+
+before_action :authenticate_user!
+
   # GET /boms
   # GET /boms.json
   def index

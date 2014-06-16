@@ -124,3 +124,6 @@ http://stackoverflow.com/questions/5976684/cloning-a-record-in-rails-is-it-possi
 
 ## HTML из MD (pandoc)
 `pandoc prog_guide.md -s -o pg.html`
+
+# Загрузка продуктов
+rails runner [-e envname] lib/import_products.rb lib/Book1.csv

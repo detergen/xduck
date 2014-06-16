@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+</head>
+<body>
+<h1 id="задачи-первого-этапа">Задачи первого этапа</h1>
+<ul>
+<li>[ ] Аутентификация логин пароль - желательно LDAP</li>
+<li>[ ] Заказы</li>
+<li>[ ] Движение по заказу наименование - сумма</li>
+<li>[ ] Продукты/BOM - смотрелось бы эффектно и как часть еще одной насущной задачи предприятия</li>
+</ul>
+<h1 id="движение.-activitis">Движение. Activitis</h1>
+<p>Действия, движение в рамках заказа.</p>
+<h2 id="поля">Поля</h2>
+<ol style="list-style-type: decimal">
+<li>name:string</li>
+<li>from</li>
+<li>to</li>
+<li>type:? типы активитис</li>
+<li>sum:decimal сумма</li>
+<li>plan_date:time планируемая дата</li>
+<li>date:time дата</li>
+<li>note:text примечание</li>
+<li>done:boolean готово</li>
+<li>freezed:boolean заморожено (менять нельзя)</li>
+</ol>
+<h2 id="типы-активитис">Типы активитис</h2>
+<ol style="list-style-type: decimal">
+<li>lead - зацепка, предзаказ</li>
+<li>bill - счет, головной документ (документы), из которого должны формироваться остальные документы со спецификацией.</li>
+<li>invoice - отгрузочная накладная</li>
+<li>delivery - транспортная накладная</li>
+<li>assembley - сборочный акт</li>
+<li>payment - оплата</li>
+<li>on_stock - на складе</li>
+<li>manufacturing - в производстве</li>
+</ol>
+<h2 id="итоги-по-активитис">Итоги по активитис</h2>
+<p>Система должна уметь делать итоги по суммам активитис.</p>
+<p>Например сумма:</p>
+<ol style="list-style-type: decimal">
+<li>bill-invoice Говорит о состоянии отгрузки</li>
+<li>payment - invoice об оплате и отгрузке по отношению к оплате</li>
+<li>delivery - assembley о состоянии сборки к доставке</li>
+</ol>
+<h2 id="работа-с-активитис">Работа с активитис</h2>
+<p>Создали lead со списком.</p>
+<p>Поставили в списке активитис на него галку в листбоксе выбрали тип активитис, нажали кнопку Create, клонировали активити, с выбранным типом и списком, напримр счет.</p>
+<p>Выбираем счет, в листбоксе выбрали Отгрузка жмем Create, клонировали активити Счет, получили Активити Отгрузка со списком.</p>
+<p>Киллер фича этого - возможность делать неколько документов одного типа, например отгрузок по нескольким счетам, таким образом чтобы итоги по количеству в списках совпадали.</p>
+<p>Пример:</p>
+<p>Счет 1</p>
+<ol style="list-style-type: decimal">
+<li>Стул - 10 шт</li>
+<li>Стол - 10 шт</li>
+</ol>
+<p>Счет 2</p>
+<ol style="list-style-type: decimal">
+<li>Тумбочка - 10 шт</li>
+<li>Кресло - 10 шт</li>
+</ol>
+<p>Накладная 1</p>
+<ol style="list-style-type: decimal">
+<li>Стол - 5 шт</li>
+<li>Кресло - 5 шт</li>
+<li>Тумбочка - 5 шт</li>
+</ol>
+<p>Накладная 2</p>
+<ol style="list-style-type: decimal">
+<li>Стол - 5 шт</li>
+<li>Кресло - 5 шт</li>
+<li>Тумбочка - 5 шт</li>
+</ol>
+<p>Накладная 3</p>
+<ol style="list-style-type: decimal">
+<li>Кресло - 10 шт</li>
+</ol>
+<p>Причем при клонировании нужно показывать список к активитис с остатком по количеству.</p>
+<h1 id="manuals-and-how-to">Manuals and how to</h1>
+<h2 id="имплементация-бутсрап">Имплементация бутсрап</h2>
+<p>http://railscasts.com/episodes/328-twitter-bootstrap-basics?view=asciicast</p>
+<h1 id="предложения-по-использованию-gem">Предложения по использованию gem</h1>
+<h2 id="аутентификация">Аутентификация</h2>
+<p>gem devise примечание done:boolean готово freezed:boolean заморожено (менять нельзя)</p>
+<h1 id="manuals-and-how-to-1">Manuals and how to</h1>
+<h2 id="имплементация-бутсрап-1">Имплементация бутсрап</h2>
+<p>http://railscasts.com/episodes/328-twitter-bootstrap-basics?view=asciicast</p>
+<h1 id="предложения-по-использованию-gem-1">Предложения по использованию gem</h1>
+<h2 id="аутентификация-1">Аутентификация</h2>
+<p>gem devise</p>
+<p>http://railscasts.com/episodes?utf8=%E2%9C%93&amp;search=devise</p>
+<p>вроде умеет с LDAP</p>
+<h2 id="права">Права</h2>
+<p>gem cancan</p>
+<h2 id="клонирование">Клонирование</h2>
+<p>Предлагаю для клонирования записей использовать gem, например amoeba https://rubygems.org/gems/amoeba</p>
+<p>описание проблемы и коротенький мануал: http://stackoverflow.com/questions/5976684/cloning-a-record-in-rails-is-it-possible-to-clone-associations-and-deep-copy</p>
+<h2 id="html-из-md-pandoc">HTML из MD (pandoc)</h2>
+<p><code>pandoc prog_guide.md -s -o pg.html</code></p>
+</body>
+</html>

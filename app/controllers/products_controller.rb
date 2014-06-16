@@ -1,7 +1,11 @@
 class ProductsController < ApplicationController
-	def bomlist
-		@bom = Bom.find("product_id = ?", params[:id]) 
-	end
+
+load_and_authorize_resource
+
+  def bomlist
+    @bom = Bom.find("product_id = ?", params[:id]) 
+  end
+
   # GET /products
   # GET /products.json
   def index
@@ -79,6 +83,7 @@ class ProductsController < ApplicationController
   # DELETE /products/1.json
   def destroy
     @product = Product.find(params[:id])
+
     @product.destroy
 
     respond_to do |format|

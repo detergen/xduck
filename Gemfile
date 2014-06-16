@@ -1,20 +1,28 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.11'
+gem 'rails'
+# Use sqlite3 as the database for Active Record
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
 
+#gem 'protected_attributes'
+
+#authorize
+gem 'devise' , '3.2.0'
+gem 'cancan'
+gem 'rolify'
+gem 'activeadmin', github: 'gregbell/active_admin'
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
   gem "therubyracer"
   gem "less-rails"
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+  gem 'sass-rails'  
+  gem 'coffee-rails'
   gem 'twitter-bootstrap-rails'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
