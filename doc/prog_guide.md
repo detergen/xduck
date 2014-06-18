@@ -112,6 +112,15 @@ http://railscasts.com/episodes?utf8=%E2%9C%93&search=devise
 
 вроде умеет с LDAP
 
+## Журнал операций - лог
+Paper trail
+https://github.com/airblade/paper_trail
+
+## Таблицы 
+Для таблиц предлагаю использовать WiceGrid
+https://github.com/leikind/wice_grid
+http://wicegrid.herokuapp.com/ - примеры
+
 ## Права 
 gem cancan
 
