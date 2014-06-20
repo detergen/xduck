@@ -37,7 +37,7 @@ for i in 1..5
         :ogrn => "789",
         :okpo => "900")
     
-      organization.save
+      organization.save or puts YAML::dump(organization.errors)
       
       test_orgs<<organization.id
     end
@@ -55,7 +55,7 @@ for i in 1..30
         :owner_user_id => user.id,
         :from_organization_id => test_orgs[rand(0..4)],
         :to_organization_id => test_orgs[rand(0..4)])
-      order.save
+      order.save or puts YAML::dump(order.errors)
     end
   end
 end

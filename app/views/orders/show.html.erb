@@ -11,11 +11,12 @@
       <th>Updated at</th>
     </tr>
     <% @orders.each do |order| %>
+    <%  if order.owner.nil? then owner_email = '' else owner_email = order.owner.email end %>
       <tr>
         <td><%= order.number %></td>
         <td><%= order.from_organization.name %></td>
         <td><%= order.to_organization.name %></td>
-        <td><%= order.owner.email %></td>
+        <td><%= owner_email %></td>
         <td><%= order.tag %></td>
         <td><%= order.note %></td>
         <td><%= order.created_at %></td>
