@@ -18,3 +18,44 @@ if user.nil? then
   user.roles<<role
   user.save or puts YAML::dump(user.errors)
 end
+
+test_orgs = []
+
+for i in 1..5
+  begin
+    organization = Organization.find_by :name => "Test organization #" + i.to_s
+    
+    if organization.nil? then
+      organization = Organization.create(
+        :name => "Test organization #" + i.to_s,
+        :tag => "test org",
+        :opf => "777",
+        :short_name => "Test" + i.to_s,
+        :full_name => "Test organization #" + i.to_s,
+        :inn => "123",
+        :kpp => "456",
+        :ogrn => "789",
+        :okpo => "900")
+    
+      organization.save
+      
+      test_orgs<<organization.id
+    end
+  end
+end
+
+for i in 1..30
+  begin
+    order = Order.find_by number: i.to_s + 'TST'
+    if order.nil? then
+      order = Order.create(
+        :number => i.to_s + 'TST',
+        :tag => 'test order',
+        :note => 'test note',
+        :owner_user_id => user.id,
+        :from_organization_id => test_orgs[rand(0..4)],
+        :to_organization_id => test_orgs[rand(0..4)])
+      order.save
+    end
+  end
+end

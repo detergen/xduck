@@ -1,4 +1,6 @@
 Xduck::Application.routes.draw do
+  get 'orders/show'
+
   devise_scope :user do
     get "/users/sign_in" => "devise/sessions#new"
     delete "users/sign_out" => "devise/sessions#destroy"

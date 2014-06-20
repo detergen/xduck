@@ -1,0 +1,26 @@
+<div style="width: 100%;">
+  <table>
+    <tr>
+      <th>Number</th>
+      <th>From</th>
+      <th>To</th>
+      <th>Owner</th>
+      <th>Tag</th>
+      <th>Note</th>
+      <th>Created at</th>
+      <th>Updated at</th>
+    </tr>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.number %></td>
+        <td><%= order.from_organization.name %></td>
+        <td><%= order.to_organization.name %></td>
+        <td><%= order.owner.email %></td>
+        <td><%= order.tag %></td>
+        <td><%= order.note %></td>
+        <td><%= order.created_at %></td>
+        <td><%= order.updated_at %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
