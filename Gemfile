@@ -12,6 +12,7 @@ gem 'sqlite3'
 
 #authorize
 gem 'devise' , '3.2.0'
+gem "devise_ldap_authenticatable"
 gem 'cancan'
 gem 'rolify'
 gem 'activeadmin', github: 'gregbell/active_admin'

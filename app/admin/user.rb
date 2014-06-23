@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-    permit_params :email, :password, :password_confirmation, :roles, :role_ids => []
+    permit_params :email, :password, :password_confirmation, :roles, :organizations, :role_ids => [],  :organization_ids => []
 	#controller.authorize_resource
     controller do 
 	def current_ability 
@@ -13,6 +13,9 @@ end
         column :sign_in_count
         column "Role" do |user|
       		(user.roles.map{ |p| p.name }).join(', ')
+	end
+        column "Organizations" do |user|
+      		(user.organizations.map{ |p| p.name }).join(', ')
     	end
         actions
     end
@@ -27,6 +30,7 @@ end
               f.input :password_confirmation
             end
             f.input :roles, :as => :check_boxes
+            f.input :organizations, :as => :check_boxes
         end
         f.actions
     end

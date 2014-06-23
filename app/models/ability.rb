@@ -6,7 +6,9 @@ class Ability
 	if user.has_role? :admin
 	  can :manage, :all
 	else
-	  can :read, ActiveAdmin::Page, :name => "Users"
+	  can :read, ActiveAdmin::Page, :name => "Dashboard"
+	  #can :manage, User
+	  can :manage, :all
 	end
     # Define abilities for the passed in user here. For example:
     #
