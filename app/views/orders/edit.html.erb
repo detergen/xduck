@@ -1,0 +1,31 @@
+<fieldset>
+  <legend>
+    <%= @order.number %>
+  </legend>
+  <table>
+    <tr>
+      <td>
+        Number
+      </td>
+      <td>
+        <input type="text" value="<%=  @order.number %> "></input>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Note
+      </td>
+      <td>
+        <input type="text" value="<%=  @order.note %> "></input>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Tag
+      </td>
+      <td>
+        <input type="text" value="<%=  @order.tag %> "></input>
+      </td>
+    </tr>
+  </table>
+</fieldset>
