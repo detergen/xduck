@@ -46,16 +46,16 @@ end
 
 for i in 1..30
   begin
-    order = Order.find_by number: i.to_s + 'TST'
-    if order.nil? then
-      order = Order.create(
+    activity = Activity.find_by number: i.to_s + 'TST'
+    if activity.nil? then
+      activity = Activity.create(
         :number => i.to_s + 'TST',
         :tag => 'test order',
         :note => 'test note',
         :owner_user_id => user.id,
         :from_organization_id => test_orgs[rand(0..4)],
         :to_organization_id => test_orgs[rand(0..4)])
-      order.save or puts YAML::dump(order.errors)
+      activity.save or puts YAML::dump(activity.errors)
     end
   end
 end

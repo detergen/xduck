@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140622224948) do
+ActiveRecord::Schema.define(version: 20140624162716) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -27,6 +27,25 @@ ActiveRecord::Schema.define(version: 20140622224948) do
   add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace"
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
+
+  create_table "activities", force: true do |t|
+    t.integer  "parent_id"
+    t.integer  "activity_type_id"
+    t.string   "number"
+    t.integer  "from_organization_id"
+    t.integer  "to_organization_id"
+    t.date     "date"
+    t.integer  "owner_user_id"
+    t.float    "total"
+    t.string   "note"
+    t.string   "tag"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "activity_types", force: true do |t|
+    t.string "name"
+  end
 
   create_table "addrs", force: true do |t|
     t.string   "name"
@@ -90,17 +109,6 @@ ActiveRecord::Schema.define(version: 20140622224948) do
     t.string   "pasp_kp"
     t.string   "address"
     t.integer  "organization_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "orders", force: true do |t|
-    t.string   "number"
-    t.integer  "from_organization_id"
-    t.integer  "to_organization_id"
-    t.integer  "owner_user_id"
-    t.string   "note"
-    t.string   "tag"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

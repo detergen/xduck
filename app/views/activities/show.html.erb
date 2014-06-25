@@ -1,0 +1,45 @@
+<%=
+  grid(@activities_grid) do |g|
+    g.action_column  
+  
+    g.column :name => 'ID', :attribute => 'id' do |activity|
+      activity.id
+    end
+    
+    g.column :name => 'Number', :attribute => 'number' do |activity|
+      activity.number
+    end
+    
+    g.column :name => 'From Orgabization', :attribute => 'name', :model => 'Organization', :table_alias => 'from_organization' do |activity|
+      activity.from_organization.name if activity.from_organization
+    end
+
+    g.column :name => 'To Organization', :attribute => 'name', :model => 'Organization', :table_alias => 'to_organization' do |activity|
+      activity.to_organization.name if activity.to_organization
+    end
+
+    g.column :name => 'Owner', :attribute => 'email', :model => 'User' do |activity|
+      activity.owner.email if activity.owner
+    end
+
+    g.column :name => 'Note', :attribute => 'note' do |activity|
+      activity.note
+    end
+
+    g.column :name => 'Tag', :attribute => 'tag' do |activity|
+      activity.tag
+    end
+    
+    g.column :name => 'Created at', :attribute => 'created_at' do |activity|
+      activity.created_at.to_s(:short)
+    end
+    
+    g.column :name => 'Updated at', :attribute => 'updated_at' do |activity|
+      activity.updated_at.to_s(:short)
+    end
+    
+    g.column do |activity|
+      link_to("Edit", :controller => "activities", :action => "edit", :id => activity.id)
+    end
+  end
+%>

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe OrdersController, :type => :controller do
+RSpec.describe ActivitiesController, :type => :controller do
 
   describe "GET 'show'" do
     it "returns http success" do
@@ -8,7 +8,14 @@ RSpec.describe OrdersController, :type => :controller do
       expect(response).to be_success
     end
   end
-  
+
+  describe "GET 'add'" do
+    it "returns http success" do
+      get 'add'
+      expect(response).to be_success
+    end
+  end
+
   describe "GET 'edit'" do
     it "returns http success" do
       get 'edit'
