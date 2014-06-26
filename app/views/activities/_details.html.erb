@@ -1,0 +1,34 @@
+<div id="activity_details">
+  <fieldset>
+    <legend>
+      <%= @activity.number %>
+    </legend>
+    <table>
+      <tr>
+        <td>
+          Number
+        </td>
+        <td>
+          <input type="text" <% unless @allow_activity_editing %>disabled="disabled"<% end %> value="<%=  @activity.number %> "></input>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Note
+        </td>
+        <td>
+          <input type="text" <% unless @allow_activity_editing %>disabled="disabled"<% end %> value="<%=  @activity.note %> "></input>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Tag
+        </td>
+        <td>
+          <input type="text" <% unless @allow_activity_editing %>disabled="disabled"<% end %> value="<%=  @activity.tag %> "></input>
+        </td>
+      </tr>
+    </table>
+  </fieldset>
+</div>
+

@@ -1,3 +1,11 @@
+<%
+  if @activity
+%>
+<%= render 'details' %>
+<%
+  end
+%>
+
 <%=
   grid(@activities_grid) do |g|
     g.action_column  
@@ -40,6 +48,10 @@
     
     g.column do |activity|
       link_to("Edit", :controller => "activities", :action => "edit", :id => activity.id)
+    end
+  
+    g.column do |activity|
+      link_to("Children", :controller => "activities", :action => "show", :parent_id => activity.id)
     end
   end
 %>
