@@ -1,34 +1,74 @@
+<style type="text/css">
+  select.date-select {
+    width:70px;
+}
+</style>
 <div id="activity_details">
-  <fieldset>
-    <legend>
-      <%= @activity.number %>
-    </legend>
-    <table>
-      <tr>
-        <td>
-          Number
-        </td>
-        <td>
-          <input type="text" <% unless @allow_activity_editing %>disabled="disabled"<% end %> value="<%=  @activity.number %> "></input>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Note
-        </td>
-        <td>
-          <input type="text" <% unless @allow_activity_editing %>disabled="disabled"<% end %> value="<%=  @activity.note %> "></input>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          Tag
-        </td>
-        <td>
-          <input type="text" <% unless @allow_activity_editing %>disabled="disabled"<% end %> value="<%=  @activity.tag %> "></input>
-        </td>
-      </tr>
-    </table>
-  </fieldset>
+  <h3>Activity Details</h3>
+  <table>
+    <tr>  
+      <td>
+        Number
+      </td>
+      <td>
+        <%= text_field(:activity, :number, :disabled => disable_activity_editing) %>
+      </td>
+
+      <td>
+        Type
+      </td>
+      <td>
+        <%= collection_select(:activity, :activity_type_id, ActivityType.all, :id, :name, {}, {:disabled => disable_activity_editing}) %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        From Organization
+      </td>
+      <td>
+        <%= collection_select(:activity, :from_organization_id, Organization.all, :id, :name, {}, {:disabled => disable_activity_editing}) %>
+      </td>
+
+      <td>
+        To Organization
+      </td>
+      <td>
+        <%= collection_select(:activity, :to_organization_id, Organization.all, :id, :name, {}, {:disabled => disable_activity_editing}) %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        Date
+      </td>
+      <td>
+        <%= date_select :activity, :date, {:prompt => { :day => 'Select day', :month => 'Select month', :year => 'Select year' }}, {:class => 'date-select', :disabled => disable_activity_editing}  %>
+      </td>
+
+      <td>
+        Owner
+      </td>
+      <td>
+        <%= collection_select(:activity, :owner_user_id, User.all, :id, :email, {}, {:disabled => disable_activity_editing}) %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        Note
+      </td>
+      <td>
+        <%= text_area_tag(:activity, :note, :disabled => disable_activity_editing) %>
+      </td>
+
+      <td>
+        Tag
+      </td>
+      <td>
+        <%= text_area_tag(:activity, :tag, :disabled => disable_activity_editing) %>
+      </td>
+    </tr>
+  </table>
 </div>
 

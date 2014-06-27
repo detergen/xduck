@@ -1,11 +1,15 @@
 <%
   if @activity
 %>
-<%= render 'details' %>
+<%= render :partial => 'details', :locals => { :activity => @activity, :disable_activity_editing => true } %>
+<h3>Child Activities</h3>
+<%
+  else
+%>
+<h3>Activities</h3>
 <%
   end
 %>
-
 <%=
   grid(@activities_grid) do |g|
     g.action_column  
@@ -18,6 +22,14 @@
       activity.number
     end
     
+    g.column :name => 'Type', :attribute => 'name', :model => 'ActivityType' do |activity|
+      activity.type.name if activity.type
+    end
+    
+    g.column :name => 'Date', :attribute => 'date' do |activity|
+      activity.date
+    end
+  
     g.column :name => 'From Orgabization', :attribute => 'name', :model => 'Organization', :table_alias => 'from_organization' do |activity|
       activity.from_organization.name if activity.from_organization
     end
@@ -29,29 +41,31 @@
     g.column :name => 'Owner', :attribute => 'email', :model => 'User' do |activity|
       activity.owner.email if activity.owner
     end
-
-    g.column :name => 'Note', :attribute => 'note' do |activity|
-      activity.note
-    end
-
-    g.column :name => 'Tag', :attribute => 'tag' do |activity|
-      activity.tag
-    end
     
-    g.column :name => 'Created at', :attribute => 'created_at' do |activity|
-      activity.created_at.to_s(:short)
+    g.column :name => 'Total', :attribute => 'total' do |activity|
+      activity.total
     end
+
+    #g.column :name => 'Note', :attribute => 'note' do |activity|
+      #activity.note
+    #end
+
+    #g.column :name => 'Tag', :attribute => 'tag' do |activity|
+      #activity.tag
+    #end
     
-    g.column :name => 'Updated at', :attribute => 'updated_at' do |activity|
-      activity.updated_at.to_s(:short)
-    end
+    #g.column :name => 'Created at', :attribute => 'created_at' do |activity|
+      #activity.created_at.to_s(:short)
+    #end
+    
+    #g.column :name => 'Updated at', :attribute => 'updated_at' do |activity|
+      #activity.updated_at.to_s(:short)
+    #end
     
     g.column do |activity|
-      link_to("Edit", :controller => "activities", :action => "edit", :id => activity.id)
-    end
-  
-    g.column do |activity|
-      link_to("Children", :controller => "activities", :action => "show", :parent_id => activity.id)
+      link_to("Edit", :controller => "activities", :action => "edit", :id => activity.id) + ' ' + unless @activity
+        link_to("Children", :controller => "activities", :action => "show", :parent_id => activity.id)
+      end
     end
   end
 %>

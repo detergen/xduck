@@ -1,12 +1,14 @@
 class ActivitiesController < ApplicationController
   def show
-    @activities_grid
     if params[:parent_id].nil?
-      @activities_grid = initialize_grid(Activity, :include => [:from_organization, :to_organization])
+      @activities_grid = initialize_grid(Activity.where(
+          :parent_id => nil),
+        :include => [:from_organization, :to_organization, :owner, :type])
     else
       @activity = Activity.find_by :id => params[:parent_id]
-      @allow_activity_editing = false
-      @activities_grid = initialize_grid(Activity.where(:parent_id => params[:parent_id]), :include => [:from_organization, :to_organization])
+      @activities_grid = initialize_grid(Activity.where(
+          :parent_id => params[:parent_id]),
+        :include => [:from_organization, :to_organization, :owner, :type])
     end
   end
 
@@ -15,7 +17,6 @@ class ActivitiesController < ApplicationController
 
   def edit
     @activity = Activity.find_by :id => params[:id]
-    @allow_activity_editing = true
   end
   
 end

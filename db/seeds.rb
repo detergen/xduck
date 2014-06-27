@@ -6,12 +6,14 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+#admin role
 role = Role.find_by name: 'admin'
 if role.nil? then
   role = Role.create(:name => 'admin', :resource_id => nil, :resource_type => nil)
   role.save or puts YAML::dump(role.errors)
 end
 
+#default admin user
 user = User.find_by email: 'admin@xduck.local'
 if user.nil? then
   user = User.create(:email => 'admin@xduck.local', :password => 'password')
@@ -19,6 +21,7 @@ if user.nil? then
   user.save or puts YAML::dump(user.errors)
 end
 
+#organizations
 test_orgs = []
 
 for i in 1..5
@@ -38,24 +41,75 @@ for i in 1..5
         :okpo => "900")
     
       organization.save or puts YAML::dump(organization.errors)
+    end
+    
+    test_orgs << organization.id
+  end
+end
+
+#activity types
+test_activity_types = []
+
+activity_types = ["Lead", "Bill", "Shipping", "Assembly", "Payment", 'Log', 'Communication']
+for i in 0..(activity_types.length - 1)
+  activity_type = ActivityType.find_by :name => activity_types[i]
+  
+  if activity_type.nil? then
+    activity_type = ActivityType.create(:name => activity_types[i])
+    
+    activity_type.save or puts YAML::dump(activity_type.errors)
+  end
+  
+  test_activity_types << activity_type.id
+end
+
+#root activities
+test_activities = []
+
+for i in 1..7
+  begin
+    activity = Activity.find_by number: i.to_s + 'TST'
+    
+    if activity.nil? then
+      activity = Activity.create(
+        #:parent_id => nil,
+        :activity_type_id => test_activity_types[0],
+        :number => i.to_s + 'TST',
+        :tag => 'test root activity',
+        :note => 'test note',
+        :owner_user_id => user.id,
+        :from_organization_id => test_orgs[rand(0..(test_orgs.length - 1))],
+        :to_organization_id => test_orgs[rand(0..(test_orgs.length - 1))],
+        :date => DateTime.now,
+        :total => 0)
       
-      test_orgs<<organization.id
+      activity.save or puts YAML::dump(activity.errors)
+      
+      test_activities << activity.id
     end
   end
 end
 
+#child activities
 for i in 1..30
   begin
-    activity = Activity.find_by number: i.to_s + 'TST'
+    activity = Activity.find_by number: i.to_s + 'TST_CH'
+    
     if activity.nil? then
       activity = Activity.create(
-        :number => i.to_s + 'TST',
-        :tag => 'test order',
+        :parent_id => test_activities[rand(0..(test_activities.length - 1))],
+        :activity_type_id => test_activity_types[rand(0..(test_activity_types.length - 1))],
+        :number => i.to_s + 'TST_CH',
+        :tag => 'test child activity',
         :note => 'test note',
         :owner_user_id => user.id,
-        :from_organization_id => test_orgs[rand(0..4)],
-        :to_organization_id => test_orgs[rand(0..4)])
+        :from_organization_id => test_orgs[rand(0..(test_orgs.length - 1))],
+        :to_organization_id => test_orgs[rand(0..(test_orgs.length - 1))],
+        :date => DateTime.now,
+        :total => 0)
+      
       activity.save or puts YAML::dump(activity.errors)
     end
   end
 end
+
