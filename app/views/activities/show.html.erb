@@ -69,3 +69,10 @@
     end
   end
 %>
+<%
+   if @activity
+%>
+    <%= link_to("Go to parent", :controller => "activities", :action => "show", :parent_id => @activity.parent_id) %>
+<%
+   end
+%>
