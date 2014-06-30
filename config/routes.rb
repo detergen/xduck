@@ -1,7 +1,4 @@
 Xduck::Application.routes.draw do
-  get 'activities/show'
-  get 'activities/add'
-  get 'activities/edit'
 
   devise_scope :user do
     get "/users/sign_in" => "devise/sessions#new"
@@ -13,6 +10,11 @@ Xduck::Application.routes.draw do
 
   devise_for :users
   get "home/index"
+  
+  get 'activities/show'
+  get 'activities/add'
+  get 'activities/edit'
+  post 'activities/edit'
 
 #  root :to => "home#index"
 #  resources :products
