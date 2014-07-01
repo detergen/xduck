@@ -1,0 +1,13 @@
+<%
+   if activity.errors.any?
+     activity.errors.each do |key, value|
+%>
+  <div id='errors'>
+    <div>
+      <%= key.to_s + ' ' + value.to_s %>
+    </div>
+  </div>
+<%
+    end
+   end
+%>

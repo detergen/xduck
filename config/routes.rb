@@ -13,6 +13,7 @@ Xduck::Application.routes.draw do
   
   get 'activities/show'
   get 'activities/add'
+  post 'activities/add'
   get 'activities/edit'
   post 'activities/edit'
 

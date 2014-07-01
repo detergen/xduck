@@ -1,5 +1,6 @@
 <%= form_for @activity, :url => {:action => 'edit'}, :html =>{:method =>'post'} do |f| %>
   <%= render :partial => 'details', :locals => { :activity => @activity, :disable_activity_editing => false } %>
+  <%= render :partial => 'errors', :locals => { :activity => @activity } %>
   <%= f.submit 'Save' %>
 <% end %>
-<%= link_to("Go back", :controller => "activities", :action => "show", :parent_id => @activity.parent_id) %>
+<%= link_to('Go back', :controller => 'activities', :action => 'show', :parent_id => @activity.parent_id) %>

@@ -1,2 +1,6 @@
-<h1>Activities#add</h1>
-<p>Find me in app/views/activities/add.html.erb</p>
+<%= form_for @activity, :url => {:action => 'add'}, :html =>{:method =>'post'} do |f| %>
+    <%= render :partial => 'details', :locals => { :activity => @activity, :disable_activity_editing => false } %>
+    <%= render :partial => 'errors', :locals => { :activity => @activity } %>
+    <%= f.submit 'Save' %>
+<% end %>
+<%= link_to('Go back', :controller => 'activities', :action => 'show') %>
