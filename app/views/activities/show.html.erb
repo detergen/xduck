@@ -13,7 +13,7 @@
   end
 %>
 <%=
-  grid(@activities_grid) do |g|
+  grid(@activities_grid, show_filters: :when_filtered) do |g|
     g.action_column  
   
     g.column :name => 'ID', :attribute => 'id' do |activity|
@@ -32,7 +32,7 @@
       activity.date
     end
   
-    g.column :name => 'From Orgabization', :attribute => 'name', :model => 'Organization', :table_alias => 'from_organization' do |activity|
+    g.column :name => 'From Organization', :attribute => 'name', :model => 'Organization', :table_alias => 'from_organization' do |activity|
       activity.from_organization.name if activity.from_organization
     end
 

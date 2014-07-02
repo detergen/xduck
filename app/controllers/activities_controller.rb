@@ -58,9 +58,9 @@ class ActivitiesController < ApplicationController
     if request.get?
       unless params[:id].nil?
         Activity.destroy(params[:id])
-
-        redirect_to request.referer
       end
+
+      redirect_to request.referer
     end
   end
 
