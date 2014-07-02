@@ -1,14 +1,14 @@
 <%
   if @activity
 %>
-    <%= render :partial => 'details', :locals => { :activity => @activity, :disable_activity_editing => true } %>
-    <h3>Child Activities</h3>
-    <%= link_to('Add', :controller => 'activities', :action => 'add', :parent_id => @activity.id) %>
+  <%= render :partial => 'details', :locals => { :activity => @activity, :disable_activity_editing => true } %>
+  <h3>Child Activities</h3>
+  <%= link_to('Add', { :controller => 'activities', :action => 'add', :parent_id => @activity.id }) %>
 <%
   else
 %>
-    <h3>Activities</h3>
-    <%= link_to('Add', :controller => 'activities', :action => 'add') %>
+  <h3>Activities</h3>
+  <%= link_to('Add', { :controller => 'activities', :action => 'add' }) %>
 <%
   end
 %>
@@ -65,16 +65,24 @@
     #end
     
     g.column do |activity|
-      link_to("Edit", :controller => "activities", :action => "edit", :id => activity.id) + ' ' + unless @activity
-        link_to("Children", :controller => "activities", :action => "show", :parent_id => activity.id)
+      a = link_to('Edit', { :controller => 'activities', :action => 'edit', :id => activity.id })
+
+      unless @activity
+        a += ' '
+        a += link_to('Children', { :controller => 'activities', :action => 'show', :parent_id => activity.id })
       end
+
+      a += ' '
+      a += link_to('Delete', { :controller => 'activities', :action => 'delete', :id => activity.id }, :data => { :confirm => 'Are you sure?' })
+
+      a
     end
   end
 %>
 <%
    if @activity
 %>
-    <%= link_to('Go to parent', :controller => 'activities', :action => 'show', :parent_id => @activity.parent_id) %>
+  <%= link_to('Go to parent', { :controller => 'activities', :action => 'show', :parent_id => @activity.parent_id }) %>
 <%
    end
 %>

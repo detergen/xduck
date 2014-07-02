@@ -36,9 +36,13 @@ class ActivitiesController < ApplicationController
   end
 
   def edit
-    unless params[:id].nil?
-      @activity = Activity.find_by :id => params[:id]
-    else
+    if request.get?
+      unless params[:id].nil?
+        @activity = Activity.find_by :id => params[:id]
+      end
+    end
+
+    if request.post?
       unless params[:activity][:id].nil?
         @activity = Activity.find_by :id => params[:activity][:id]
 
@@ -46,6 +50,16 @@ class ActivitiesController < ApplicationController
           redirect_to :action => 'show', :parent_id => @activity.parent_id
           return
         end
+      end
+    end
+  end
+
+  def delete
+    if request.get?
+      unless params[:id].nil?
+        Activity.destroy(params[:id])
+
+        redirect_to request.referer
       end
     end
   end

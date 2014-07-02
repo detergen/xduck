@@ -3,4 +3,4 @@
   <%= render :partial => 'errors', :locals => { :activity => @activity } %>
   <%= f.submit 'Save' %>
 <% end %>
-<%= link_to('Go back', :controller => 'activities', :action => 'show', :parent_id => @activity.parent_id) %>
+<%= link_to('Go back', { :controller => 'activities', :action => 'show', :parent_id => @activity.parent_id }) %>

@@ -23,4 +23,11 @@ RSpec.describe ActivitiesController, :type => :controller do
     end
   end
 
+  describe "GET 'delete'" do
+    it "returns http success" do
+      get 'delete'
+      expect(response).to be_success
+    end
+  end
+
 end

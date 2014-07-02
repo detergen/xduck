@@ -22,7 +22,8 @@
       <div class="nav-collapse">
         <ul class="nav">
           <li><%= link_to "Browse Products", products_path %></li>
-          <li><%= link_to "Browse boms", boms_path %></li>
+          <li><%= link_to "Browse Boms", boms_path %></li>
+          <li><%= link_to "Browse Activities", activities_show_path %></li>
           <li><%= link_to "Price List" %></li>
           <li><%= link_to "Contact Us" %></li>
           <li><%= link_to "Cart" %></li>
@@ -34,7 +35,9 @@
 
 
 <div class="container">
-   <%= yield %>
+
+  <%= yield %>
+
   <p><%= notice %></p>
   <p><%= alert %></p>
   <div id="user_nav">
