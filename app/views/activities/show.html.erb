@@ -9,6 +9,7 @@
 %>
   <h3>Activities</h3>
   <%= link_to('Add', { :controller => 'activities', :action => 'add' }) %>
+  <%= link_to('Delete', { :controller => 'activities', :action => 'delete' }, :id => 'delete') %>
 <%
   end
 %>
@@ -80,9 +81,29 @@
   end
 %>
 <%
-   if @activity
+  if @activity
 %>
   <%= link_to('Go to parent', { :controller => 'activities', :action => 'show', :parent_id => @activity.parent_id }) %>
 <%
-   end
+  end
 %>
+<script type="text/javascript">
+  $(document).ready( function() {
+    $('#delete').click( function() {
+      var selected = $('input[type=checkbox][name^=grid]:checked');
+      var ids = [];
+
+      for(var i = 0; i < selected.length; i++) {
+        ids[i] = selected[i].value
+      }
+
+      $.ajax({
+        type: 'GET',
+        url: '/activities/delete',
+        data: { id: ids }
+      });
+
+      return false;
+    });
+  });
+</script>
