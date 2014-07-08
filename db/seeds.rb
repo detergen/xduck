@@ -91,24 +91,26 @@ for i in 1..7
 end
 
 #child activities
-for i in 1..30
-  begin
-    activity = Activity.find_by number: i.to_s + 'TST_CH'
-    
-    if activity.nil? then
-      activity = Activity.create(
-        :parent_id => test_activities[rand(0..(test_activities.length - 1))],
-        :activity_type_id => test_activity_types[rand(0..(test_activity_types.length - 1))],
-        :number => i.to_s + 'TST_CH',
-        :tag => 'test child activity',
-        :note => 'test note',
-        :owner_user_id => user.id,
-        :from_organization_id => test_orgs[rand(0..(test_orgs.length - 1))],
-        :to_organization_id => test_orgs[rand(0..(test_orgs.length - 1))],
-        :date => DateTime.now,
-        :total => 0)
-      
-      activity.save or puts YAML::dump(activity.errors)
+if test_activities.length > 0
+  for i in 1..30
+    begin
+      activity = Activity.find_by number: i.to_s + 'TST_CH'
+
+      if activity.nil? then
+        activity = Activity.create(
+            :parent_id => test_activities[rand(0..(test_activities.length - 1))],
+            :activity_type_id => test_activity_types[rand(0..(test_activity_types.length - 1))],
+            :number => i.to_s + 'TST_CH',
+            :tag => 'test child activity',
+            :note => 'test note',
+            :owner_user_id => user.id,
+            :from_organization_id => test_orgs[rand(0..(test_orgs.length - 1))],
+            :to_organization_id => test_orgs[rand(0..(test_orgs.length - 1))],
+            :date => DateTime.now,
+            :total => 0)
+
+        activity.save or puts YAML::dump(activity.errors)
+      end
     end
   end
 end

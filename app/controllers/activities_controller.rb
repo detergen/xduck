@@ -55,12 +55,19 @@ class ActivitiesController < ApplicationController
   end
 
   def delete
+    success = false
+
     if request.get?
       unless params[:id].nil?
         Activity.destroy(params[:id])
+
+        success = true
       end
 
-      redirect_to request.referer
+      respond_to do |format|
+        format.html { redirect_to(request.referer) }
+        format.json  { render :json => success }
+      end
     end
   end
 

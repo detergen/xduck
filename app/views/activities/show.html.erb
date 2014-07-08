@@ -9,10 +9,10 @@
 %>
   <h3>Activities</h3>
   <%= link_to('Add', { :controller => 'activities', :action => 'add' }) %>
-  <%= link_to('Delete', { :controller => 'activities', :action => 'delete' }, :id => 'delete') %>
 <%
   end
 %>
+<%= link_to('Delete', { :controller => 'activities', :action => 'delete' }, :id => 'delete') %>
 <%=
   grid(@activities_grid, show_filters: :when_filtered) do |g|
     g.action_column  
@@ -90,6 +90,10 @@
 <script type="text/javascript">
   $(document).ready( function() {
     $('#delete').click( function() {
+      if (!confirm('Are you sure?')) {
+        return false;
+      }
+
       var selected = $('input[type=checkbox][name^=grid]:checked');
       var ids = [];
 
@@ -97,10 +101,23 @@
         ids[i] = selected[i].value
       }
 
+      if (ids.length < 1) {
+        alert('Please select at least one activity');
+
+        return false;
+      }
+
       $.ajax({
         type: 'GET',
         url: '/activities/delete',
-        data: { id: ids }
+        data: { id: ids },
+        dataType : 'json',
+        async: false,
+        success: function(e) {
+          if (e == true) {
+            location.reload();
+          }
+        }
       });
 
       return false;
