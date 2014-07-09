@@ -7,4 +7,6 @@ en:
     product_active: Active
     product_forsale: For sale 
     product_sku: SKU
-
+    bom_subprod_sku: Consists of SKU
+    bom_subprod_name: Consists of product
+    bom_qty: Quantity
