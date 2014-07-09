@@ -1,0 +1,55 @@
+<%- model_class = Bom -%>
+
+<%=
+  grid(@boms_grid, show_filters: true) do |g|
+    g.action_column
+
+#    g.column :name => 'ID', :attribute => 'id' do |product|
+#      product.id
+#    end
+    g.column :name => t(:product_sku), :model => 'Product', :attribute => 'articul' do |bom|
+      bom.product.articul if bom.product
+    end
+
+    g.column :name => t(:product_name), :model => 'Product', :attribute => 'name' do |bom|
+      bom.product.name if bom.product
+    end
+
+    g.column :name => t(:bom_subprod_sku), :model => 'Product', :table_alias => 'subproducts_boms', :attribute => 'articul' do |bom|
+      bom.subproduct.articul if bom.subproduct
+    end
+
+    g.column :name => t(:bom_subprod_name), :model => 'Product', :table_alias => 'subproducts_boms', :attribute => 'name' do |bom|
+      bom.subproduct.name if bom.subproduct
+    end
+
+    g.column :name => t(:bom_qty), :attribute => 'qty' do |bom|
+      bom.qty
+    end
+
+    g.column :name => t(:product_active), :attribute => 'active' do |bom|
+      bom.active? ? t(:yes) : t(:no)
+    end
+
+    g.column do |product|
+      a = link_to('Edit', { :controller => 'boms', :action => 'edit', :id => product.id })
+
+#      a += ' '
+#      a += link_to('Delete', { :controller => 'products', :action => 'delete', :id => product.id }, :data => { :confirm => 'Are you sure?' })
+
+      a
+    end
+  end
+%>
+
+
+
+
+<% if @product.nil?  %>
+	<% path_to = new_bom_path %>
+<% else %>
+	<% path_to = new_bom_path(:product_id=>@product.id) %>
+<% end %>
+
+<%= link_to t('.new', :default => t("helpers.links.new")), path_to, :class => 'btn btn-primary' %>
+

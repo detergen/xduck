@@ -5,8 +5,10 @@ before_action :authenticate_user!
   # GET /boms
   # GET /boms.json
   def index
-    @boms = Bom.all
-
+#    @boms = Bom.all
+    @boms_grid = initialize_grid(Bom.joins(:product).joins(:subproduct).all,
+		:include => [:product, :subproduct] ,:order => 'products.name'
+		)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @boms }

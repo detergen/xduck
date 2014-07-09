@@ -9,12 +9,7 @@ load_and_authorize_resource
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @products }
-    end
+    @products_grid = initialize_grid(Product.all, :order => 'products.name')
   end
 
   # GET /products/1

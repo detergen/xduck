@@ -93,8 +93,8 @@ ActiveRecord::Schema.define(version: 20140702151951) do
     t.integer  "group_id"
     t.decimal  "qty"
     t.boolean  "active"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "contacts", force: true do |t|
@@ -146,8 +146,8 @@ ActiveRecord::Schema.define(version: 20140702151951) do
     t.boolean  "active"
     t.boolean  "forsale"
     t.text     "note"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
     t.string   "sizes",      limit: 30
   end
 

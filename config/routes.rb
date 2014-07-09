@@ -19,8 +19,8 @@ Xduck::Application.routes.draw do
   get 'activities/delete'
 
 #  root :to => "home#index"
-#  resources :products
-#  resources :boms
+  resources :products
+  resources :boms
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,5 +1,5 @@
-ActiveAdmin.register Bom do
-permit_params :product_id, :subproduct_id, :group_id, :qty, :active
+#ActiveAdmin.register Bom do
+#permit_params :product_id, :subproduct_id, :group_id, :qty, :active
   
   # See permitted parameters documentation:
   # https://github.com/gregbell/active_admin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
@@ -14,4 +14,4 @@ permit_params :product_id, :subproduct_id, :group_id, :qty, :active
   #  permitted
   # end
   
-end
+#end
