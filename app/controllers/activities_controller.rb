@@ -39,12 +39,16 @@ class ActivitiesController < ApplicationController
     if request.get?
       unless params[:id].nil?
         @activity = Activity.find_by :id => params[:id]
+
+        @activity_items_grid = initialize_grid(ActivityItem.where(:activity_id => @activity.id), :include => [:product])
       end
     end
 
     if request.post?
       unless params[:activity][:id].nil?
         @activity = Activity.find_by :id => params[:activity][:id]
+
+        @activity_items_grid = initialize_grid(ActivityItem.where(:activity_id => @activity.id), :include => [:product])
 
         if @activity.update(activity_update_params)
           redirect_to :action => 'show', :parent_id => @activity.parent_id

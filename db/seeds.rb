@@ -110,6 +110,20 @@ if test_activities.length > 0
             :total => 0)
 
         activity.save or puts YAML::dump(activity.errors)
+
+        product = Product.first
+
+        unless product.nil?
+          for i in 1..3
+            activity_item = ActivityItem.create(
+                :activity_id => activity.id,
+                :product_id => product.id,
+                :quantity => 1
+            )
+
+            activity_item.save or puts YAML::dump(activity_item.errors)
+          end
+        end
       end
     end
   end

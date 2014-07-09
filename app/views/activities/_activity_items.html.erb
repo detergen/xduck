@@ -1,0 +1,22 @@
+<h3>Activity Items</h3>
+<%=
+    grid(@activity_items_grid, show_filters: :when_filtered) do |g|
+      g.action_column
+
+      g.column :name => 'ID', :attribute => 'id' do |activity_item|
+        activity_item.id
+      end
+
+      g.column :name => 'Product', :attribute => 'name', :model => 'Product' do |activity_item|
+        activity_item.product.name if activity_item.product
+      end
+
+      g.column :name => 'Quantity', :attribute => 'quantity' do |activity_item|
+        activity_item.quantity
+      end
+
+      g.column do |activity_item|
+        link_to('Delete', { :controller => 'activity_items', :action => 'delete', :id => activity_item.id }, :data => { :confirm => 'Are you sure?' })
+      end
+    end
+%>
