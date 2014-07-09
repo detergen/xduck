@@ -1,6 +1,10 @@
 en:
+    yes: Yes
+    no: No
     product: Product
     products: Products
+    product_name: Name
     product_active: Active
     product_forsale: For sale 
-    product_name: Name
+    product_sku: SKU
+

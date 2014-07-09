@@ -1,2 +1,10 @@
-ru:
-    product: "Product"
+en:
+    yes: "Да"
+    no: "Нет"
+    product: "Товар"
+    products: "Товары"
+    product_name: "Название"
+    product_active: "Активен"
+    product_forsale: "Для продажи" 
+    product_sku: "Артикул"
+
