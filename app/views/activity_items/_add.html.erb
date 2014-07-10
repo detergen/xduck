@@ -1,0 +1,19 @@
+<div id="activity_item">
+  <table>
+    <tr>
+      <td>
+        Product
+      </td>
+      <td>
+        <%= collection_select(:activity_item, :product_id, Product.all, :id, :name) %>
+      </td>
+
+      <td>
+        Quantity
+      </td>
+      <td>
+        <%= text_field(:activity_item, :quantity) %>
+      </td>
+    </tr>
+  </table>
+</div>
