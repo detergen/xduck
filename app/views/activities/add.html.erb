@@ -1,4 +1,5 @@
 <%= form_for @activity, :url => { :action => 'add' }, :html => { :method => 'post' } do |f| %>
+  <h3>Activity Details</h3>
   <%= render :partial => 'details', :locals => { :activity => @activity, :disable_activity_editing => false } %>
   <%= render :partial => 'errors', :locals => { :activity => @activity } %>
   <%= f.submit 'Save' %>

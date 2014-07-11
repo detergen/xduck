@@ -1,6 +1,7 @@
 <%
   if @activity
 %>
+  <h3>Activity Details</h3>
   <%= render :partial => 'details', :locals => { :activity => @activity, :disable_activity_editing => true } %>
   <h3>Child Activities</h3>
   <%= link_to('Add', { :controller => 'activities', :action => 'add', :parent_id => @activity.id }) %>
