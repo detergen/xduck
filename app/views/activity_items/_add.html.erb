@@ -10,8 +10,8 @@
     margin-bottom: 0px;
   }
 </style>
-<div id="add_activity_item">
-  <table id="activity_item_details">
+<div id="activity_item_details">
+  <table>
     <tr>
       <td>
         Product
@@ -28,15 +28,43 @@
       </td>
     </tr>
   </table>
-  <a href="#" id="add_activity_item">Add</a>
+  <a href='#' id='add_activity_item' onClick='return onActivityItemAdd()'>Add</a>
 </div>
 <script type="text/javascript">
-  $(document).ready( function() {
-    $('#add_activity_item').click( function() {
-      var selected_product_id = $('input[name^=product_id]:selected');
-      var quantity = $('input[name^=quantity]');
+  var added_activity_items = [];
+
+  function onActivityItemAdd() {
+    var selected_product_id = $('#activity_item_product_id :selected')[0].value;
+    var selected_product_name = $('#activity_item_product_id :selected')[0].text;
+    var quantity = $('#activity_item_quantity')[0].value;
+    var index = added_activity_items.length;
+
+    added_activity_items[index] = { productId: selected_product_id, quantity: quantity };
+
+    var tr = $('<tr>');
+    var id_td = $('<td>');
+    var product_td = $('<td>').text(selected_product_name);
+    var quantity_td = $('<td>').text(quantity);
+    var link = $('<a>', { href: '#', onclick: 'return onAddedActivityItemDelete($(this), ' + index + ')' }).text('Delete');
+    var link_td = $('<td>').append(link);
+
+    tr.append(id_td);
+    tr.append(product_td);
+    tr.append(quantity_td);
+    tr.append(link_td);
+
+    $('.wice-grid').append(tr);
+
+    return false;
+  }
+
+  function onAddedActivityItemDelete(e, index) {
+    if (confirm('Are you sure?')) {
+      delete added_activity_items[index];
+
+      e.parent().parent().remove();
 
       return false;
-    });
-  });
+    }
+  }
 </script>

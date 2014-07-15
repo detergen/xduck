@@ -1,7 +1,5 @@
 <%=
     grid(@activity_items_grid, show_filters: :when_filtered) do |g|
-      g.action_column
-
       g.column :name => 'ID', :attribute => 'id' do |activity_item|
         activity_item.id
       end
@@ -15,7 +13,22 @@
       end
 
       g.column do |activity_item|
-        link_to('Delete', { :controller => 'activity_items', :action => 'delete', :id => activity_item.id }, :data => { :confirm => 'Are you sure?' })
+        a = "<a href='#' id='delete_activity_item' onClick='return onExistingActivityItemDelete($(this), " + activity_item.id.to_s + ")'>Delete</a>"
+
+        a.html_safe
       end
     end
 %>
+<script type="text/javascript">
+  var deleted_activity_items = [];
+
+  function onExistingActivityItemDelete(e, id) {
+    if (confirm('Are you sure?')) {
+      deleted_activity_items[deleted_activity_items.length] = id;
+
+      e.parent().parent().remove();
+
+      return false;
+    }
+  }
+</script>

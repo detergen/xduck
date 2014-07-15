@@ -8,3 +8,39 @@
   <%= f.submit 'Save' %>
 <% end %>
 <%= link_to('Go back', { :controller => 'activities', :action => 'show', :parent_id => @activity.parent_id }) %>
+<script type="text/javascript">
+  $(document).ready( function() {
+    $('.edit_activity').submit( function() {
+      $.ajax({
+        type: 'POST',
+        url: '/activities/edit',
+        data: {
+          activity: {
+            id: $('#activity_id')[0].value,
+            parent_id: $('#activity_parent_id')[0].value,
+            activity_type_id: $('#activity_activity_type_id :selected')[0].value,
+            from_organization_id: $('#activity_from_organization_id :selected')[0].value,
+            to_organization_id: $('#activity_to_organization_id :selected')[0].value,
+            date_1i: $('#activity_date_1i :selected')[0].value,
+            date_2i: $('#activity_date_2i :selected')[0].value,
+            date_3i: $('#activity_date_3i :selected')[0].value,
+            owner_user_id: $('#activity_owner_user_id :selected')[0].value,
+            note: $('#activity_note')[0].value,
+            tag: $('#activity_tag')[0].value
+          },
+          added_activity_items: added_activity_items,
+          deleted_activity_items: deleted_activity_items
+        },
+        dataType : 'json',
+        async: false,
+        success: function(e) {
+          if (e == true) {
+            location.reload();
+          }
+        }
+      });
+
+      return false;
+    });
+  });
+</script>
