@@ -1,7 +1,33 @@
 <%= form_for @activity, :url => { :action => 'add' }, :html => { :method => 'post' } do |f| %>
   <h3>Activity Details</h3>
   <%= render :partial => 'details', :locals => { :activity => @activity, :disable_activity_editing => false } %>
+  <h3>Activity Items</h3>
+  <%= render :partial => 'activity_items/add', :locals => { :activity_item => nil } %>
+  <%= render :partial => 'activity_items/show', :locals => { :activity => @activity } %>
   <%= render :partial => 'errors', :locals => { :activity => @activity } %>
   <%= f.submit 'Save' %>
 <% end %>
 <%= link_to('Go back', { :controller => 'activities', :action => 'show', :parent_id => @activity.parent_id }) %>
+<script type="text/javascript">
+  $(document).ready( function() {
+    $('.edit_activity').submit( function() {
+      $.ajax({
+        type: 'POST',
+        url: '/activities/edit',
+        data: {
+          activity: getActivityDetails(),
+          added_activity_items: getAddedActivityItems()
+        },
+        dataType : 'json',
+        async: false,
+        success: function(e) {
+          if (e == true) {
+            location.replace('<%= activities_show_path(@activity.parent_id) %>');
+          }
+        }
+      });
+
+      return false;
+    });
+  });
+</script>

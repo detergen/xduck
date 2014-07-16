@@ -11,20 +11,35 @@ class ActivitiesController < ApplicationController
   def add
     if request.get?
       @activity = Activity.new(:parent_id => params[:parent_id])
+      @activity_items_grid = initialize_grid(@activity.activity_items)
     end
 
     if request.post?
-      @activity = Activity.new(activity_create_params)
+      activity = Activity.new(activity_create_params)
 
-      if @activity.activity_type_id.nil?
+      if activity.activity_type_id.nil?
         activityType = ActivityType.find_by_name 'Lead'
 
-        @activity.activity_type_id = activityType.id
+        activity.activity_type_id = activityType.id
       end
 
-      if @activity.save
-        redirect_to :action => 'show', :parent_id => @activity.parent_id
-        return
+      activity.save
+
+      unless params[:added_activity_items].nil?
+        params[:added_activity_items].each do |key, value|
+          activity_item = ActivityItem.create(
+              :activity_id => activity.id,
+              :product_id => value[:product_id].to_i,
+              :quantity => value[:quantity].to_i
+          )
+
+          activity_item.save()
+        end
+      end
+
+      respond_to do |format|
+        format.html { redirect_to(request.referer) }
+        format.json  { render :json => true }
       end
     end
   end
@@ -33,21 +48,36 @@ class ActivitiesController < ApplicationController
     if request.get?
       unless params[:id].nil?
         @activity = Activity.find_by :id => params[:id]
-
         @activity_items_grid = initialize_grid(ActivityItem.where(:activity_id => @activity.id), :include => [:product])
       end
     end
 
     if request.post?
       unless params[:activity][:id].nil?
-        @activity = Activity.find_by :id => params[:activity][:id]
+        activity = Activity.find_by :id => params[:activity][:id]
 
-        @activity_items_grid = initialize_grid(ActivityItem.where(:activity_id => @activity.id), :include => [:product])
+        activity.update(activity_update_params)
 
-        if @activity.update(activity_update_params)
-          redirect_to :action => 'show', :parent_id => @activity.parent_id
-          return
+        unless params[:added_activity_items].nil?
+          params[:added_activity_items].each do |key, value|
+            activity_item = ActivityItem.create(
+                :activity_id => activity.id,
+                :product_id => value[:product_id].to_i,
+                :quantity => value[:quantity].to_i
+            )
+
+            activity_item.save()
+          end
         end
+
+        unless params[:deleted_activity_items].nil?
+          ActivityItem.destroy(params[:deleted_activity_items])
+        end
+      end
+
+      respond_to do |format|
+        format.html { redirect_to(request.referer) }
+        format.json  { render :json => true }
       end
     end
   end

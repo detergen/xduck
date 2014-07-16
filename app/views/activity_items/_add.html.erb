@@ -39,7 +39,7 @@
     var quantity = $('#activity_item_quantity')[0].value;
     var index = added_activity_items.length;
 
-    added_activity_items[index] = { productId: selected_product_id, quantity: quantity };
+    added_activity_items[index] = { product_id: selected_product_id, quantity: quantity };
 
     var tr = $('<tr>');
     var id_td = $('<td>');
@@ -66,5 +66,17 @@
 
       return false;
     }
+  }
+
+  function getAddedActivityItems() {
+    var result = [];
+
+    for (var i = 0; i < added_activity_items.length; i++) {
+      if (added_activity_items[i] != null) {
+        result[result.length] = added_activity_items[i];
+      }
+    }
+
+    return result;
   }
 </script>
