@@ -13,11 +13,10 @@ Xduck::Application.routes.draw do
   
   get 'activities/show'
   get 'activities/add'
-  post 'activities/add'
+  get 'activities/ajax_add'
   get 'activities/edit'
-  post 'activities/edit'
+  get 'activities/ajax_edit'
   get 'activities/delete'
-  get 'activity_items/delete'
 
 #  root :to => "home#index"
   resources :products

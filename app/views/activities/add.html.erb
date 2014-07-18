@@ -1,28 +1,31 @@
 <%= form_for @activity, :url => { :action => 'add' }, :html => { :method => 'post' } do |f| %>
   <h3>Activity Details</h3>
   <%= render :partial => 'details', :locals => { :activity => @activity, :disable_activity_editing => false } %>
-  <h3>Activity Items</h3>
-  <%= render :partial => 'activity_items/add', :locals => { :activity_item => nil } %>
-  <%= render :partial => 'activity_items/show', :locals => { :activity => @activity } %>
-  <%= render :partial => 'errors', :locals => { :activity => @activity } %>
+
+  <% unless @activity.parent_id.nil? %>
+    <h3>Activity Items</h3>
+    <%= render :partial => 'activity_items/add', :locals => { :activity_item => nil } %>
+    <%= render :partial => 'activity_items/show', :locals => { :activity => @activity } %>
+  <% end %>
+
   <%= f.submit 'Save' %>
 <% end %>
 <%= link_to('Go back', { :controller => 'activities', :action => 'show', :parent_id => @activity.parent_id }) %>
 <script type="text/javascript">
   $(document).ready( function() {
-    $('.edit_activity').submit( function() {
+    $('#new_activity').submit( function() {
       $.ajax({
-        type: 'POST',
-        url: '/activities/edit',
+        type: 'GET',
+        url: '/activities/ajax_add',
         data: {
           activity: getActivityDetails(),
-          added_activity_items: getAddedActivityItems()
+          added_activity_items: typeof getAddedActivityItems !== 'undefined' ? getAddedActivityItems() : []
         },
         dataType : 'json',
         async: false,
         success: function(e) {
           if (e == true) {
-            location.replace('<%= activities_show_path(@activity.parent_id) %>');
+            location.replace('<%= activities_show_path(:parent_id => @activity.parent_id) %>');
           }
         }
       });

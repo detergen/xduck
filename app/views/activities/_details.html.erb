@@ -19,7 +19,17 @@
         Type
       </td>
       <td>
-        <%= collection_select(:activity, :activity_type_id, ActivityType.all, :id, :name, {}, {:disabled => disable_activity_editing || @activity.parent_id.nil?}) %>
+        <%
+          if @activity.parent_id.nil?
+            disable_type_editing = true;
+            activityTypes = ActivityType.all
+          else
+            disable_type_editing = disable_activity_editing
+            activityTypes = ActivityType.where.not(:name => 'Order')
+          end
+
+        %>
+        <%= collection_select(:activity, :activity_type_id, activityTypes, :id, :name, { }, { :disabled => disable_type_editing }) %>
       </td>
     </tr>
 
@@ -28,14 +38,14 @@
         From Organization
       </td>
       <td>
-        <%= collection_select(:activity, :from_organization_id, Organization.all, :id, :name, {}, {:disabled => disable_activity_editing}) %>
+        <%= collection_select(:activity, :from_organization_id, Organization.all, :id, :name, { }, { :disabled => disable_activity_editing }) %>
       </td>
 
       <td>
         To Organization
       </td>
       <td>
-        <%= collection_select(:activity, :to_organization_id, Organization.all, :id, :name, {}, {:disabled => disable_activity_editing}) %>
+        <%= collection_select(:activity, :to_organization_id, Organization.all, :id, :name, { }, { :disabled => disable_activity_editing }) %>
       </td>
     </tr>
 
@@ -44,14 +54,14 @@
         Date
       </td>
       <td>
-        <%= date_select :activity, :date, {:prompt => { :day => 'Select day', :month => 'Select month', :year => 'Select year' }}, {:class => 'date-select', :disabled => disable_activity_editing}  %>
+        <%= date_select :activity, :date, { :prompt => { :day => 'Select day', :month => 'Select month', :year => 'Select year' }}, { :class => 'date-select', :disabled => disable_activity_editing }  %>
       </td>
 
       <td>
         Owner
       </td>
       <td>
-        <%= collection_select(:activity, :owner_user_id, User.all, :id, :email, {}, {:disabled => disable_activity_editing}) %>
+        <%= collection_select(:activity, :owner_user_id, User.all, :id, :email, { }, { :disabled => disable_activity_editing }) %>
       </td>
     </tr>
 

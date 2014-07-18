@@ -9,21 +9,44 @@ class ActivitiesController < ApplicationController
   end
 
   def add
-    if request.get?
-      @activity = Activity.new(:parent_id => params[:parent_id])
-      @activity_items_grid = initialize_grid(@activity.activity_items)
+    @activity = Activity.new(:parent_id => params[:parent_id])
+    @activity_items_grid = initialize_grid(@activity.activity_items)
+  end
+
+  def ajax_add
+    activity = Activity.new(activity_create_params)
+
+    activity.save
+
+    unless params[:added_activity_items].nil?
+      params[:added_activity_items].each do |key, value|
+        activity_item = ActivityItem.create(
+            :activity_id => activity.id,
+            :product_id => value[:product_id].to_i,
+            :quantity => value[:quantity].to_i
+        )
+
+        activity_item.save()
+      end
     end
 
-    if request.post?
-      activity = Activity.new(activity_create_params)
+    respond_to do |format|
+      format.json  { render :json => true }
+    end
+  end
 
-      if activity.activity_type_id.nil?
-        activityType = ActivityType.find_by_name 'Lead'
+  def edit
+    unless params[:id].nil?
+      @activity = Activity.find_by :id => params[:id]
+      @activity_items_grid = initialize_grid(ActivityItem.where(:activity_id => @activity.id), :include => [:product])
+    end
+  end
 
-        activity.activity_type_id = activityType.id
-      end
+  def ajax_edit
+    unless params[:activity][:id].nil?
+      activity = Activity.find_by :id => params[:activity][:id]
 
-      activity.save
+      activity.update(activity_update_params)
 
       unless params[:added_activity_items].nil?
         params[:added_activity_items].each do |key, value|
@@ -37,48 +60,13 @@ class ActivitiesController < ApplicationController
         end
       end
 
-      respond_to do |format|
-        format.html { redirect_to(request.referer) }
-        format.json  { render :json => true }
-      end
-    end
-  end
-
-  def edit
-    if request.get?
-      unless params[:id].nil?
-        @activity = Activity.find_by :id => params[:id]
-        @activity_items_grid = initialize_grid(ActivityItem.where(:activity_id => @activity.id), :include => [:product])
+      unless params[:deleted_activity_items].nil?
+        ActivityItem.destroy(params[:deleted_activity_items])
       end
     end
 
-    if request.post?
-      unless params[:activity][:id].nil?
-        activity = Activity.find_by :id => params[:activity][:id]
-
-        activity.update(activity_update_params)
-
-        unless params[:added_activity_items].nil?
-          params[:added_activity_items].each do |key, value|
-            activity_item = ActivityItem.create(
-                :activity_id => activity.id,
-                :product_id => value[:product_id].to_i,
-                :quantity => value[:quantity].to_i
-            )
-
-            activity_item.save()
-          end
-        end
-
-        unless params[:deleted_activity_items].nil?
-          ActivityItem.destroy(params[:deleted_activity_items])
-        end
-      end
-
-      respond_to do |format|
-        format.html { redirect_to(request.referer) }
-        format.json  { render :json => true }
-      end
+    respond_to do |format|
+      format.json  { render :json => true }
     end
   end
 

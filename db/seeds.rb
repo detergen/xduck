@@ -50,7 +50,7 @@ end
 #activity types
 test_activity_types = []
 
-activity_types = ["Lead", "Bill", "Shipping", "Assembly", "Payment", 'Log', 'Communication']
+activity_types = ["Order", "Lead", "Bill", "Shipping", "Assembly", "Payment", 'Log', 'Communication']
 for i in 0..(activity_types.length - 1)
   activity_type = ActivityType.find_by :name => activity_types[i]
   
@@ -99,7 +99,7 @@ if test_activities.length > 0
       if activity.nil? then
         activity = Activity.create(
             :parent_id => test_activities[rand(0..(test_activities.length - 1))],
-            :activity_type_id => test_activity_types[rand(0..(test_activity_types.length - 1))],
+            :activity_type_id => test_activity_types[rand(1..(test_activity_types.length - 1))],
             :number => i.to_s + 'TST_CH',
             :tag => 'test child activity',
             :note => 'test note',

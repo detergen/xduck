@@ -1,23 +1,26 @@
 <%= form_for @activity, :url => { :action => 'edit' }, :html => { :method => 'post' } do |f| %>
   <h3>Activity Details</h3>
   <%= render :partial => 'details', :locals => { :activity => @activity, :disable_activity_editing => false } %>
+
+  <% unless @activity.parent_id.nil? %>
   <h3>Activity Items</h3>
-  <%= render :partial => 'activity_items/add', :locals => { :activity_item => nil } %>
-  <%= render :partial => 'activity_items/show', :locals => { :activity => @activity } %>
-  <%= render :partial => 'errors', :locals => { :activity => @activity } %>
+    <%= render :partial => 'activity_items/add', :locals => { :activity_item => nil } %>
+    <%= render :partial => 'activity_items/show', :locals => { :activity => @activity } %>
+  <% end %>
+
   <%= f.submit 'Save' %>
 <% end %>
 <%= link_to('Go back', { :controller => 'activities', :action => 'show', :parent_id => @activity.parent_id }) %>
 <script type="text/javascript">
   $(document).ready( function() {
-    $('.edit_activity').submit( function() {
+    $('.edit_activity').submit( function(e) {
       $.ajax({
-        type: 'POST',
-        url: '/activities/edit',
+        type: 'GET',
+        url: '/activities/ajax_edit',
         data: {
           activity: getActivityDetails(),
-          added_activity_items: getAddedActivityItems(),
-          deleted_activity_items: getDeletedActivityItems()
+          added_activity_items: typeof getAddedActivityItems !== 'undefined' ? getAddedActivityItems() : [],
+          deleted_activity_items: typeof getDeletedActivityItems !== 'undefined' ? getDeletedActivityItems() : []
         },
         dataType : 'json',
         async: false,
