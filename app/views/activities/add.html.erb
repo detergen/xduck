@@ -13,7 +13,11 @@
 <%= link_to('Go back', { :controller => 'activities', :action => 'show', :parent_id => @activity.parent_id }) %>
 <script type="text/javascript">
   $(document).ready( function() {
-    $('#new_activity').submit( function() {
+    $('#new_activity').submit(function() {
+      if (!$('#new_activity').validate().form()) {
+        return false;
+      }
+
       $.ajax({
         type: 'GET',
         url: '/activities/ajax_add',
@@ -24,13 +28,20 @@
         dataType : 'json',
         async: false,
         success: function(e) {
-          if (e == true) {
+          if (e.result == true) {
             location.replace('<%= activities_show_path(:parent_id => @activity.parent_id) %>');
+            return;
           }
+
+          alert(e.errors);
         }
       });
 
       return false;
+    });
+
+    $('#new_activity').validate({
+      rules: activityDetailsValidationRules()
     });
   });
 </script>

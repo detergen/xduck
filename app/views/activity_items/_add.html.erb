@@ -39,6 +39,12 @@
     var quantity = $('#activity_item_quantity')[0].value;
     var index = added_activity_items.length;
 
+    if ($.trim(quantity) == '') {
+      alert('Please provide quantity for the new product');
+
+      return false;
+    }
+
     added_activity_items[index] = { product_id: selected_product_id, quantity: quantity };
 
     var tr = $('<tr>');

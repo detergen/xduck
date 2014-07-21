@@ -31,7 +31,7 @@ class ActivitiesController < ApplicationController
     end
 
     respond_to do |format|
-      format.json  { render :json => true }
+      format.json  { render :json => { :result => !activity.errors.any?, :errors => activity.errors.full_messages } }
     end
   end
 
@@ -66,7 +66,7 @@ class ActivitiesController < ApplicationController
     end
 
     respond_to do |format|
-      format.json  { render :json => true }
+      format.json  { render :json => { :result => !activity.errors.any?, :errors => activity.errors.full_messages } }
     end
   end
 

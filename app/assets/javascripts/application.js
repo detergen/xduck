@@ -11,6 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require jquery.validate
 //= require jquery_ujs
 //= require wice_grid
 //= require twitter/bootstrap

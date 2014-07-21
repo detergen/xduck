@@ -33,6 +33,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'jquery-validation-rails'
 gem 'wice_grid'
 
 group :development, :test do

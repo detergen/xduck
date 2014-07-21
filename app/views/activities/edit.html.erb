@@ -13,7 +13,11 @@
 <%= link_to('Go back', { :controller => 'activities', :action => 'show', :parent_id => @activity.parent_id }) %>
 <script type="text/javascript">
   $(document).ready( function() {
-    $('.edit_activity').submit( function(e) {
+    $('.edit_activity').submit(function(e) {
+      if (!$('.edit_activity').validate().form()) {
+        return false;
+      }
+
       $.ajax({
         type: 'GET',
         url: '/activities/ajax_edit',
@@ -25,13 +29,20 @@
         dataType : 'json',
         async: false,
         success: function(e) {
-          if (e == true) {
+          if (e.result == true) {
             location.reload();
+            return;
           }
+
+          alert(e.errors);
         }
       });
 
       return false;
+    });
+
+    $('.edit_activity').validate({
+      rules: activityDetailsValidationRules()
     });
   });
 </script>
