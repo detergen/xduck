@@ -18,6 +18,8 @@ Xduck::Application.routes.draw do
   get 'activities/ajax_edit'
   get 'activities/delete'
 
+  get 'products/ajax_get'
+
 #  root :to => "home#index"
   resources :products
   resources :boms

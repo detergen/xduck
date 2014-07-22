@@ -17,7 +17,8 @@
         Product
       </td>
       <td>
-        <%= collection_select(:activity_item, :product_id, Product.all, :id, :name) %>
+        <%= text_field(:activity_item, :product) %>
+        <%= hidden_field(:activity_item, :product_id) %>
       </td>
 
       <td>
@@ -34,8 +35,8 @@
   var added_activity_items = [];
 
   function onActivityItemAdd() {
-    var selected_product_id = $('#activity_item_product_id :selected')[0].value;
-    var selected_product_name = $('#activity_item_product_id :selected')[0].text;
+    var selected_product_id = $('#activity_item_product_id')[0].value;
+    var selected_product_name = $('#activity_item_product')[0].text;
     var quantity = $('#activity_item_quantity')[0].value;
     var index = added_activity_items.length;
 
@@ -85,4 +86,29 @@
 
     return result;
   }
+
+  $(document).ready( function() {
+    $('#activity_item_product').autocomplete({
+      minLength : 3,
+      source: function(request, response) {
+        $.ajax({
+          type: 'GET',
+          url: '/products/ajax_get',
+          data: {
+            term: request.term
+          },
+          dataType : 'json',
+          async: false,
+          success: function(e) {
+            response(e);
+          }
+        });
+      },
+      select: function( event, ui ) {
+        $('#activity_item_product').value(ui.item.id);
+      }
+    }).autocomplete('instance')._renderItem = function(ul, item) {
+      return $('<li>').append(item.name).appendTo(ul);
+    };
+  });
 </script>
