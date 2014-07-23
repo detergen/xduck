@@ -1,9 +1,9 @@
 <style type="text/css">
-  #add_activity_item input[type=text] {
-    width:70px;
+  #activity_item_product {
+    width:300px;
   }
-  #add_activity_item select {
-    width:250px;
+  #activity_item_quantity {
+    width:30px;
   }
   #activity_item_details {
     width: 50%;
@@ -35,10 +35,16 @@
   var added_activity_items = [];
 
   function onActivityItemAdd() {
-    var selected_product_id = $('#activity_item_product_id')[0].value;
-    var selected_product_name = $('#activity_item_product')[0].text;
-    var quantity = $('#activity_item_quantity')[0].value;
+    var selected_product_id = $('#activity_item_product_id').val();
+    var selected_product_name = $('#activity_item_product').val();
+    var quantity = $('#activity_item_quantity').val();
     var index = added_activity_items.length;
+
+    if ($.trim(selected_product_id) == '') {
+      alert('Please select product');
+
+      return false;
+    }
 
     if ($.trim(quantity) == '') {
       alert('Please provide quantity for the new product');
@@ -104,11 +110,20 @@
           }
         });
       },
-      select: function( event, ui ) {
-        $('#activity_item_product').value(ui.item.id);
+      select: function(event, ui) {
+        $('#activity_item_product_id').val(ui.item.id);
+        $('#activity_item_product').val(ui.item.name);
+
+        return false;
       }
-    }).autocomplete('instance')._renderItem = function(ul, item) {
-      return $('<li>').append(item.name).appendTo(ul);
+    }).data('ui-autocomplete')._renderItem = function(ul, item) {
+      return $('<li>').append("<a>" + item.name + "</a>").appendTo(ul);
     };
+
+    $('#activity_item_product').change(function () {
+      if ($.trim($('#activity_item_product').val()) == '') {
+        $('#activity_item_product_id').val('');
+      }
+    })
   });
 </script>

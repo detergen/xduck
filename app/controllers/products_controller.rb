@@ -89,7 +89,7 @@ load_and_authorize_resource
 
   def ajax_get
     respond_to do |format|
-      format.json { render :json => Product.where('name like :term', { :term => '%' + params[:term] + '%' }).limit(10).select('id,name') }
+      format.json { render :json => Product.where('name like :term', { :term => params[:term] + '%' }).limit(10).select('id,name') }
     end
   end
 end

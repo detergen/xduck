@@ -85,18 +85,18 @@
 <script type="text/javascript">
   function getActivityDetails() {
     return {
-      id: $('#activity_id')[0].value,
-      parent_id: $('#activity_parent_id')[0].value,
-      number: $('#activity_number')[0].value,
-      activity_type_id: $('#activity_activity_type_id :selected')[0].value,
-      from_organization_id: $('#activity_from_organization_id :selected')[0].value,
-      to_organization_id: $('#activity_to_organization_id :selected')[0].value,
-      date_1i: $('#activity_date_1i :selected')[0].value,
-      date_2i: $('#activity_date_2i :selected')[0].value,
-      date_3i: $('#activity_date_3i :selected')[0].value,
-      owner_user_id: $('#activity_owner_user_id :selected')[0].value,
-      note: $('#activity_note')[0].value,
-      tag: $('#activity_tag')[0].value
+      id: $('#activity_id').val(),
+      parent_id: $('#activity_parent_id').val(),
+      number: $('#activity_number').val(),
+      activity_type_id: $('#activity_activity_type_id :selected').val(),
+      from_organization_id: $('#activity_from_organization_id :selected').val(),
+      to_organization_id: $('#activity_to_organization_id :selected').val(),
+      date_1i: $('#activity_date_1i :selected').val(),
+      date_2i: $('#activity_date_2i :selected').val(),
+      date_3i: $('#activity_date_3i :selected').val(),
+      owner_user_id: $('#activity_owner_user_id :selected').val(),
+      note: $('#activity_note').val(),
+      tag: $('#activity_tag').val()
     };
   }
 
