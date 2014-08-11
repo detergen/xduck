@@ -21,6 +21,39 @@ if user.nil? then
   user.save or puts YAML::dump(user.errors)
 end
 
+#currencies
+euro = Currency.find_by code: 'EUR'
+if euro.nil? then
+  euro = Currency.create(:code => 'EUR')
+  euro.save or puts YAML::dump(euro.errors)
+end
+
+dollar = Currency.find_by code: 'USD'
+if dollar.nil? then
+  dollar = Currency.create(:code => 'USD')
+  dollar.save or puts YAML::dump(dollar.errors)
+end
+
+rouble = Currency.find_by code: 'RUR'
+if rouble.nil? then
+  rouble = Currency.create(:code => 'RUR')
+  rouble.save or puts YAML::dump(rouble.errors)
+end
+
+date_aug_11 = Date.parse('2014-08-11')
+
+euro_to_rouble = ExchangeRate.find_by from_currency_id: euro.id, to_currency_id: rouble.id,  from_date: date_aug_11.beginning_of_day
+if euro_to_rouble.nil? then
+  euro_to_rouble = ExchangeRate.create(:from_currency_id => euro.id, :to_currency_id => rouble.id, :from_date => date_aug_11.beginning_of_day, :exchange_rate => 48.2856)
+  euro_to_rouble.save or puts YAML::dump(euro_to_rouble.save.errors)
+end
+
+dollar_to_rouble = ExchangeRate.find_by from_currency_id: dollar.id, to_currency_id: rouble.id, from_date: date_aug_11.beginning_of_day
+if dollar_to_rouble.nil? then
+  dollar_to_rouble = ExchangeRate.create(:from_currency_id => dollar.id, :to_currency_id => rouble.id, :from_date => date_aug_11.beginning_of_day, :exchange_rate => 36.0475)
+  dollar_to_rouble.save or puts YAML::dump(dollar_to_rouble.save.errors)
+end
+
 #organizations
 test_orgs = []
 
