@@ -12,6 +12,10 @@
         activity_item.quantity
       end
 
+      g.column :name => 'Price' do |activity_item|
+        (activity_item.product.getSalePrice * activity_item.quantity) if activity_item.product
+      end
+
       g.column do |activity_item|
         a = "<a href='#' id='delete_activity_item' onClick='return onExistingActivityItemDelete($(this), " + activity_item.id.to_s + ")'>Delete</a>"
 

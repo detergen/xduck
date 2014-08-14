@@ -58,12 +58,14 @@
     var id_td = $('<td>');
     var product_td = $('<td>').text(selected_product_name);
     var quantity_td = $('<td>').text(quantity);
+    var price_td = $('<td>').text('N/A');
     var link = $('<a>', { href: '#', onclick: 'return onAddedActivityItemDelete($(this), ' + index + ')' }).text('Delete');
     var link_td = $('<td>').append(link);
 
     tr.append(id_td);
     tr.append(product_td);
     tr.append(quantity_td);
+    tr.append(price_td);
     tr.append(link_td);
 
     $('.wice-grid').append(tr);

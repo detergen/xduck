@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140811110120) do
+ActiveRecord::Schema.define(version: 20140814135942) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20140811110120) do
     t.integer  "to_organization_id"
     t.date     "date"
     t.integer  "owner_user_id"
-    t.float    "total"
+    t.decimal  "total"
     t.string   "note"
     t.string   "tag"
     t.datetime "created_at"
@@ -93,8 +93,8 @@ ActiveRecord::Schema.define(version: 20140811110120) do
     t.integer  "group_id"
     t.decimal  "qty"
     t.boolean  "active"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "contacts", force: true do |t|
@@ -160,8 +160,8 @@ ActiveRecord::Schema.define(version: 20140811110120) do
     t.boolean  "active"
     t.boolean  "forsale"
     t.text     "note"
-    t.datetime "created_at",                                               null: false
-    t.datetime "updated_at",                                               null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "sizes",                limit: 30
     t.integer  "purchase_currency_id"
     t.decimal  "purchase_price",                  precision: 10, scale: 2

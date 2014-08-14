@@ -30,6 +30,8 @@ class ActivitiesController < ApplicationController
       end
     end
 
+    activity.setTotalPrice()
+
     respond_to do |format|
       format.json  { render :json => { :result => !activity.errors.any?, :errors => activity.errors.full_messages } }
     end
@@ -63,6 +65,8 @@ class ActivitiesController < ApplicationController
       unless params[:deleted_activity_items].nil?
         ActivityItem.destroy(params[:deleted_activity_items])
       end
+
+      activity.setTotalPrice()
     end
 
     respond_to do |format|
