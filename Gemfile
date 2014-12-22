@@ -22,7 +22,7 @@ gem 'activeadmin', github: 'gregbell/active_admin'
 group :assets do
   gem "therubyracer"
   gem "less-rails"
-  gem 'sass-rails'  
+  gem 'sass-rails'
   gem 'coffee-rails'
   gem 'twitter-bootstrap-rails'
 
@@ -33,19 +33,24 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'jquery-validation-rails'
 gem 'wice_grid'
 
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
-  gem 'launchy'
   gem 'database_cleaner'
   gem 'guard-rspec'
   gem 'capybara'
   gem 'launchy'
   gem 'faker'
   gem 'populator'
+
+  # human console
+  gem 'pry'
+  gem 'pry-rails'
+  gem 'pry-remote'
 end
 
 # To use ActiveModel has_secure_password
