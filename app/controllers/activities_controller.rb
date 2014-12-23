@@ -1,6 +1,11 @@
 class ActivitiesController < ApplicationController
   before_action :authenticate_user!
 
+  def index
+    @activities_grid = initialize_grid(Activity.where(parent_id: nil),
+                                       include: [:from_organization, :to_organization, :owner, :type])
+  end
+
   def show
     @activity = Activity.find_by :id => params[:parent_id]
     @activities_grid = initialize_grid(Activity.where(
@@ -118,5 +123,5 @@ class ActivitiesController < ApplicationController
         :note,
         :tag)
   end
-  
+
 end
