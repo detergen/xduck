@@ -14,31 +14,22 @@ class Activity < ActiveRecord::Base
 
   validates :activity_type, :number, :from_organization, :to_organization, :owner, :presence => true
 
+  # если указана сумма внутри активити, берем ее,
+  # иначе берем сумму по всем айтемам вложенным внее
+  # с коэффициентом суммирования
+  # и добавляем сюда сумму всех вложенных activity
   def total_price
-    leadChildren = children.joins(:type).where(:activity_types => { :name => "Lead" })
+    total = if price
+              price
+            else
+              activity_items.includes(:product).sum(&:get_price)
+            end
 
-    if leadChildren.count < 1
-      if activity_type.name == "Lead"
-        return activity_items.sum(&:get_price)
-      end
-
-      return 0
-    end
-
-    return leadChildren.sum(&:total_price)
+    (total * sum_koef) + children.sum(&:total_price)
   end
 
   def type
     activity_type
   end
 
-  def setTotalPrice
-    self.total = getTotalPrice()
-
-    self.save
-
-    unless parent.nil?
-      parent.setTotalPrice()
-    end
-  end
 end

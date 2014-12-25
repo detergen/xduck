@@ -1,10 +1,10 @@
 
-<h3>Activities</h3>
+<h2>Activities</h2>
 <%= link_to('Add', { :controller => 'activities', :action => 'add' }) %>
-
+пше
 <%= link_to('Delete', { :controller => 'activities', :action => 'delete' }, :id => 'delete') %>
 <%=
-  grid(@activities_grid, show_filters: :when_filtered) do |g|
+  grid(@activities_grid, show_filters: :when_filtered, class: :table) do |g|
     g.action_column
 
     g.column :name => 'ID', :attribute => 'id' do |activity|
@@ -56,15 +56,15 @@
     #end
 
     g.column do |activity|
-      a = link_to('Edit', { :controller => 'activities', :action => 'edit', :id => activity.id })
+      a = link_to 'Edit', edit_activity_path(activity)
 
       unless @activity
         a += ' '
-        a += link_to('Children', { :controller => 'activities', :action => 'show', :parent_id => activity.id })
+        a += link_to 'Children', activity_path(activity)
       end
 
       a += ' '
-      a += link_to('Delete', { :controller => 'activities', :action => 'delete', :id => activity.id }, :data => { :confirm => 'Are you sure?' })
+      a += link_to 'Delete', activity_path(activity), method: :delete, data: { confirm: 'Вы уверены ?' }
 
       a
     end

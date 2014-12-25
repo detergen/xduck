@@ -3,7 +3,7 @@ class ActivitiesController < ApplicationController
 
   def index
     @activities_grid = initialize_grid(Activity.where(parent_id: nil),
-                                       include: [:from_organization, :to_organization, :owner, :type])
+                                       include: [:from_organization, :to_organization, :owner, :activity_type])
   end
 
   def show
