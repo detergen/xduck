@@ -22,14 +22,22 @@ class Activity < ActiveRecord::Base
     total = if price
               price
             else
-              activity_items.includes(:product).sum(&:get_price)
+              activity_items.includes(:product).map(&:get_price).sum
             end
 
-    (total * sum_koef) + children.sum(&:total_price)
+    (total * sum_koef.to_i) + children.map(&:total_price).sum
   end
 
   def type
     activity_type
+  end
+
+  def calculate_price
+
+  end
+
+  def name
+    "#{activity_type.name} #{number}"
   end
 
 end

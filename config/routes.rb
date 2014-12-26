@@ -16,7 +16,7 @@ Xduck::Application.routes.draw do
   get "home/index"
 
   resources :activities, only: [:index, :show, :edit, :destroy] do
-
+    resources :activity_items, only: [:edit, :create, :destroy, :new, :update]
   end
 
   get 'activities/add'

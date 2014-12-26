@@ -12,11 +12,10 @@ class Product < ActiveRecord::Base
 
 
   def get_sale_price
-
-    if sale_price.nil? then
-      return boms.map { |b| b.qty * b.subproduct.get_sale_price }.sum
+    unless sale_price
+      return 0
+      #return boms.map { |b| b.qty * b.subproduct.get_sale_price }.sum
     end
-
     sale_price
   end
 

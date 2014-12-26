@@ -60,7 +60,7 @@ test_orgs = []
 for i in 1..5
   begin
     organization = Organization.find_by :name => "Test organization #" + i.to_s
-    
+
     if organization.nil? then
       organization = Organization.create(
         :name => "Test organization #" + i.to_s,
@@ -72,10 +72,10 @@ for i in 1..5
         :kpp => "456",
         :ogrn => "789",
         :okpo => "900")
-    
+
       organization.save or puts YAML::dump(organization.errors)
     end
-    
+
     test_orgs << organization.id
   end
 end
@@ -86,13 +86,13 @@ test_activity_types = []
 activity_types = ["Order", "Lead", "Bill", "Shipping", "Assembly", "Payment", 'Log', 'Communication']
 for i in 0..(activity_types.length - 1)
   activity_type = ActivityType.find_by :name => activity_types[i]
-  
+
   if activity_type.nil? then
     activity_type = ActivityType.create(:name => activity_types[i])
-    
+
     activity_type.save or puts YAML::dump(activity_type.errors)
   end
-  
+
   test_activity_types << activity_type.id
 end
 
@@ -102,7 +102,7 @@ test_activities = []
 for i in 1..7
   begin
     activity = Activity.find_by number: i.to_s + 'TST'
-    
+
     if activity.nil? then
       activity = Activity.create(
         #:parent_id => nil,
@@ -115,13 +115,15 @@ for i in 1..7
         :to_organization_id => test_orgs[rand(0..(test_orgs.length - 1))],
         :date => DateTime.now,
         :total => 0)
-      
+
       activity.save or puts YAML::dump(activity.errors)
-      
+
       test_activities << activity.id
     end
   end
 end
+
+
 
 #child activities
 if test_activities.length > 0

@@ -7,10 +7,8 @@ class ActivitiesController < ApplicationController
   end
 
   def show
-    @activity = Activity.find_by :id => params[:parent_id]
-    @activities_grid = initialize_grid(Activity.where(
-      :parent_id => params[:parent_id]),
-      :include => [:from_organization, :to_organization, :owner, :type])
+    @activities_grid = initialize_grid(activity.children, include: [:from_organization, :to_organization, :owner, :activity_type])
+    @activity_items_grid = initialize_grid(activity.activity_items, include: [:product])
   end
 
   def add
@@ -97,6 +95,11 @@ class ActivitiesController < ApplicationController
   end
 
   private
+
+  def activity
+    @activity ||= Activity.find params[:id]
+  end
+
   def activity_update_params
     return params.require(:activity).permit(
         :id,

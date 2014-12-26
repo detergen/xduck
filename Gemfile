@@ -28,13 +28,14 @@ end
 gem 'twitter-bootstrap-rails'
 gem "less-rails"
 gem "therubyracer"
-
+gem "haml-rails"
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'jquery-validation-rails'
 gem 'wice_grid'
 
+gem 'simple_form'
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'

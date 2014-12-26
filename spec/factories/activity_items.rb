@@ -2,5 +2,7 @@
 
 FactoryGirl.define do
   factory :activity_item do
+    product
+    activity
   end
 end
