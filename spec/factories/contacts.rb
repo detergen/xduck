@@ -2,24 +2,23 @@
 
 FactoryGirl.define do
   factory :contact do
-    name "MyString"
-    short_name "MyString"
-    full_name "MyString"
-    to_name "MyString"
+    name Faker::Name.name
+    short_name Faker::Name.first_name
+    full_name "#{Faker::Name.first_name} #{Faker::Name.last_name}"
+    to_name Faker::Name.first_name
     post "MyString"
-    phone1 "MyString"
-    phone2 "MyString"
-    phone3 "MyString"
-    phone4 "MyString"
+    phone1 Faker::PhoneNumber.cell_phone
+    phone2 Faker::PhoneNumber.cell_phone
+    phone3 Faker::PhoneNumber.cell_phone
+    phone4 Faker::PhoneNumber.cell_phone
     key "MyString"
     tag "MyString"
     note "MyText"
-    pasp_series "MyString"
-    pasp_number "MyString"
-    pasp_date "MyString"
+    pasp_series Faker::Number.number(4)
+    pasp_number Faker::Number.number(6)
+    pasp_date Faker::Time.birthday
     pasp_given "MyString"
     pasp_kp "MyString"
-    address "MyString"
-    organization_id 1
+    address Faker::Address.street_address
   end
 end

@@ -72,4 +72,4 @@ end
 # To use debugger
 # gem 'debugger'
 
-ruby "2.1.5"
+ruby "2.1.2"

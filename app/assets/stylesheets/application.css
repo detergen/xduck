@@ -10,5 +10,6 @@
  *
  *= require bootstrap_and_overrides
  //*= require jquery-ui
- //*= require_tree .
+ *= require_tree .
+ *= stub active_admin
  */

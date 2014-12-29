@@ -2,11 +2,10 @@
 
 FactoryGirl.define do
   factory :bankacc do
-    name "MyString"
-    full_name "MyString"
-    ks "MyString"
-    rs "MyString"
-    bik "MyString"
-    organization_id 1
+    name {Faker::Address.city}
+    full_name {Faker::Address.street_address}
+    ks {Faker::Company.duns_number}
+    rs {Faker::Company.ein}
+    bik {Faker::Code.ean}
   end
 end
