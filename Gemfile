@@ -6,7 +6,11 @@ gem 'rails'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+group :production do
+  gem 'pg'
+  gem 'rails_12factor' # for heroku
+end
+
 
 #gem 'protected_attributes'
 
@@ -37,6 +41,7 @@ gem 'wice_grid'
 
 gem 'simple_form'
 group :development, :test do
+  gem 'sqlite3'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
@@ -66,3 +71,5 @@ end
 
 # To use debugger
 # gem 'debugger'
+
+ruby "2.1.5"
