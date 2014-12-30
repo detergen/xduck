@@ -54,33 +54,19 @@ end
 
 #activity types
 
+20.times do
+  FactoryGirl.create :product
+end
+
 ["Order", "Lead", "Bill", "Shipping", "Assembly", "Payment", 'Log', 'Communication'].each do |type|
   unless ActivityType.find_by_name(type)
     ActivityType.create(name: type)
   end
 end
 
-7.times do
-  FactoryGirl.create(:activity, owner: user)
-end
-
-#child activities
-30.times do
-  activity = FactoryGirl.create(:activity, owner: user, parent: Activity.all.sample)
-
-  product = Product.first
-
-  unless product.nil?
-    for i in 1..3
-      activity_item = ActivityItem.create(
-          :activity_id => activity.id,
-          :product_id => product.id,
-          :quantity => 1
-      )
-
-      activity_item.save or puts YAML::dump(activity_item.errors)
-    end
+10.times do
+  parent_activity = FactoryGirl.create(:activity, owner: user)
+  rand(1..7).times do
+    FactoryGirl.create(:activity, :with_items, owner: user, parent: parent_activity)
   end
-
 end
-

@@ -16,8 +16,10 @@ FactoryGirl.define do
       tag 'test root activity'
     end
 
-    factory :root_activity do
-      association :parent, factory: :activity
+    trait :with_items do
+      after(:create) do |activity|
+        create_list(:activity_item, rand(1..7), activity: activity, product: Product.all.sample)
+      end
     end
 
   end

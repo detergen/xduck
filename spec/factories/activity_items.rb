@@ -4,5 +4,6 @@ FactoryGirl.define do
   factory :activity_item do
     product
     activity
+    quantity { rand(1..20) }
   end
 end
