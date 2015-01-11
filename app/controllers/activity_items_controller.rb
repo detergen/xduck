@@ -9,6 +9,7 @@ class ActivityItemsController < ApplicationController
   def create
     @activity_item = activity.activity_items.build(permited_params)
     if @activity_item.save
+      activity.recalculate_total
       redirect_to activity_path(activity)
     else
       render :new
@@ -22,6 +23,7 @@ class ActivityItemsController < ApplicationController
   def update
     @activity_item = activity.activity_items.find params[:id]
     if @activity_item.update_attributes(permited_params)
+      activity.recalculate_total
       redirect_to activity_path(activity)
     else
       render :edit
@@ -30,6 +32,7 @@ class ActivityItemsController < ApplicationController
 
   def destroy
     activity.activity_items.find(params[:id]).delete
+    activity.recalculate_total
     redirect_to activity_path(activity)
   end
 

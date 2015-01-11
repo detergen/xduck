@@ -1,6 +1,6 @@
 <%= form_for @activity, :url => { :action => 'edit' }, :html => { :method => 'post' } do |f| %>
   <h3>Activity Details</h3>
-  <%= render :partial => 'details', :locals => { :activity => @activity, :disable_activity_editing => false } %>
+  <%= render :partial => 'form', :locals => { :activity => @activity, :disable_activity_editing => false } %>
 
   <% unless @activity.parent_id.nil? %>
   <h3>Activity Items</h3>

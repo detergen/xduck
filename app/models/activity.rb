@@ -14,18 +14,16 @@ class Activity < ActiveRecord::Base
 
   validates :activity_type, :number, :from_organization, :to_organization, :owner, :presence => true
 
+  accepts_nested_attributes_for :activity_items
+
+  after_create :recalculate_total
   # если указана сумма внутри активити, берем ее,
   # иначе берем сумму по всем айтемам вложенным внее
   # с коэффициентом суммирования
   # и добавляем сюда сумму всех вложенных activity
-  def total_price
-    total = if price
-              price
-            else
-              activity_items.includes(:product).map(&:get_price).sum
-            end
 
-    (total * sum_koef.to_i) + children.map(&:total_price).sum
+  def total_price
+    (price * sum_koef.to_i) + children.map(&:total_price).sum
   end
 
   def type
@@ -40,4 +38,28 @@ class Activity < ActiveRecord::Base
     "#{activity_type.name} #{number}"
   end
 
+  # в преположении что у нас только 2 уровня
+  def child?
+    !!parent_id
+  end
+
+  def parent?
+    !parent_id
+  end
+
+  def recalculate_total
+    self.total = activity_items.includes(:product).map(&:get_price).sum
+    save
+  end
+
+  class << self
+    def create_dup(origin_id)
+      origin = find(origin_id)
+      child = origin.dup
+      origin.activity_items.map do |item|
+        child.activity_items << item.dup
+      end
+      child
+    end
+  end
 end

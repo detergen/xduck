@@ -8,6 +8,8 @@
     <%= render :partial => 'activity_items/show', :locals => { :activity => @activity } %>
   <% end %>
 
+
+
   <%= f.submit 'Save' %>
 <% end %>
 <%= link_to('Go back', { :controller => 'activities', :action => 'show', :parent_id => @activity.parent_id }) %>

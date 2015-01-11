@@ -15,11 +15,10 @@ Xduck::Application.routes.draw do
   devise_for :users
   get "home/index"
 
-  resources :activities, only: [:index, :show, :edit, :destroy] do
+  resources :activities, only: [:index, :show, :edit, :destroy, :new, :create] do
     resources :activity_items, only: [:edit, :create, :destroy, :new, :update]
   end
 
-  get 'activities/add'
   get 'activities/ajax_add'
   get 'activities/ajax_edit'
   get 'activities/delete'

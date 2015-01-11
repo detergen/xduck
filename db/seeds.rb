@@ -15,7 +15,7 @@ if user.nil?
 end
 
 #currencies
-euro = Currency.find_by code: 'EUR'
+euro = Currency.find_by_code 'EUR'
 if euro.nil?
   euro = Currency.create(:code => 'EUR')
   euro.save or puts YAML::dump(euro.errors)

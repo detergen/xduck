@@ -8,6 +8,9 @@
       g.column :name => 'Quantity', attribute: 'quantity'
 
       g.column :name => 'Price' do |activity_item|
+        (activity_item.product.sale_price * activity_item.quantity) if activity_item.product
+      end
+      g.column :name => 'Total Price' do |activity_item|
         (activity_item.product.get_sale_price * activity_item.quantity) if activity_item.product
       end
 

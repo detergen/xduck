@@ -1,68 +1,67 @@
 %h3
   Activity Details
-= render :partial => 'details', :locals => { :activity => @activity, :disable_activity_editing => true }
+= render :partial => 'form', :locals => { :activity => @activity, :disable_activity_editing => true }
 
-%h3
-  Activity Items
-= link_to 'Add Item', new_activity_activity_item_path(activity_id: @activity.id)
+- if @activity.child?
+  %h3
+    Activity Items
+  = link_to 'Add Item', new_activity_activity_item_path(activity_id: @activity.id)
 
-- if @activity.items.any?
-  .row
-    .col-md-12
-      = render partial: 'activity_items/grid', locals: { activity_items_grid: @activity_items_grid }
+  - if @activity.items.any?
+    .row
+      .col-md-12
+        = render partial: 'activity_items/grid', locals: { activity_items_grid: @activity_items_grid }
+
+- if @activity.parent?
+  %h3
+    Child Activities
+  = link_to 'Add', new_activity_path(parent_id: @activity.id)
+  = link_to('Delete', { :controller => 'activities', :action => 'delete' }, :id => 'delete')
+  = grid(@activities_grid, show_filters: :when_filtered) do |g|
+    - g.action_column
+
+    - g.column :name => 'Number', :attribute => 'number' do |activity|
+      - activity.number
+
+    - g.column :name => 'Type', :attribute => 'name', :model => 'ActivityType' do |activity|
+      - activity.activity_type.name if activity.activity_type
+
+    - g.column :name => 'Date', :attribute => 'date' do |activity|
+      - activity.date
+
+    - g.column :name => 'From Organization', :attribute => 'name', :model => 'Organization', :table_alias => 'from_organization' do |activity|
+      - activity.from_organization.name if activity.from_organization
+
+    - g.column :name => 'To Organization', :attribute => 'name', :model => 'Organization', :table_alias => 'to_organization' do |activity|
+      - activity.to_organization.name if activity.to_organization
+
+    - g.column :name => 'Owner', :attribute => 'email', :model => 'User' do |activity|
+      - activity.owner.email if activity.owner
+
+    - g.column :name => 'Total', :attribute => 'total' do |activity|
+      - activity.total
 
 
-%h3
-  Child Activities
-= link_to('Add', { :controller => 'activities', :action => 'add', :parent_id => @activity.id })
+    - #g.column :name => 'Note', :attribute => 'note' do |activity|
+    -  #activity.note
+    -#end
 
+    -#g.column :name => 'Tag', :attribute => 'tag' do |activity|
+    -  #activity.tag
+    -#end
 
-= link_to('Delete', { :controller => 'activities', :action => 'delete' }, :id => 'delete')
-= grid(@activities_grid, show_filters: :when_filtered) do |g|
-  - g.action_column
+    -#g.column :name => 'Created at', :attribute => 'created_at' do |activity|
+    -  #activity.created_at.to_s(:short)
+    -#end
 
-  - g.column :name => 'Number', :attribute => 'number' do |activity|
-    - activity.number
+    -#g.column :name => 'Updated at', :attribute => 'updated_at' do |activity|
+    -  #activity.updated_at.to_s(:short)
+    -#end
 
-  - g.column :name => 'Type', :attribute => 'name', :model => 'ActivityType' do |activity|
-    - activity.activity_type.name if activity.activity_type
+    - g.column do |activity|
+      - "#{link_to 'Edit', edit_activity_path(activity)} #{link_to 'View', activity_path(activity)} #{link_to 'Delete', activity_path(activity), method: :delete, data: { confirm: 'Вы уверены ?' }} #{link_to('Duplicate', new_activity_path(id:activity.id))}".html_safe
 
-  - g.column :name => 'Date', :attribute => 'date' do |activity|
-    - activity.date
-
-  - g.column :name => 'From Organization', :attribute => 'name', :model => 'Organization', :table_alias => 'from_organization' do |activity|
-    - activity.from_organization.name if activity.from_organization
-
-  - g.column :name => 'To Organization', :attribute => 'name', :model => 'Organization', :table_alias => 'to_organization' do |activity|
-    - activity.to_organization.name if activity.to_organization
-
-  - g.column :name => 'Owner', :attribute => 'email', :model => 'User' do |activity|
-    - activity.owner.email if activity.owner
-
-  - g.column :name => 'Total', :attribute => 'total' do |activity|
-    - activity.total
-
-
-  - #g.column :name => 'Note', :attribute => 'note' do |activity|
-  -  #activity.note
-  -#end
-
-  -#g.column :name => 'Tag', :attribute => 'tag' do |activity|
-  -  #activity.tag
-  -#end
-
-  -#g.column :name => 'Created at', :attribute => 'created_at' do |activity|
-  -  #activity.created_at.to_s(:short)
-  -#end
-
-  -#g.column :name => 'Updated at', :attribute => 'updated_at' do |activity|
-  -  #activity.updated_at.to_s(:short)
-  -#end
-
-  - g.column do |activity|
-    - "#{link_to 'Edit', edit_activity_path(activity)} #{link_to 'View', activity_path(activity)} #{link_to 'Delete', activity_path(activity), method: :delete, data: { confirm: 'Вы уверены ?' }}".html_safe
-
-- if @activity.parent
+-else
   = link_to 'Go to parent', activity_path(@activity.parent)
 
 :javascript

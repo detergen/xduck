@@ -11,9 +11,23 @@ class ActivitiesController < ApplicationController
     @activity_items_grid = initialize_grid(activity.activity_items, include: [:product])
   end
 
-  def add
-    @activity = Activity.new(:parent_id => params[:parent_id])
+  def new
+    if params[:id]
+      @activity = Activity.create_dup(params[:id])
+    else
+      @activity = Activity.new
+    end
     @activity_items_grid = initialize_grid(@activity.activity_items)
+  end
+
+  def create
+    @activity = Activity.new(activity_create_params)
+    if activity.save
+      redirect_to activity
+    else
+      @activity_items_grid = initialize_grid(activity.activity_items)
+      render :new
+    end
   end
 
   def ajax_add
@@ -101,7 +115,7 @@ class ActivitiesController < ApplicationController
   end
 
   def activity_update_params
-    return params.require(:activity).permit(
+    params.require(:activity).permit(
         :id,
         :number,
         :activity_type_id,
@@ -115,7 +129,7 @@ class ActivitiesController < ApplicationController
 
   private
   def activity_create_params
-    return params.require(:activity).permit(
+    params.require(:activity).permit(
         :parent_id,
         :number,
         :activity_type_id,
@@ -124,7 +138,8 @@ class ActivitiesController < ApplicationController
         :date,
         :owner_user_id,
         :note,
-        :tag)
+        :tag,
+        activity_items: [:product_id, :quantity])
   end
 
 end
