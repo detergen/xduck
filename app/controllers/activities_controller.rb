@@ -1,13 +1,30 @@
 class ActivitiesController < ApplicationController
   before_action :authenticate_user!
 
+  def grouped?
+    params[:grouped]
+  end
+  helper_method :grouped?
+
   def index
     @activities_grid = initialize_grid(Activity.where(parent_id: nil),
                                        include: [:from_organization, :to_organization, :owner, :activity_type])
   end
 
   def show
-    @activities_grid = initialize_grid(activity.children, include: [:from_organization, :to_organization, :owner, :activity_type])
+    if grouped?
+      @activities_grids =
+          activity.children.group_by(&:group_name).map{ |(key, values)|
+            {
+              name: key,
+              total: values.sum(&:total),
+              grid: initialize_grid(activity.children.where(group_name: key),
+                                    include: [:from_organization, :to_organization, :owner, :activity_type])
+            }
+          }
+    else
+      @activities_grid = initialize_grid(activity.children, include: [:from_organization, :to_organization, :owner, :activity_type])
+    end
     @activity_items_grid = initialize_grid(activity.activity_items, include: [:product])
   end
 
@@ -23,8 +40,9 @@ class ActivitiesController < ApplicationController
   def create
     @activity = Activity.new(activity_create_params)
     if activity.save
-      redirect_to activity
+      redirect_to activity_path(@activity)
     else
+      puts @activity.errors.full_messages
       @activity_items_grid = initialize_grid(activity.activity_items)
       render :new
     end
@@ -127,7 +145,6 @@ class ActivitiesController < ApplicationController
         :tag)
   end
 
-  private
   def activity_create_params
     params.require(:activity).permit(
         :parent_id,
@@ -139,7 +156,7 @@ class ActivitiesController < ApplicationController
         :owner_user_id,
         :note,
         :tag,
-        activity_items: [:product_id, :quantity])
+        activity_items_attributes: [:product_id, :quantity])
   end
 
 end

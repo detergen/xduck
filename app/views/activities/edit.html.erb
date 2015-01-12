@@ -5,7 +5,7 @@
   <% unless @activity.parent_id.nil? %>
   <h3>Activity Items</h3>
     <%= render :partial => 'activity_items/add', :locals => { :activity_item => nil } %>
-    <%= render :partial => 'activity_items/show', :locals => { :activity => @activity } %>
+    <%= render :partial => 'activity_items/grid', :locals => { :activity => @activity } %>
   <% end %>
 
   <%= f.submit 'Save' %>

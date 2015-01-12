@@ -2,16 +2,16 @@
     grid(@activity_items_grid, show_filters: :when_filtered) do |g|
 
       g.column :name => 'Product', :attribute => 'name', :model => 'Product' do |activity_item|
-        activity_item.product.name if activity_item.product
+        activity_item.product.name
       end
 
       g.column :name => 'Quantity', attribute: 'quantity'
 
       g.column :name => 'Price' do |activity_item|
-        (activity_item.product.sale_price * activity_item.quantity) if activity_item.product
+        activity_item.price
       end
       g.column :name => 'Total Price' do |activity_item|
-        (activity_item.product.get_sale_price * activity_item.quantity) if activity_item.product
+        activity_item.total_price
       end
 
       g.column do |activity_item|

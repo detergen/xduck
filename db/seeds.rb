@@ -15,6 +15,12 @@ if user.nil?
 end
 
 #currencies
+rouble = Currency.find_by code: 'RUR'
+if rouble.nil?
+  rouble = Currency.create(:code => 'RUR')
+  rouble.save or puts YAML::dump(rouble.errors)
+end
+
 euro = Currency.find_by_code 'EUR'
 if euro.nil?
   euro = Currency.create(:code => 'EUR')
@@ -27,11 +33,6 @@ if dollar.nil?
   dollar.save or puts YAML::dump(dollar.errors)
 end
 
-rouble = Currency.find_by code: 'RUR'
-if rouble.nil?
-  rouble = Currency.create(:code => 'RUR')
-  rouble.save or puts YAML::dump(rouble.errors)
-end
 
 date_aug_11 = Date.parse('2014-08-11')
 

@@ -48,7 +48,7 @@ class Activity < ActiveRecord::Base
   end
 
   def recalculate_total
-    self.total = activity_items.includes(:product).map(&:get_price).sum
+    self.total = activity_items.includes(:product).map(&:total_price).sum
     save
   end
 

@@ -10,6 +10,8 @@ FactoryGirl.define do
     association :from_organization, factory: :organization
     association :to_organization, factory: :organization
     date {Date.today}
+    group_name { %w(Счета Отгрузки Другое).sample }
+    sort_name 'date'
 
     factory :root_activity do
       activity_type { ActivityType.find_by_name('Order') }
@@ -18,7 +20,8 @@ FactoryGirl.define do
 
     trait :with_items do
       after(:create) do |activity|
-        create_list(:activity_item, rand(1..7), activity: activity, product: Product.all.sample)
+        create_list(:activity_item, rand(1..7), activity: activity)
+        activity.recalculate_total
       end
     end
 

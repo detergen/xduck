@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141225150342) do
+ActiveRecord::Schema.define(version: 20150112092505) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -44,6 +44,8 @@ ActiveRecord::Schema.define(version: 20141225150342) do
     t.string   "type"
     t.integer  "sum_koef"
     t.decimal  "price"
+    t.string   "group_name"
+    t.string   "sort_name"
   end
 
   create_table "activity_items", force: true do |t|
