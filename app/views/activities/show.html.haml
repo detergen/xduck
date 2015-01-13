@@ -2,6 +2,10 @@
   Activity Details
 = render :partial => 'form', :locals => { :activity => @activity, :disable_activity_editing => true }
 
+.row
+  .col-md-12
+    Total:
+    = @activity.total_price
 - if @activity.child?
   %h3
     Activity Items

@@ -32,7 +32,7 @@ class ActivitiesController < ApplicationController
     if params[:id]
       @activity = Activity.create_dup(params[:id])
     else
-      @activity = Activity.new
+      @activity = Activity.new(activity_type: ActivityType.find_by_name('Order'), owner: current_user, sum_koef: 1, parent_id: params[:parent_id])
     end
     @activity_items_grid = initialize_grid(@activity.activity_items)
   end
@@ -43,6 +43,7 @@ class ActivitiesController < ApplicationController
       redirect_to activity_path(@activity)
     else
       puts @activity.errors.full_messages
+      activity.activity_items.as_json
       @activity_items_grid = initialize_grid(activity.activity_items)
       render :new
     end
@@ -78,6 +79,12 @@ class ActivitiesController < ApplicationController
       @activity_items_grid = initialize_grid(ActivityItem.where(:activity_id => @activity.id), :include => [:product])
     end
   end
+
+  def update
+    activity.update(activity_update_params)
+    redirect_to activity_path(activity)
+  end
+
 
   def ajax_edit
     unless params[:activity][:id].nil?
@@ -148,6 +155,7 @@ class ActivitiesController < ApplicationController
         :owner_user_id,
         :note,
         :tag,
+        :sum_koef,
         :group_name,
         :sort_name)
   end
@@ -164,6 +172,7 @@ class ActivitiesController < ApplicationController
         :note,
         :tag,
         :group_name,
+        :sum_koef,
         :sort_name,
         activity_items_attributes: [:product_id, :quantity])
   end

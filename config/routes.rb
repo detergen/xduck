@@ -15,7 +15,7 @@ Xduck::Application.routes.draw do
   devise_for :users
   get "home/index"
 
-  resources :activities, only: [:index, :show, :edit, :destroy, :new, :create] do
+  resources :activities, only: [:index, :show, :edit, :destroy, :new, :create, :update] do
     resources :activity_items, only: [:edit, :create, :destroy, :new, :update]
   end
 

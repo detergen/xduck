@@ -1,5 +1,5 @@
 %h2
-  New Activity
+  Edit Activity
 - @activity.errors.full_messages.each do |message|
   .alert.alert-danger{role: 'alert'}
     %span.glyphicon.glyphicon-exclamation-sign{ 'aria-hidden' => "true" }
@@ -8,20 +8,20 @@
     = message
 
 #activity_details.container
-  = simple_form_for @activity, defaults: { input_html: { class: 'form-control' } } do |f|
+  = simple_form_for @activity, method: :put, defaults: { input_html: { class: 'form-control' } } do |f|
     = f.input :parent_id, as: :hidden
     .row.form-group
       .col-xs-4
-        = f.input :number
+        = f.input :number, readonly: true
       .col-xs-2
         = f.input :activity_type_id, collection: ActivityType.all, include_blank: false
       .col-xs-2
         = f.input :sum_koef, collection: [-1, 0, 1], include_blank: false
     .row.form-group
       .col-xs-4
-        = f.input :from_organization_id, collection: Organization.all, required: true
+        = f.input :from_organization_id, collection: Organization.all
       .col-xs-4
-        = f.input :to_organization_id, collection: Organization.all, required: true
+        = f.input :to_organization_id, collection: Organization.all
 
     .row.form-group
       .col-xs-4
@@ -41,32 +41,23 @@
       .col-xs-4
         = f.input :sort_name
 
-    - if @activity.child?
+    -unless @activity.parent_id.nil?
       %h3 Activity Items
-      .row
-        .col-md-12
-          %table.table.table-striped
-            %thead
-              %tr
-                %td Product
-                %td Product Price
-                %td Quantity
-              = f.simple_fields_for :activity_items do |i|
-                %tr
-
-                  %td= i.object.product.name
-                  %td= i.object.product.get_sale_price
-                  %td= i.input_field :quantity
-                  %td= i.input :product_id, as: :hidden
+      %p
+        = link_to 'Add Item', new_activity_activity_item_path(activity_id: @activity.id), class: 'btn btn-success'
+      - # = render :partial => 'activity_items/add', :locals => { :activity_item => nil }
+      = render :partial => 'activity_items/grid', :locals => { :activity => @activity }
 
     .row.form-group
       .col-xs-12
         = link_to 'Go back', :back, class: 'btn btn-primary'
         = f.button :submit, 'Save', class: 'btn btn-primary'
 
+
 :javascript
-  $(document).ready(function(){
+  $(document).ready( function() {
     $('.bdatepicker').datepicker({
       dateFormat: 'yy-mm-dd'
     });
   });
+

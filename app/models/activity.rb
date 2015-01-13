@@ -12,7 +12,7 @@ class Activity < ActiveRecord::Base
 
   belongs_to :owner, :class_name => "User", :foreign_key => "owner_user_id"
 
-  validates :activity_type, :number, :from_organization, :to_organization, :owner, :presence => true
+  validates :activity_type, :number, :from_organization, :to_organization, :sum_koef, :owner, :presence => true
 
   accepts_nested_attributes_for :activity_items
 
@@ -29,7 +29,7 @@ class Activity < ActiveRecord::Base
     if parent?
       children.map(&:total_price).sum
     else
-      total * sum_koef
+      total.to_i * sum_koef.to_i
     end
   end
 

@@ -299,7 +299,6 @@ DEPENDENCIES
   guard-rspec
   haml-rails
   jquery-rails
-  jquery-ui-rails
   jquery-validation-rails
   launchy
   less-rails
