@@ -43,12 +43,10 @@ gem 'simple_form'
 group :development, :test do
   gem 'sqlite3'
   gem 'rspec-rails'
-  gem 'factory_girl_rails'
   gem 'database_cleaner'
   gem 'guard-rspec'
   gem 'capybara'
   gem 'launchy'
-  gem 'faker'
   gem 'populator'
 
   # human console
@@ -56,6 +54,9 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-remote'
 end
+
+gem 'factory_girl_rails'
+gem 'faker'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
