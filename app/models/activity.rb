@@ -17,6 +17,9 @@ class Activity < ActiveRecord::Base
   accepts_nested_attributes_for :activity_items
 
   after_create :recalculate_total
+
+  before_destroy :delete_children
+
   # если указана сумма внутри активити, берем ее,
   # иначе берем сумму по всем айтемам вложенным внее
   # с коэффициентом суммирования
@@ -50,6 +53,11 @@ class Activity < ActiveRecord::Base
   def recalculate_total
     self.total = activity_items.includes(:product).map(&:total_price).sum
     save
+  end
+
+  def delete_children
+    children.each(&:destroy)
+    activity_items.each(&:destroy)
   end
 
   class << self

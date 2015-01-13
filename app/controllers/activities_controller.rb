@@ -126,6 +126,11 @@ class ActivitiesController < ApplicationController
     end
   end
 
+  def destroy
+    activity.destroy
+    redirect_to :back
+  end
+
   private
 
   def activity
@@ -142,7 +147,9 @@ class ActivitiesController < ApplicationController
         :date,
         :owner_user_id,
         :note,
-        :tag)
+        :tag,
+        :group_name,
+        :sort_name)
   end
 
   def activity_create_params
@@ -156,6 +163,8 @@ class ActivitiesController < ApplicationController
         :owner_user_id,
         :note,
         :tag,
+        :group_name,
+        :sort_name
         activity_items_attributes: [:product_id, :quantity])
   end
 

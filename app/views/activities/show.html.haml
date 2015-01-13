@@ -5,7 +5,8 @@
 - if @activity.child?
   %h3
     Activity Items
-
+  %p
+    = link_to 'Add Item', new_activity_activity_item_path(activity_id: @activity.id), class: 'btn btn-success'
   - if @activity.items.any?
     .row
       .col-md-12
@@ -14,11 +15,12 @@
   %p
     = link_to 'Edit activity', edit_activity_path(@activity), class: 'btn btn-primary'
     = link_to 'Go to parent', activity_path(@activity.parent), class: 'btn btn-primary'
-    = link_to 'Add Item', new_activity_activity_item_path(activity_id: @activity.id), class: 'btn btn-primary'
 
 - if @activity.parent?
   %h3
     Child Activities
+  %p
+    = link_to 'Add', new_activity_path(parent_id: @activity.id), class: 'btn btn-success'
   - if grouped?
     %table.table
       %thead
@@ -56,7 +58,7 @@
                 - g.column :name => 'Total', :attribute => 'total'
 
                 - g.column do |activity|
-                  - "#{link_to 'Edit', edit_activity_path(activity)} #{link_to 'View', activity_path(activity)} #{link_to 'Delete', activity_path(activity), method: :delete, data: { confirm: 'Вы уверены ?' }} #{link_to('Duplicate', new_activity_path(id:activity.id))}".html_safe
+                  - "#{link_to 'Edit', edit_activity_path(activity), class: 'btn btn-primary btn-xs'} #{link_to 'View', activity_path(activity), class: 'btn btn-primary btn-xs'} #{link_to 'Delete', activity_path(activity), method: :delete, data: { confirm: 'Вы уверены ?' }, class: 'btn btn-danger btn-xs'} #{link_to('Duplicate', new_activity_path(id:activity.id), class: 'btn btn-primary btn-xs')}".html_safe
 
   - else
     = grid(@activities_grid, show_filters: :when_filtered) do |g|
@@ -83,12 +85,11 @@
       - g.column :name => 'Total', :attribute => 'total'
 
       - g.column do |activity|
-        - "#{link_to 'Edit', edit_activity_path(activity)} #{link_to 'View', activity_path(activity)} #{link_to 'Delete', activity_path(activity), method: :delete, data: { confirm: 'Вы уверены ?' }} #{link_to('Duplicate', new_activity_path(id:activity.id))}".html_safe
+        - "#{link_to 'Edit', edit_activity_path(activity), class: 'btn btn-primary btn-xs'} #{link_to 'View', activity_path(activity), class: 'btn btn-primary btn-xs'} #{link_to 'Delete', activity_path(activity), method: :delete, data: { confirm: 'Вы уверены ?' }, class: 'btn btn-danger btn-xs'} #{link_to('Duplicate', new_activity_path(id:activity.id), class: 'btn btn-primary btn-xs')}".html_safe
 
   %p
     = link_to 'Edit', edit_activity_path(@activity), class: 'btn btn-primary'
-    = link_to 'Add', new_activity_path(parent_id: @activity.id), class: 'btn btn-success'
-    = link_to 'Delete', activity_path(@activity, method: :delete), class: 'btn btn-danger'
+    = link_to 'Delete', activity_path(@activity, method: :delete, data: { confirm: 'Вы уверены ?' }), class: 'btn btn-danger'
     - if grouped?
       = link_to 'View Ungrouped', activity_path(@activity), class: 'btn btn-primary'
     - else
