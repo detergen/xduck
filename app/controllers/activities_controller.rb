@@ -17,7 +17,7 @@ class ActivitiesController < ApplicationController
           activity.children.group_by(&:group_name).map{ |(key, values)|
             {
               name: key,
-              total: values.sum(&:total),
+              total: values.sum(&:total_price),
               grid: initialize_grid(activity.children.where(group_name: key),
                                     include: [:from_organization, :to_organization, :owner, :activity_type])
             }
