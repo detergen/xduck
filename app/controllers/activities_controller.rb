@@ -164,7 +164,7 @@ class ActivitiesController < ApplicationController
         :note,
         :tag,
         :group_name,
-        :sort_name
+        :sort_name,
         activity_items_attributes: [:product_id, :quantity])
   end
 

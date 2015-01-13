@@ -48,6 +48,11 @@ if dollar_to_rouble.nil?
   dollar_to_rouble.save or puts YAML::dump(dollar_to_rouble.save.errors)
 end
 
+Organization.delete_all
+Product.delete_all
+Activity.delete_all
+
+
 10.times do
   break if Organization.count >= 10
   FactoryGirl.create :organization
