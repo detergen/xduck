@@ -52,6 +52,10 @@
       Sort Type
       = text_field(:activity, :sort_name, :disabled => disable_activity_editing)
 
+  .row
+    .col-xs-4
+      Sum Koef
+      = text_field(:activity, :sum_koef, :disabled => disable_activity_editing)
 :javascript
   function getActivityDetails() {
     return {

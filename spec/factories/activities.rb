@@ -12,6 +12,7 @@ FactoryGirl.define do
     date {Date.today}
     group_name { %w(Счета Отгрузки Другое).sample }
     sort_name 'date'
+    sum_koef { [1, -1, 0].sample }
 
     factory :root_activity do
       activity_type { ActivityType.find_by_name('Order') }

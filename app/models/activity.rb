@@ -26,7 +26,11 @@ class Activity < ActiveRecord::Base
   # и добавляем сюда сумму всех вложенных activity
 
   def total_price
-    (price * sum_koef.to_i) + children.map(&:total_price).sum
+    if parent?
+      children.map(&:total_price).sum
+    else
+      total * sum_koef
+    end
   end
 
   def type

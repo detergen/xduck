@@ -23,7 +23,7 @@
     - activity.owner.email if activity.owner
 
   - g.column :name => 'Total', :attribute => 'total' do |activity|
-    - activity.total
+    - activity.total_price
 
   - g.column do |activity|
     - "#{link_to 'Edit', edit_activity_path(activity), class: 'btn btn-primary btn-xs'} #{link_to 'View', activity_path(activity), class: 'btn btn-primary btn-xs'} #{link_to 'Delete', activity_path(activity), method: :delete, data: { confirm: 'Вы уверены ?' }, class: 'btn btn-danger btn-xs'}".html_safe
