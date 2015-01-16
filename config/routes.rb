@@ -1,4 +1,8 @@
 Xduck::Application.routes.draw do
+  # The priority is based upon order of creation: first created -> highest priority.
+  # See how all your routes lay out with "rake routes".
+
+  root :to => "activities#index"
 
   devise_scope :user do
     get "/users/sign_in" => "devise/sessions#new"
@@ -10,17 +14,17 @@ Xduck::Application.routes.draw do
 
   devise_for :users
   get "home/index"
-  
-  get 'activities/show'
-  get 'activities/add'
+
+  resources :activities, only: [:index, :show, :edit, :destroy, :new, :create] do
+    resources :activity_items, only: [:edit, :create, :destroy, :new, :update]
+  end
+
   get 'activities/ajax_add'
-  get 'activities/edit'
   get 'activities/ajax_edit'
   get 'activities/delete'
 
   get 'products/ajax_get'
 
-#  root :to => "home#index"
   resources :products
   resources :boms
 
@@ -38,7 +42,7 @@ Xduck::Application.routes.draw do
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
 
-  # Sample resource route with options:
+  # Example resource route with options:
   #   resources :products do
   #     member do
   #       get 'short'
@@ -50,34 +54,31 @@ Xduck::Application.routes.draw do
   #     end
   #   end
 
-  # Sample resource route with sub-resources:
+  # Example resource route with sub-resources:
   #   resources :products do
   #     resources :comments, :sales
   #     resource :seller
   #   end
 
-  # Sample resource route with more complex sub-resources
+  # Example resource route with more complex sub-resources:
   #   resources :products do
   #     resources :comments
   #     resources :sales do
-  #       get 'recent', :on => :collection
+  #       get 'recent', on: :collection
   #     end
   #   end
 
-  # Sample resource route within a namespace:
+  # Example resource route with concerns:
+  #   concern :toggleable do
+  #     post 'toggle'
+  #   end
+  #   resources :posts, concerns: :toggleable
+  #   resources :photos, concerns: :toggleable
+
+  # Example resource route within a namespace:
   #   namespace :admin do
   #     # Directs /admin/products/* to Admin::ProductsController
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
-
-  # See how all your routes lay out with "rake routes"
-
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id))(.:format)'
 end

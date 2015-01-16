@@ -1,0 +1,133 @@
+%h3
+  Activity Details
+= render :partial => 'form', :locals => { :activity => @activity, :disable_activity_editing => true }
+
+- if @activity.child?
+  %h3
+    Activity Items
+  %p
+    = link_to 'Add Item', new_activity_activity_item_path(activity_id: @activity.id), class: 'btn btn-success'
+  - if @activity.items.any?
+    .row
+      .col-md-12
+        = render partial: 'activity_items/grid', locals: { activity_items_grid: @activity_items_grid }
+
+  %p
+    = link_to 'Edit activity', edit_activity_path(@activity), class: 'btn btn-primary'
+    = link_to 'Go to parent', activity_path(@activity.parent), class: 'btn btn-primary'
+
+- if @activity.parent?
+  %h3
+    Child Activities
+  %p
+    = link_to 'Add', new_activity_path(parent_id: @activity.id), class: 'btn btn-success'
+  - if grouped?
+    %table.table
+      %thead
+        %tr
+          %td Name
+          %td
+          %td Total
+        - @activities_grids.each do |grid|
+
+          %tr
+            %td= grid[:name]
+            %td
+            %td= grid[:total]
+          %tr
+            %td{ colspan: 3}
+              = grid( grid[:grid], show_filters: :when_filtered) do |g|
+                - g.action_column
+
+                - g.column :name => 'Number', attribute: 'number'
+
+                - g.column :name => 'Type', :attribute => 'name', :model => 'ActivityType' do |activity|
+                  - activity.activity_type.name if activity.activity_type
+
+                - g.column :name => 'Date', attribute: 'date'
+
+                - g.column :name => 'From Organization', :attribute => 'name', :model => 'Organization', :table_alias => 'from_organization' do |activity|
+                  - activity.from_organization.name if activity.from_organization
+
+                - g.column :name => 'To Organization', :attribute => 'name', :model => 'Organization', :table_alias => 'to_organization' do |activity|
+                  - activity.to_organization.name if activity.to_organization
+
+                - g.column :name => 'Owner', :attribute => 'email', :model => 'User' do |activity|
+                  - activity.owner.email if activity.owner
+
+                - g.column :name => 'Total', :attribute => 'total'
+
+                - g.column do |activity|
+                  - "#{link_to 'Edit', edit_activity_path(activity), class: 'btn btn-primary btn-xs'} #{link_to 'View', activity_path(activity), class: 'btn btn-primary btn-xs'} #{link_to 'Delete', activity_path(activity), method: :delete, data: { confirm: 'Вы уверены ?' }, class: 'btn btn-danger btn-xs'} #{link_to('Duplicate', new_activity_path(id:activity.id), class: 'btn btn-primary btn-xs')}".html_safe
+
+  - else
+    = grid(@activities_grid, show_filters: :when_filtered) do |g|
+      - g.action_column
+
+      - g.column :name => 'Number', attribute: 'number'
+
+      - g.column :name => 'Type', :attribute => 'name', :model => 'ActivityType' do |activity|
+        - activity.activity_type.name if activity.activity_type
+
+      - g.column :name => 'Group', attribute: 'group_name'
+
+      - g.column :name => 'Date', attribute: 'date'
+
+      - g.column :name => 'From Organization', :attribute => 'name', :model => 'Organization', :table_alias => 'from_organization' do |activity|
+        - activity.from_organization.name if activity.from_organization
+
+      - g.column :name => 'To Organization', :attribute => 'name', :model => 'Organization', :table_alias => 'to_organization' do |activity|
+        - activity.to_organization.name if activity.to_organization
+
+      - g.column :name => 'Owner', :attribute => 'email', :model => 'User' do |activity|
+        - activity.owner.email if activity.owner
+
+      - g.column :name => 'Total', :attribute => 'total'
+
+      - g.column do |activity|
+        - "#{link_to 'Edit', edit_activity_path(activity), class: 'btn btn-primary btn-xs'} #{link_to 'View', activity_path(activity), class: 'btn btn-primary btn-xs'} #{link_to 'Delete', activity_path(activity), method: :delete, data: { confirm: 'Вы уверены ?' }, class: 'btn btn-danger btn-xs'} #{link_to('Duplicate', new_activity_path(id:activity.id), class: 'btn btn-primary btn-xs')}".html_safe
+
+  %p
+    = link_to 'Edit', edit_activity_path(@activity), class: 'btn btn-primary'
+    = link_to 'Delete', activity_path(@activity, method: :delete, data: { confirm: 'Вы уверены ?' }), class: 'btn btn-danger'
+    - if grouped?
+      = link_to 'View Ungrouped', activity_path(@activity), class: 'btn btn-primary'
+    - else
+      = link_to 'View Grouped', activity_path(@activity, grouped: true), class: 'btn btn-primary'
+
+:javascript
+  $(document).ready( function() {
+    $('#delete').click( function() {
+      if (!confirm('Are you sure?')) {
+        return false;
+      }
+
+      var selected = $('input[type=checkbox][name^=grid]:checked');
+      var ids = [];
+
+      for(var i = 0; i < selected.length; i++) {
+        ids[i] = selected[i].value
+      }
+
+      if (ids.length < 1) {
+        alert('Please select at least one activity');
+
+        return false;
+      }
+
+      $.ajax({
+        type: 'GET',
+        url: '/activities/delete',
+        data: { id: ids },
+        dataType : 'json',
+        async: false,
+        success: function(e) {
+          if (e == true) {
+            location.reload();
+          }
+        }
+      });
+
+      return false;
+    });
+  });

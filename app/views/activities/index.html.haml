@@ -1,0 +1,66 @@
+%h2 Activities
+%p
+  = link_to 'Add', new_activity_path, class: 'btn btn-success'
+  = link_to 'Delete', { :controller => 'activities', :action => 'delete' }, :id => 'delete'
+
+= grid(@activities_grid, show_filters: :when_filtered, class: :table) do |g|
+  - g.action_column
+  - g.column :name => 'ID', attribute: 'id'
+  - g.column :name => 'Number', attribute: 'number'
+
+  - g.column :name => 'Type', :attribute => 'name', :model => 'ActivityType' do |activity|
+    - activity.type.name if activity.type
+
+  - g.column :name => 'Date', attribute: 'date'
+
+  - g.column :name => 'From Organization', :attribute => 'name', :model => 'Organization', :table_alias => 'from_organization' do |activity|
+    - activity.from_organization.name if activity.from_organization
+
+  - g.column :name => 'To Organization', :attribute => 'name', :model => 'Organization', :table_alias => 'to_organization' do |activity|
+    - activity.to_organization.name if activity.to_organization
+
+  - g.column :name => 'Owner', :attribute => 'email', :model => 'User' do |activity|
+    - activity.owner.email if activity.owner
+
+  - g.column :name => 'Total', :attribute => 'total' do |activity|
+    - activity.total_price
+
+  - g.column do |activity|
+    - "#{link_to 'Edit', edit_activity_path(activity), class: 'btn btn-primary btn-xs'} #{link_to 'View', activity_path(activity), class: 'btn btn-primary btn-xs'} #{link_to 'Delete', activity_path(activity), method: :delete, data: { confirm: 'Вы уверены ?' }, class: 'btn btn-danger btn-xs'}".html_safe
+
+:javascript
+  $(document).ready( function() {
+    $('#delete').click( function() {
+      if (!confirm('Are you sure?')) {
+        return false;
+      }
+
+      var selected = $('input[type=checkbox][name^=grid]:checked');
+      var ids = [];
+
+      for(var i = 0; i < selected.length; i++) {
+        ids[i] = selected[i].value
+      }
+
+      if (ids.length < 1) {
+        alert('Please select at least one activity');
+
+        return false;
+      }
+
+      $.ajax({
+        type: 'GET',
+        url: '/activities/delete',
+        data: { id: ids },
+        dataType : 'json',
+        async: false,
+        success: function(e) {
+          if (e == true) {
+            location.reload();
+          }
+        }
+      });
+
+      return false;
+    });
+  });

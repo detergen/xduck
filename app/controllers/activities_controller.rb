@@ -1,16 +1,51 @@
 class ActivitiesController < ApplicationController
   before_action :authenticate_user!
 
-  def show
-    @activity = Activity.find_by :id => params[:parent_id]
-    @activities_grid = initialize_grid(Activity.where(
-      :parent_id => params[:parent_id]),
-      :include => [:from_organization, :to_organization, :owner, :type])
+  def grouped?
+    params[:grouped]
+  end
+  helper_method :grouped?
+
+  def index
+    @activities_grid = initialize_grid(Activity.where(parent_id: nil),
+                                       include: [:from_organization, :to_organization, :owner, :activity_type])
   end
 
-  def add
-    @activity = Activity.new(:parent_id => params[:parent_id])
+  def show
+    if grouped?
+      @activities_grids =
+          activity.children.group_by(&:group_name).map{ |(key, values)|
+            {
+              name: key,
+              total: values.sum(&:total_price),
+              grid: initialize_grid(activity.children.where(group_name: key),
+                                    include: [:from_organization, :to_organization, :owner, :activity_type])
+            }
+          }
+    else
+      @activities_grid = initialize_grid(activity.children, include: [:from_organization, :to_organization, :owner, :activity_type])
+    end
+    @activity_items_grid = initialize_grid(activity.activity_items, include: [:product])
+  end
+
+  def new
+    if params[:id]
+      @activity = Activity.create_dup(params[:id])
+    else
+      @activity = Activity.new
+    end
     @activity_items_grid = initialize_grid(@activity.activity_items)
+  end
+
+  def create
+    @activity = Activity.new(activity_create_params)
+    if activity.save
+      redirect_to activity_path(@activity)
+    else
+      puts @activity.errors.full_messages
+      @activity_items_grid = initialize_grid(activity.activity_items)
+      render :new
+    end
   end
 
   def ajax_add
@@ -91,9 +126,19 @@ class ActivitiesController < ApplicationController
     end
   end
 
+  def destroy
+    activity.destroy
+    redirect_to :back
+  end
+
   private
+
+  def activity
+    @activity ||= Activity.find params[:id]
+  end
+
   def activity_update_params
-    return params.require(:activity).permit(
+    params.require(:activity).permit(
         :id,
         :number,
         :activity_type_id,
@@ -102,12 +147,13 @@ class ActivitiesController < ApplicationController
         :date,
         :owner_user_id,
         :note,
-        :tag)
+        :tag,
+        :group_name,
+        :sort_name)
   end
 
-  private
   def activity_create_params
-    return params.require(:activity).permit(
+    params.require(:activity).permit(
         :parent_id,
         :number,
         :activity_type_id,
@@ -116,7 +162,10 @@ class ActivitiesController < ApplicationController
         :date,
         :owner_user_id,
         :note,
-        :tag)
+        :tag,
+        :group_name,
+        :sort_name,
+        activity_items_attributes: [:product_id, :quantity])
   end
-  
+
 end

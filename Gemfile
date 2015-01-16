@@ -6,7 +6,11 @@ gem 'rails'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+group :production do
+  gem 'pg'
+  gem 'rails_12factor' # for heroku
+end
+
 
 #gem 'protected_attributes'
 
@@ -20,33 +24,39 @@ gem 'activeadmin', github: 'gregbell/active_admin'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem "therubyracer"
-  gem "less-rails"
-  gem 'sass-rails'  
+  gem 'sass-rails'
   gem 'coffee-rails'
-  gem 'twitter-bootstrap-rails'
-
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platforms => :ruby
-
   gem 'uglifier', '>= 1.0.3'
 end
 
+gem 'twitter-bootstrap-rails'
+gem "less-rails"
+gem "therubyracer"
+gem "haml-rails"
+
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'jquery-validation-rails'
 gem 'wice_grid'
 
+gem 'simple_form'
 group :development, :test do
+  gem 'sqlite3'
   gem 'rspec-rails'
-  gem 'factory_girl_rails'
-  gem 'launchy'
   gem 'database_cleaner'
   gem 'guard-rspec'
   gem 'capybara'
   gem 'launchy'
-  gem 'faker'
   gem 'populator'
+
+  # human console
+  gem 'pry'
+  gem 'pry-rails'
+  gem 'pry-remote'
 end
+
+gem 'factory_girl_rails'
+gem 'faker'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -62,3 +72,5 @@ end
 
 # To use debugger
 # gem 'debugger'
+
+#ruby "2.1.2"

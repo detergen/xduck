@@ -20,17 +20,17 @@ table.each {
       prod1 = Product.find_by id: prod1.id
 
       prod1.sale_currency = rouble
-      prod1.sale_price = prod1.getSalePrice
+      prod1.sale_price = prod1.get_sale_price
 
       prod1.save or puts YAML::dump(prod1.errors)
     end
- 
+
     prod1 = Product.find_by articul: row[:art1]
     if prod1.nil? then
       #puts "Product " + row[:art1].to_s + " does not exist"
-      prod1 = Product.new(:name => row[:name1], :articul => row[:art1], :active => true, 
+      prod1 = Product.new(:name => row[:name1], :articul => row[:art1], :active => true,
                           :forsale => true, :sizes => row[:size1])
-      unless prod1.save 
+      unless prod1.save
         puts "Cannot save product " + row[:art1].to_s
         puts YAML::dump(prod1.errors)
       end
@@ -40,9 +40,9 @@ table.each {
   unless row[:art2].nil? || row[:art2].to_s.empty?
     prod2 = Product.find_by articul: row[:art2]
     if prod2.nil? then
-      prod2 = Product.new(:name => row[:name2], :articul => row[:art2], :active => true, 
+      prod2 = Product.new(:name => row[:name2], :articul => row[:art2], :active => true,
                           :forsale => false)
-      unless prod2.save 
+      unless prod2.save
         puts "Cannot save product " + row[:art2]
         puts YAML::dump(prod2.errors)
       end
@@ -82,11 +82,11 @@ table.each {
       prod3.purchase_currency = euro
       prod3.purchase_price = row[:price]
     end
-    
+
     if prod3.sale_price.nil? then
       prod3.sale_currency = rouble
       prod3.sale_price = row[:total]
-    end 
+    end
     prod3.save or puts YAML::dump(prod3.errors)
   elsif !(row[:art2].nil? || row[:art2].to_s.empty?) then
     if prod2.purchase_price.nil? then
@@ -100,11 +100,11 @@ table.each {
     end
     prod2.save or puts YAML::dump(prod2.errors)
   end
-  
- 
+
+
   prev_art1 = row[:art1]
   prev_art2 = row[:art2]
-  prev_art3 = row[:art3] 
+  prev_art3 = row[:art3]
 }
 
 

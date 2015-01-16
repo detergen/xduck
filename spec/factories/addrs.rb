@@ -2,14 +2,14 @@
 
 FactoryGirl.define do
   factory :addr do
-    name "MyString"
-    typeofaddr "MyString"
-    postindex "MyString"
-    string1 "MyString"
-    string2 "MyString"
+    contact
+
+    name {Faker::Address.city}
+    typeofaddr 'Work'
+    postindex {Faker::Address.postcode}
+    string1 {Faker::Address.street_address}
+    string2 {Faker::Address.secondary_address}
     key "MyString"
     note "MyText"
-    organization_id 1
-    contact_id 1
   end
 end

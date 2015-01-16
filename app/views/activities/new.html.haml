@@ -1,0 +1,36 @@
+%h2
+  New Activity
+= form_for @activity do |f|
+  = render :partial => 'form', :locals => { :activity => @activity, :disable_activity_editing => false }
+
+  - if @activity.child?
+    %h3 Activity Items
+    .row
+      .col-md-12
+        %table.table.table-striped
+          %thead
+            %tr
+              %td Product
+              %td Product Price
+              %td Quantity
+            = f.fields_for :activity_items do |i|
+              %tr
+                = i.hidden_field :product_id
+                %td= i.object.product.name
+                %td= i.object.product.get_sale_price
+                %td= i.text_field :quantity
+  = link_to 'Go back', :back, class: 'btn btn-primary'
+  = f.submit 'Save', class: 'btn btn-primary'
+
+:javascript
+  $(document).ready( function() {
+    $('#new_activity').submit(function() {
+      if (!$('#new_activity').validate().form()) {
+        return false;
+      }
+    });
+
+    $('#new_activity').validate({
+      rules: activityDetailsValidationRules()
+    });
+  });

@@ -18,3 +18,4 @@ test
 *.swo
 .DS_Store
 *~
+.idea

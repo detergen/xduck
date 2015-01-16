@@ -1,10 +1,10 @@
-<style type="text/css">
+:css
   #activity_details select.date-select {
     width:70px;
-}
-</style>
-<%= hidden_field(:activity, :id) %>
-<%= hidden_field(:activity, :parent_id) %>
+  }
+
+= hidden_field(:activity, :id)
+= hidden_field(:activity, :parent_id)
 <div id="activity_details">
   <table>
     <tr>

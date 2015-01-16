@@ -1,6 +1,8 @@
 ActiveAdmin.register Organization do
-permit_params :name, :tag, :opf, :short_name, :full_name, :inn, :kpp, :ogrn, :okpo
-  
+  permit_params :name, :tag, :opf, :short_name, :full_name, :inn, :kpp, :ogrn, :okpo
+
+  remove_filter :organizations_users
+
   # See permitted parameters documentation:
   # https://github.com/gregbell/active_admin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
   #
@@ -13,5 +15,5 @@ permit_params :name, :tag, :opf, :short_name, :full_name, :inn, :kpp, :ogrn, :ok
   #  permitted << :other if resource.something?
   #  permitted
   # end
-  
+
 end

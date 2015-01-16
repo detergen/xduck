@@ -1,0 +1,41 @@
+<%=
+    grid(@activity_items_grid, show_filters: :when_filtered) do |g|
+
+      g.column :name => 'Product', :attribute => 'name', :model => 'Product' do |activity_item|
+        activity_item.product.name
+      end
+
+      g.column :name => 'Quantity', attribute: 'quantity'
+
+      g.column :name => 'Price' do |activity_item|
+        activity_item.price
+      end
+      g.column :name => 'Total Price' do |activity_item|
+        activity_item.total_price
+      end
+
+      g.column do |activity_item|
+        "#{link_to 'Edit', edit_activity_activity_item_path(activity_item, activity_id: activity_item.activity.id)}
+        #{link_to 'Delete', activity_activity_item_path(activity_item, activity_id: activity_item.activity.id), method: :delete, data: { confirm: 'Вы уверены ?' }}".html_safe
+        #a = "<a href='#' id='delete_activity_item' onClick='return onExistingActivityItemDelete($(this), " + activity_item.id.to_s + ")'>Delete</a>"
+        #a.html_safe
+      end
+    end
+%>
+<script type="text/javascript">
+  var deleted_activity_items = [];
+
+  function onExistingActivityItemDelete(e, id) {
+    if (confirm('Are you sure?')) {
+      deleted_activity_items[deleted_activity_items.length] = id;
+
+      e.parent().parent().remove();
+
+      return false;
+    }
+  }
+
+  function getDeletedActivityItems() {
+    return deleted_activity_items;
+  }
+</script>

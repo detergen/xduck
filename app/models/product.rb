@@ -11,12 +11,11 @@ class Product < ActiveRecord::Base
   has_many :boms, :dependent => :delete_all
 
 
-  def getSalePrice
-
-    if sale_price.nil? then
-      return boms.map { |b| b.qty * b.subproduct.getSalePrice() }.sum
+  def get_sale_price
+    unless sale_price
+      return 0
+      #return boms.map { |b| b.qty * b.subproduct.get_sale_price }.sum
     end
-    
     sale_price
   end
 

@@ -13,7 +13,7 @@
       end
 
       g.column :name => 'Price' do |activity_item|
-        (activity_item.product.getSalePrice * activity_item.quantity) if activity_item.product
+        #(activity_item.product.getSalePrice * activity_item.quantity) if activity_item.product
       end
 
       g.column do |activity_item|
