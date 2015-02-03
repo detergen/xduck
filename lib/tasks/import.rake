@@ -32,7 +32,7 @@ namespace :import do
     end
 
     file['orders'].each do |hash|
-      match = hash['number'].match(/\d+-(\d)+/) if hash['number']
+      match = hash['number'].match(/(\d+)-\d+/) if hash['number']
       parent_id = match ? match[1] : nil
       Activity.create(from_organization_id: hash['from_id'],
                       to_organization_id: hash['to_id'],
@@ -80,7 +80,10 @@ namespace :import do
     Product.delete_all
     Activity.delete_all
     ActivityItem.delete_all
-
+    ['products', 'organizations', 'contacts', 'bankaccs',
+    'addrs', 'activities', 'activity_items'].each do |table|
+      ActiveRecord::Base.connection.execute("TRUNCATE #{table} RESTART IDENTITY")
+    end
   end
 
 end
