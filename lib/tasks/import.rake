@@ -80,10 +80,12 @@ namespace :import do
     Product.delete_all
     Activity.delete_all
     ActivityItem.delete_all
-    ['products', 'organizations', 'contacts', 'bankaccs',
-    'addrs', 'activities', 'activity_items'].each do |table|
+    ['active_admin_comments', 'activities', 'activity_items', 'activity_types', 'addrs',
+     'articles', 'products', 'bankaccs', 'boms', 'contacts', 'currencies', 'exchange_rates',
+    'organizations', 'organizations_users', 'roles', 'users', 'users_roles'].each do |table|
       ActiveRecord::Base.connection.execute("TRUNCATE #{table} RESTART IDENTITY")
     end
+
   end
 
 end
