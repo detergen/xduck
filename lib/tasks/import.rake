@@ -54,7 +54,7 @@ namespace :import do
       if activity.child?
         destination_activity = activity
       else
-        destination_activity = activity.children.select{ |a| a.number == "Sub #{activity.id}"}.first
+        destination_activity = activity.children.select{ |a| a.number == "Sub #{activity.number}"}.first
         unless destination_activity
           destination_activity = activity.dup
           destination_activity.parent = activity
