@@ -33,7 +33,8 @@ namespace :import do
 
     file['orders'].each do |hash|
       match = hash['number'].match(/(\d+)-\d+/) if hash['number']
-      parent_id = match ? match[1] : nil
+      parent_number = match ? match[1] : nil
+      parent = Activity.find_by_number(parent_number) if parent_number
       Activity.create(from_organization_id: hash['from_id'],
                       to_organization_id: hash['to_id'],
       note: hash['note'],
@@ -43,7 +44,7 @@ namespace :import do
                   sum_koef: 1,
                   date: hash['order_date'],
                   owner_user_id: 1,
-                  parent_id: parent_id,
+                  parent: parent,
                   price: hash['price']
       )
     end
