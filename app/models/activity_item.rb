@@ -9,7 +9,7 @@ class ActivityItem < ActiveRecord::Base
   #end
 
   def total_price
-    product ? product.get_sale_price * quantity : 0
+    price * quantity
   end
 
 end

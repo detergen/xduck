@@ -35,23 +35,25 @@ namespace :import do
       match = hash['number'].match(/(\d+)-\d+/) if hash['number']
       parent_number = match ? match[1] : nil
       parent = Activity.find_by_number(parent_number) if parent_number
-      Activity.create(from_organization_id: hash['from_id'],
+      activity = Activity.new(id: hash['id'],
+                      from_organization_id: hash['from_id'],
                       to_organization_id: hash['to_id'],
-      note: hash['note'],
-      tag: hash['tag'],
-      number: hash['number'],
-      activity_type_id: 1, #order
-                  sum_koef: 1,
-                  date: hash['order_date'],
-                  owner_user_id: 1,
-                  parent: parent,
-                  price: hash['price']
-      )
+                      note: hash['note'],
+                      tag: hash['tag'],
+                      number: hash['number'],
+                      activity_type_id: 1, #order
+                      sum_koef: 1,
+                      date: hash['order_date'],
+                      owner_user_id: 1,
+                      parent: parent,
+                      price: hash['price'])
+      activity.save(validate: false)
     end
 
     file['order_links'].each do |hash|
       next unless hash['order_id']
-      activity = Activity.find(hash['order_id'])
+      activity = Activity.find_by_id(hash['order_id'])
+      next unless activity
       if activity.child?
         destination_activity = activity
       else
