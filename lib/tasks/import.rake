@@ -87,19 +87,21 @@ namespace :import do
           destination_activity.save
         end
 
-        destination_shipping = activity.children.select{ |a| a.number == "#{activity.number} Shipping"}.first
-        unless destination_shipping
-          destination_shipping = activity.dup
-          destination_shipping.parent = activity
-          destination_shipping.number = "#{activity.number} Shipping"
-          destination_shipping.activity_type_id = 4
-          destination_shipping.save
+        if !activity.children.select{ |a| a.number != "#{activity.number} Sub"}.any?
+          destination_shipping = activity.children.select{ |a| a.number == "#{activity.number} Shipping"}.first
+          unless destination_shipping
+            destination_shipping = activity.dup
+            destination_shipping.parent = activity
+            destination_shipping.number = "#{activity.number} Shipping"
+            destination_shipping.activity_type_id = 4
+            destination_shipping.save
+          end
+          item2 = destination_shipping.activity_items.build(product_id: hash['product_id'], quantity: hash['qty'], price: hash['price'])
+          item2.save
         end
       end
       item = destination_activity.activity_items.build(product_id: hash['product_id'], quantity: hash['qty'], price: hash['price'])
       item.save
-      item2 = destination_shipping.activity_items.build(product_id: hash['product_id'], quantity: hash['qty'], price: hash['price'])
-      item2.save
     end
 
 

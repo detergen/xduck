@@ -14,11 +14,11 @@ class ActivitiesController < ApplicationController
   def show
     if grouped?
       @activities_grids =
-          activity.children.group_by(&:group_name).map{ |(key, values)|
+          activity.children.group_by(&:activity_type).map{ |(key, values)|
             {
-              name: key,
+              name: key.name,
               total: values.sum(&:total_price),
-              grid: initialize_grid(activity.children.where(group_name: key),
+              grid: initialize_grid(activity.children.where(activity_type: key),
                                     include: [:from_organization, :to_organization, :owner, :activity_type])
             }
           }
