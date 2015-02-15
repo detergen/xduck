@@ -16,6 +16,11 @@ class Activity < ActiveRecord::Base
 
   accepts_nested_attributes_for :activity_items
 
+  scope :orders,    -> { where(activity_type_id: 1) }
+  scope :leads,     -> { where(activity_type_id: 2) }
+  scope :shippings, -> { where(activity_type_id: 4) }
+  scope :payments,  -> { where(activity_type_id: 6) }
+
   after_create :recalculate_total
 
   before_destroy :delete_children
@@ -63,6 +68,19 @@ class Activity < ActiveRecord::Base
     children.each(&:destroy)
     activity_items.each(&:destroy)
   end
+
+  def orders_sum
+    children.orders.map(&:total_price).sum
+  end
+
+  def shipping_sum
+    children.shippings.map(&:total_price).sum
+  end
+
+  def payments_sum
+    children.payments.map(&:total_price).sum
+  end
+
 
   class << self
     def create_dup(origin_id)
