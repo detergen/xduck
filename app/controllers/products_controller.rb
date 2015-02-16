@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
 
-load_and_authorize_resource
+  load_and_authorize_resource except: [:create]
 
   def bomlist
     @bom = Bom.find("product_id = ?", params[:id]) 
@@ -44,7 +44,7 @@ load_and_authorize_resource
   # POST /products
   # POST /products.json
   def create
-    @product = Product.new(params[:product])
+    @product = Product.new(permitted_params)
 
     respond_to do |format|
       if @product.save
@@ -58,13 +58,19 @@ load_and_authorize_resource
     end
   end
 
+  def permitted_params
+    params.require(:product).permit(:id, :name, :articul,
+                                    :sale_price, :active,
+                                    :forsale, :note)
+  end
+
   # PUT /products/1
   # PUT /products/1.json
   def update
     @product = Product.find(params[:id])
 
     respond_to do |format|
-      if @product.update_attributes(params[:product])
+      if @product.update_attributes(permited_params)
         format.html { redirect_to @product, notice: 'Product was successfully updated.' }
         format.json { head :no_content }
       else
