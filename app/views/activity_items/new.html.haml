@@ -14,9 +14,9 @@
 #activity_item_details
   = simple_form_for [@activity, @activity_item] do |f|
     .row
-      .col-md-6
+      .col-md-4
         = f.input :product_id, collection: Product.all
-      .col-md-6
+      .col-md-4
         = f.input :quantity, as: :integer
 
     .row

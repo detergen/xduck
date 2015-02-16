@@ -2,12 +2,14 @@ class ActivityItemsController < ApplicationController
   before_action :authenticate_user!
   before_action :activity
 
+  load_and_authorize_resource
+
   def new
     @activity_item = activity.activity_items.build
   end
 
   def create
-    @activity_item = activity.activity_items.build(permited_params)
+    @activity_item = activity.activity_items.build(activity_item_params)
     if @activity_item.save
       activity.recalculate_total
       redirect_to activity_path(activity)
@@ -22,7 +24,7 @@ class ActivityItemsController < ApplicationController
 
   def update
     @activity_item = activity.activity_items.find params[:id]
-    if @activity_item.update_attributes(permited_params)
+    if @activity_item.update_attributes(activity_item_params)
       activity.recalculate_total
       redirect_to activity_path(activity)
     else
@@ -40,7 +42,7 @@ class ActivityItemsController < ApplicationController
     @activity ||= Activity.find params[:activity_id]
   end
 
-  def permited_params
-    params.require(:activity_item).permit(:product_id, :quantity)
+  def activity_item_params
+    params.require(:activity_item).permit(:product_id, :quantity, :price)
   end
 end

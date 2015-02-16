@@ -8,8 +8,15 @@ class ActivityItem < ActiveRecord::Base
   #  product.sale_price
   #end
 
+  before_create :set_price
+
+
   def total_price
-    price * quantity
+    price.to_i * quantity
+  end
+
+  def set_price
+    self.price = product.sale_price if self.price.to_i == 0
   end
 
 end
