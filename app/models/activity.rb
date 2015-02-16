@@ -70,15 +70,15 @@ class Activity < ActiveRecord::Base
   end
 
   def orders_sum
-    children.orders.map(&:total_price).sum
+    children.orders.map(&:total_price).sum.to_f
   end
 
   def shipping_sum
-    children.shippings.map(&:total_price).sum
+    children.shippings.map(&:total_price).sum.to_f
   end
 
   def payments_sum
-    children.payments.map(&:total_price).sum
+    children.payments.map(&:total_price).sum.to_f
   end
 
 
