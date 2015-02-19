@@ -138,6 +138,10 @@ class ActivitiesController < ApplicationController
     redirect_to :back
   end
 
+  def new_diff
+
+  end
+
   private
 
   def activity

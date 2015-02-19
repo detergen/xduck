@@ -17,6 +17,9 @@ Xduck::Application.routes.draw do
 
   resources :activities, only: [:index, :show, :edit, :destroy, :new, :create, :update] do
     resources :activity_items, only: [:edit, :create, :destroy, :new, :update]
+    collection do
+      get :new_diff
+    end
   end
 
   get 'activities/ajax_add'
