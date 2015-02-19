@@ -130,27 +130,8 @@
         return false;
       }
 
-      var urlParams = {activities: $.map( selected, function(a){ return a.value; })};
-
-      //$.param(urlParams);
-
-
-      //window.open("//?" + $.param(urlParams),"_self");
-      console.log("#{ activities_path }?" + $.param(urlParams));
-      location.href = "#{ activities_path }?" + $.param(urlParams);
-
-      /*$.ajax({
-        type: 'GET',
-        url: '/activities/delete',
-        data: { id: ids },
-        dataType : 'json',
-        async: false,
-        success: function(e) {
-          if (e == true) {
-            location.reload();
-          }
-        }
-      });*/
+      var urlParams = {ids: $.map( selected, function(a){ return a.value; }), parent_id: "#{ @activity.id }" };
+      location.href = "#{ new_diff_activities_path }?" + $.param(urlParams);
 
       return false;
     });

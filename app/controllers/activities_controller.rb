@@ -85,7 +85,6 @@ class ActivitiesController < ApplicationController
     redirect_to activity_path(activity)
   end
 
-
   def ajax_edit
     unless params[:activity][:id].nil?
       activity = Activity.find_by :id => params[:activity][:id]
@@ -139,7 +138,39 @@ class ActivitiesController < ApplicationController
   end
 
   def new_diff
+    parent = Activity.find params[:parent_id]
+    @activity = Activity.new(activity_type: ActivityType.find_by_name('Order'), owner: current_user, sum_koef: 1, parent_id: params[:parent_id], from_organization_id: parent.from_organization.id, to_organization_id: parent.to_organization.id )
 
+    items = Activity.where(id: params[:ids]).reduce([]) do |items, activity|
+      multiplier = if activity.activity_type_id == 1
+                   1
+                 elsif activity.activity_type_id == 4
+                   -1
+                 else
+                   0
+                 end
+      activity.activity_items.each do |item|
+        i = items.select{ |a| a.product_id == item.product_id }.first
+        if i
+          i.quantity = i.quantity + item.quantity * multiplier
+          puts i.as_json
+        else
+          items << item
+          puts 'adding ' + item.as_json.to_s
+        end
+      end
+      items
+    end
+
+    items.map{ |a| a.activity_id = nil; a.id = nil; a}.each do |item|
+      @activity.activity_items << item
+    end
+
+    puts items.count
+
+    @activity_items_grid = initialize_grid(@activity.activity_items)
+
+    render :new
   end
 
   private
