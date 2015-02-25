@@ -153,10 +153,12 @@ class ActivitiesController < ApplicationController
         i = items.select{ |a| a.product_id == item.product_id }.first
         if i
           i.quantity = i.quantity + item.quantity * multiplier
-          puts i.as_json
+          puts item.quantity * multiplier
         else
+          item.quantity = item.quantity * multiplier
           items << item
           puts 'adding ' + item.as_json.to_s
+          puts item.quantity
         end
       end
       items
