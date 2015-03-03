@@ -42,7 +42,6 @@ namespace :import do
 
     ActiveRecord::Base.connection.execute("ALTER SEQUENCE products_id_seq RESTART WITH #{Product.last.id + 1}")
 
-
     file['orders'].each do |hash|
       match = hash['number'].match(/(\d+)-\d+/) if hash['number']
       parent_number = match ? match[1] : nil
@@ -64,8 +63,6 @@ namespace :import do
       activity.save(validate: false)
     end
 
-
-
     ActiveRecord::Base.connection.execute("ALTER SEQUENCE activities_id_seq RESTART WITH #{Activity.last.id + 1}")
 
     Activity.where('parent_id IS NULL').select {|a| a.children.count == 0 }.each do |activity|
@@ -78,33 +75,29 @@ namespace :import do
       next unless activity
       if activity.child?
         destination_activity = activity
+        item = destination_activity.activity_items.build(product_id: hash['product_id'], quantity: hash['qty'], price: hash['price'])
+        item.save
       else
         destination_activity = activity.children.select{ |a| a.number == "#{activity.number} Sub"}.first
+        destination_shipping = activity.children.select{ |a| a.number == "#{activity.number} Shipping"}.first
         unless destination_activity
           destination_activity = activity.dup
           destination_activity.parent = activity
           destination_activity.number = "#{activity.number} Sub"
           destination_activity.save
-        end
 
-        if !activity.children.select{ |a| a.number != "#{activity.number} Sub"}.any?
-          destination_shipping = activity.children.select{ |a| a.number == "#{activity.number} Shipping"}.first
-          unless destination_shipping
-            destination_shipping = activity.dup
-            destination_shipping.parent = activity
-            destination_shipping.number = "#{activity.number} Shipping"
-            destination_shipping.activity_type_id = 4
-            destination_shipping.save
-          end
-          item2 = destination_shipping.activity_items.build(product_id: hash['product_id'], quantity: hash['qty'], price: hash['price'])
-          item2.save
+          destination_shipping = activity.dup
+          destination_shipping.parent = activity
+          destination_shipping.number = "#{activity.number} Shipping"
+          destination_shipping.activity_type_id = 4
+          destination_shipping.save
         end
+        item = destination_activity.activity_items.build(product_id: hash['product_id'], quantity: hash['qty'], price: hash['price'])
+        item.save
+        item2 = destination_shipping.activity_items.build(product_id: hash['product_id'], quantity: hash['qty'], price: hash['price'])
+        item2.save
       end
-      item = destination_activity.activity_items.build(product_id: hash['product_id'], quantity: hash['qty'], price: hash['price'])
-      item.save
     end
-
-
 
     Activity.all.each{ |a| a.recalculate_total }
 
