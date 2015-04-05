@@ -19,4 +19,20 @@ class ActivityItem < ActiveRecord::Base
     self.price = product.sale_price if self.price.to_i == 0
   end
 
+  def price_without_vat
+    price * (1.0 - 1.0 / 118.0 * 18.0)
+  end
+
+  def vat
+    price / 118.0 * 18.0
+  end
+
+  def total_vat
+    vat * quantity
+  end
+
+  def total_price_without_vat
+    price_without_vat * quantity
+  end
+
 end

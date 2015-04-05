@@ -20,6 +20,11 @@ Xduck::Application.routes.draw do
     collection do
       get :new_diff
     end
+    controller :reports do
+      get :bill
+      get :torg12
+      get :sf
+    end
   end
 
   get 'activities/ajax_add'
@@ -30,6 +35,9 @@ Xduck::Application.routes.draw do
 
   resources :products
   resources :boms
+
+
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

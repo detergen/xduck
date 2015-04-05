@@ -57,6 +57,10 @@ end
 gem 'factory_girl_rails'
 gem 'faker'
 
+# building torg 12 forms
+gem 'odf-report'
+gem 'ru_propisju'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

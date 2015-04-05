@@ -20,6 +20,10 @@
   %p
     = link_to 'Edit activity', edit_activity_path(@activity), class: 'btn btn-primary'
     = link_to 'Go to parent', activity_path(@activity.parent), class: 'btn btn-primary'
+  %p
+    = link_to 'Скачать счет', activity_bill_path(@activity), class: 'btn btn-default'
+    = link_to 'Скачать Торг 12', activity_torg12_path(@activity), class: 'btn btn-default'
+    = link_to 'Скачать СФ', activity_sf_path(@activity), class: 'btn btn-default'
 
 - if @activity.parent?
   .row
@@ -113,6 +117,11 @@
       = link_to 'View Ungrouped', activity_path(@activity), class: 'btn btn-primary'
     - else
       = link_to 'View Grouped', activity_path(@activity, grouped: true), class: 'btn btn-primary'
+
+  %p
+    = link_to 'Скачать счет', activity_bill_path(@activity), class: 'btn btn-default'
+    = link_to 'Скачать Торг 12', activity_torg12_path(@activity), class: 'btn btn-default'
+    = link_to 'Скачать СФ', activity_sf_path(@activity), class: 'btn btn-default'
 
 :javascript
   $(document).ready( function() {

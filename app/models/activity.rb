@@ -38,6 +38,10 @@ class Activity < ActiveRecord::Base
     end
   end
 
+  def total_price_vat
+    total_price.to_f / 118.0 * 18.0
+  end
+
   def type
     activity_type
   end
