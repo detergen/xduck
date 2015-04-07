@@ -18,4 +18,8 @@ class Organization < ActiveRecord::Base
     addrs.where(key: :law_address).first
   end
 
+  def short_name_with_opf
+    "#{opf} #{short_name}"
+  end
+
 end

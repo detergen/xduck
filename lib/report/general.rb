@@ -19,14 +19,14 @@ class Report::General
       r.add_field :order_document_date_s, I18n.localize(activity.date, format: "%d %B %Y г")
 
       # Organization from fields
-      r.add_field :from, from_organization.short_name
+      r.add_field :from, from_organization.short_name_with_opf
       r.add_field :from_inn, from_organization.inn
       r.add_field :from_kpp, from_organization.kpp
       r.add_field :from_law_address, from_organization.legal_address.string1
 
       # Organization "to" fields
       recipient = activity.to_organization.contacts.first.try(:short_name)
-      r.add_field :to, to_organization.short_name
+      r.add_field :to, to_organization.short_name_with_opf
       r.add_field :to_inn, to_organization.inn
       r.add_field :to_kpp, to_organization.kpp
       r.add_field :to_law_address, to_organization.legal_address.string1
@@ -48,8 +48,8 @@ class Report::General
 
 
       #Totals and number to words lines
-      r.add_field :total, number_to_currency(activity.total_price)
-      r.add_field :vat_in, number_to_currency(activity.total_price_vat)
+      r.add_field :total, number_to_currency(activity.total_price, unit: '')
+      r.add_field :vat_in, number_to_currency(activity.total_price_vat, unit: '')
       r.add_field :pos_propisju, RuPropisju.propisju_shtuk(activity.activity_items.length, 3, ["наименование","наименования","наименований"])
       r.add_field :total_propisju, RuPropisju.rublej(activity.total_price)
 
@@ -73,7 +73,7 @@ class Report::General
   end
 
   def generate_filename(type)
-    "#{type}_№#{activity.number}_#{from_organization.name}-#{from_organization.name}" +
+    "#{type}_№#{activity.number}_#{from_organization.name}-#{to_organization.name}" +
         "_#{activity.date.strftime('%d.%m.%Y')}_на_" +
         "#{number_to_currency(activity.total_price, unit: '')}.odt"
   end
