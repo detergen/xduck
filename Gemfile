@@ -9,6 +9,7 @@ gem 'rails'
 group :production do
   gem 'pg'
   gem 'rails_12factor' # for heroku
+  gem 'unicorn'
 end
 
 
@@ -67,11 +68,11 @@ gem 'ru_propisju'
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
 
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
+gem 'capistrano', '~> 3.4.0'
+gem 'capistrano-rails', '~> 1.1.0'
+gem 'capistrano-bundler'
+gem 'capistrano-rbenv', "~> 2.0"
+gem 'capistrano-unicorn-nginx', '~> 2.0'
 
 # To use debugger
 # gem 'debugger'
