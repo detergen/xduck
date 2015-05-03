@@ -9,7 +9,7 @@ FactoryGirl.define do
     postindex {Faker::Address.postcode}
     string1 {Faker::Address.street_address}
     string2 {Faker::Address.secondary_address}
-    key "MyString"
+    address_key "MyString"
     note "MyText"
   end
 end
