@@ -12,7 +12,7 @@
     = f.input :parent_id, as: :hidden
     .row.form-group
       .col-xs-4
-        = f.input :number, readonly: true
+        = f.input :number
       .col-xs-2
         = f.input :activity_type_id, collection: ActivityType.all, include_blank: false
       .col-xs-2
