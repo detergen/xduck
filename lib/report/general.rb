@@ -16,7 +16,7 @@ class Report::General
     ODFReport::Report.new(template) do |r|
       r.add_field :order_number, activity.number
       r.add_field :order_document_date, activity.date.strftime("%d.%m.%Y")
-      r.add_field :order_document_date_s, I18n.localize(activity.date, format: "%d %B %Y г")
+      r.add_field :order_document_date_s, Russian::strftime(activity.date, "%d %B %Y г")
 
       # Organization from fields
       r.add_field :from, from_organization.short_name_with_opf

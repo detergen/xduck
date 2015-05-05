@@ -61,7 +61,7 @@ gem 'faker'
 # building torg 12 forms
 gem 'odf-report'
 gem 'ru_propisju'
-
+gem 'russian'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
