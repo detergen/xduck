@@ -9,6 +9,7 @@ gem 'rails'
 group :production do
   gem 'pg'
   gem 'rails_12factor' # for heroku
+  gem 'unicorn'
 end
 
 
@@ -17,7 +18,7 @@ end
 #authorize
 gem 'devise' , '3.2.0'
 gem 'devise_ldap_authenticatable'
-gem 'cancan'
+gem 'cancancan'
 gem 'rolify'
 gem 'activeadmin', github: 'gregbell/active_admin'
 
@@ -35,7 +36,6 @@ gem "therubyracer"
 gem "haml-rails"
 
 gem 'jquery-rails'
-gem 'jquery-ui-rails'
 gem 'jquery-validation-rails'
 gem 'wice_grid'
 
@@ -58,18 +58,22 @@ end
 gem 'factory_girl_rails'
 gem 'faker'
 
+# building torg 12 forms
+gem 'odf-report'
+gem 'ru_propisju'
+gem 'russian'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
 
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
+gem 'capistrano', '~> 3.4.0'
+gem 'capistrano-rails', '~> 1.1.0'
+gem 'capistrano-bundler'
+gem 'capistrano-rbenv', "~> 2.0"
+gem 'capistrano-unicorn-nginx', '~> 2.0'
+gem 'capistrano-rails-console'
 # To use debugger
 # gem 'debugger'
 

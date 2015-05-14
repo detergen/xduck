@@ -6,4 +6,20 @@ class Organization < ActiveRecord::Base
   has_many :contacts
   has_many :addrs
 
+  def head_contact
+    contacts.where(contact_key: :head).first
+  end
+
+  def book_contact
+    contacts.where(contact_key: :book).first
+  end
+
+  def legal_address
+    addrs.where(address_key: :law_address).first
+  end
+
+  def short_name_with_opf
+    "#{opf} #{short_name}"
+  end
+
 end

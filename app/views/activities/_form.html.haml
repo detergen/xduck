@@ -9,7 +9,7 @@
   .row
     .col-xs-4
       Number
-      = text_field(:activity, :number, :disabled => disable_activity_editing)
+      = text_field(:activity, :number, :readonly => disable_activity_editing)
     .col-xs-4
       Type
       - if @activity.parent_id.nil?
@@ -18,15 +18,15 @@
       - else
         - disable_type_editing = disable_activity_editing
         - activityTypes = ActivityType.where.not(:name => 'Order')
-      = collection_select(:activity, :activity_type_id, activityTypes, :id, :name, { }, { :disabled => disable_type_editing })
+      = collection_select(:activity, :activity_type_id, activityTypes, :id, :name, { }, { readonly: disable_type_editing })
 
   .row
     .col-xs-4
       From Organization
-      = collection_select(:activity, :from_organization_id, Organization.all, :id, :name, { }, { :disabled => disable_activity_editing })
+      = collection_select(:activity, :from_organization_id, Organization.all, :id, :name, { }, { :readonly => disable_activity_editing })
     .col-xs-4
       To Organization
-      = collection_select(:activity, :to_organization_id, Organization.all, :id, :name, { }, { :disabled => disable_activity_editing })
+      = collection_select(:activity, :to_organization_id, Organization.all, :id, :name, { }, { :readonly => disable_activity_editing })
 
   .row
     .col-xs-4

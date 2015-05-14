@@ -11,7 +11,7 @@ FactoryGirl.define do
     phone2 Faker::PhoneNumber.cell_phone
     phone3 Faker::PhoneNumber.cell_phone
     phone4 Faker::PhoneNumber.cell_phone
-    key "MyString"
+    contact_key "MyString"
     tag "MyString"
     note "MyText"
     pasp_series Faker::Number.number(4)

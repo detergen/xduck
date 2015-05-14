@@ -48,21 +48,21 @@ if dollar_to_rouble.nil?
   dollar_to_rouble.save or puts YAML::dump(dollar_to_rouble.save.errors)
 end
 
-Organization.delete_all
-Product.delete_all
-Activity.delete_all
-
-
-10.times do
-  break if Organization.count >= 10
-  FactoryGirl.create :organization
-end
+# Organization.delete_all
+# Product.delete_all
+# Activity.delete_all
+#
+#
+# 10.times do
+#   break if Organization.count >= 10
+#   FactoryGirl.create :organization
+# end
 
 #activity types
 
-20.times do
-  FactoryGirl.create :product
-end
+# 20.times do
+#   FactoryGirl.create :product
+# end
 
 ["Order", "Lead", "Bill", "Shipping", "Assembly", "Payment", 'Log', 'Communication'].each do |type|
   unless ActivityType.find_by_name(type)
@@ -70,9 +70,9 @@ end
   end
 end
 
-10.times do
-  parent_activity = FactoryGirl.create(:activity, owner: user)
-  rand(1..7).times do
-    FactoryGirl.create(:activity, :with_items, owner: user, parent: parent_activity)
-  end
-end
+# 10.times do
+#   parent_activity = FactoryGirl.create(:activity, owner: user)
+#   rand(1..7).times do
+#     FactoryGirl.create(:activity, :with_items, owner: user, parent: parent_activity)
+#   end
+# end

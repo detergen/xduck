@@ -15,8 +15,16 @@ Xduck::Application.routes.draw do
   devise_for :users
   get "home/index"
 
-  resources :activities, only: [:index, :show, :edit, :destroy, :new, :create] do
+  resources :activities, only: [:index, :show, :edit, :destroy, :new, :create, :update] do
     resources :activity_items, only: [:edit, :create, :destroy, :new, :update]
+    collection do
+      get :new_diff
+    end
+    controller :reports do
+      get :bill
+      get :torg12
+      get :sf
+    end
   end
 
   get 'activities/ajax_add'
@@ -27,6 +35,9 @@ Xduck::Application.routes.draw do
 
   resources :products
   resources :boms
+
+
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,36 +1,72 @@
 %h2
   New Activity
-= form_for @activity do |f|
-  = render :partial => 'form', :locals => { :activity => @activity, :disable_activity_editing => false }
+- @activity.errors.full_messages.each do |message|
+  .alert.alert-danger{role: 'alert'}
+    %span.glyphicon.glyphicon-exclamation-sign{ 'aria-hidden' => "true" }
+    %snam.sr-only
+      Error:
+    = message
 
-  - if @activity.child?
-    %h3 Activity Items
-    .row
-      .col-md-12
-        %table.table.table-striped
-          %thead
-            %tr
-              %td Product
-              %td Product Price
-              %td Quantity
-            = f.fields_for :activity_items do |i|
+#activity_details.container
+  = simple_form_for @activity, defaults: { input_html: { class: 'form-control' } } do |f|
+    = f.input :parent_id, as: :hidden
+    .row.form-group
+      .col-xs-4
+        = f.input :number
+      .col-xs-2
+        = f.input :activity_type_id, collection: ActivityType.all, include_blank: false
+      .col-xs-2
+        = f.input :sum_koef, collection: [-1, 0, 1], include_blank: false
+    .row.form-group
+      .col-xs-4
+        = f.input :from_organization_id, collection: Organization.all, required: true
+      .col-xs-4
+        = f.input :to_organization_id, collection: Organization.all, required: true
+
+    .row.form-group
+      .col-xs-4
+        = f.input :date, as: :string, required: true, input_html: { class: 'bdatepicker form-control' }
+      .col-xs-4
+        = f.input :owner_user_id, collection: User.all
+
+    .row.form-group
+      .col-xs-4
+        = f.input :note, as: :text
+      .col-xs-4
+        = f.input :tag, as: :text
+
+    .row.form-group
+      .col-xs-4
+        = f.input :group_name
+      .col-xs-4
+        = f.input :sort_name
+
+    - if @activity.child?
+      %h3 Activity Items
+      .row
+        .col-md-12
+          %table.table.table-striped
+            %thead
               %tr
-                = i.hidden_field :product_id
-                %td= i.object.product.name
-                %td= i.object.product.get_sale_price
-                %td= i.text_field :quantity
-  = link_to 'Go back', :back, class: 'btn btn-primary'
-  = f.submit 'Save', class: 'btn btn-primary'
+                %td Product
+                %td Product Price
+                %td Quantity
+              = f.simple_fields_for :activity_items do |i|
+                %tr
+
+                  %td= i.object.product.name
+                  %td= i.object.product.get_sale_price
+                  %td= i.input_field :quantity
+                  %td= i.input :product_id, as: :hidden
+
+    .row.form-group
+      .col-xs-12
+        = link_to 'Go back', :back, class: 'btn btn-primary'
+        = f.button :submit, 'Save', class: 'btn btn-primary'
 
 :javascript
-  $(document).ready( function() {
-    $('#new_activity').submit(function() {
-      if (!$('#new_activity').validate().form()) {
-        return false;
-      }
-    });
-
-    $('#new_activity').validate({
-      rules: activityDetailsValidationRules()
+  $(document).ready(function(){
+    $('.bdatepicker').datepicker({
+      dateFormat: 'yy-mm-dd'
     });
   });

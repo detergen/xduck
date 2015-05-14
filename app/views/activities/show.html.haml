@@ -1,7 +1,13 @@
 %h3
   Activity Details
-= render :partial => 'form', :locals => { :activity => @activity, :disable_activity_editing => true }
+.row
+  .col-md-8
+    = render :partial => 'form', :locals => { :activity => @activity, :disable_activity_editing => true }
 
+.row
+  .col-md-12
+    Total:
+    = @activity.total_price
 - if @activity.child?
   %h3
     Activity Items
@@ -9,14 +15,29 @@
     = link_to 'Add Item', new_activity_activity_item_path(activity_id: @activity.id), class: 'btn btn-success'
   - if @activity.items.any?
     .row
-      .col-md-12
+      .col-md-6
         = render partial: 'activity_items/grid', locals: { activity_items_grid: @activity_items_grid }
-
   %p
     = link_to 'Edit activity', edit_activity_path(@activity), class: 'btn btn-primary'
     = link_to 'Go to parent', activity_path(@activity.parent), class: 'btn btn-primary'
+  %p
+    = link_to 'Скачать счет', activity_bill_path(@activity), class: 'btn btn-default'
+    = link_to 'Скачать Торг 12', activity_torg12_path(@activity), class: 'btn btn-default'
+    = link_to 'Скачать СФ', activity_sf_path(@activity), class: 'btn btn-default'
 
 - if @activity.parent?
+  .row
+    .col-md-6
+      %table.table
+        %thead
+          %tr
+            %th Total
+            %th Value
+        - Total.active.each do |total|
+          %tr
+            %td= total.name
+            %td= total.value(@activity)
+
   %h3
     Child Activities
   %p
@@ -61,6 +82,7 @@
                   - "#{link_to 'Edit', edit_activity_path(activity), class: 'btn btn-primary btn-xs'} #{link_to 'View', activity_path(activity), class: 'btn btn-primary btn-xs'} #{link_to 'Delete', activity_path(activity), method: :delete, data: { confirm: 'Вы уверены ?' }, class: 'btn btn-danger btn-xs'} #{link_to('Duplicate', new_activity_path(id:activity.id), class: 'btn btn-primary btn-xs')}".html_safe
 
   - else
+
     = grid(@activities_grid, show_filters: :when_filtered) do |g|
       - g.action_column
 
@@ -90,17 +112,20 @@
   %p
     = link_to 'Edit', edit_activity_path(@activity), class: 'btn btn-primary'
     = link_to 'Delete', activity_path(@activity, method: :delete, data: { confirm: 'Вы уверены ?' }), class: 'btn btn-danger'
+    = link_to 'Рассчитать остаток', activity_path(@activity), class: 'btn btn-success', id: 'generate'
     - if grouped?
       = link_to 'View Ungrouped', activity_path(@activity), class: 'btn btn-primary'
     - else
       = link_to 'View Grouped', activity_path(@activity, grouped: true), class: 'btn btn-primary'
 
+  %p
+    = link_to 'Скачать счет', activity_bill_path(@activity), class: 'btn btn-default'
+    = link_to 'Скачать Торг 12', activity_torg12_path(@activity), class: 'btn btn-default'
+    = link_to 'Скачать СФ', activity_sf_path(@activity), class: 'btn btn-default'
+
 :javascript
   $(document).ready( function() {
-    $('#delete').click( function() {
-      if (!confirm('Are you sure?')) {
-        return false;
-      }
+    $('#generate').click( function() {
 
       var selected = $('input[type=checkbox][name^=grid]:checked');
       var ids = [];
@@ -109,24 +134,13 @@
         ids[i] = selected[i].value
       }
 
-      if (ids.length < 1) {
-        alert('Please select at least one activity');
-
+      if (ids.length < 2) {
+        alert('Please select at least two activity');
         return false;
       }
 
-      $.ajax({
-        type: 'GET',
-        url: '/activities/delete',
-        data: { id: ids },
-        dataType : 'json',
-        async: false,
-        success: function(e) {
-          if (e == true) {
-            location.reload();
-          }
-        }
-      });
+      var urlParams = {ids: $.map( selected, function(a){ return a.value; }), parent_id: "#{ @activity.id }" };
+      location.href = "#{ new_diff_activities_path }?" + $.param(urlParams);
 
       return false;
     });

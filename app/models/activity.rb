@@ -12,9 +12,14 @@ class Activity < ActiveRecord::Base
 
   belongs_to :owner, :class_name => "User", :foreign_key => "owner_user_id"
 
-  validates :activity_type, :number, :from_organization, :to_organization, :owner, :presence => true
+  validates :activity_type, :number, :from_organization, :to_organization, :sum_koef, :owner, :presence => true
 
   accepts_nested_attributes_for :activity_items
+
+  scope :orders,    -> { where(activity_type_id: 1) }
+  scope :leads,     -> { where(activity_type_id: 2) }
+  scope :shippings, -> { where(activity_type_id: 4) }
+  scope :payments,  -> { where(activity_type_id: 6) }
 
   after_create :recalculate_total
 
@@ -29,8 +34,12 @@ class Activity < ActiveRecord::Base
     if parent?
       children.map(&:total_price).sum
     else
-      total * sum_koef
+      total.to_i * sum_koef.to_i
     end
+  end
+
+  def total_price_vat
+    total_price.to_f / 118.0 * 18.0
   end
 
   def type
@@ -63,6 +72,19 @@ class Activity < ActiveRecord::Base
     children.each(&:destroy)
     activity_items.each(&:destroy)
   end
+
+  def orders_sum
+    children.orders.map(&:total_price).sum.to_f
+  end
+
+  def shipping_sum
+    children.shippings.map(&:total_price).sum.to_f
+  end
+
+  def payments_sum
+    children.payments.map(&:total_price).sum.to_f
+  end
+
 
   class << self
     def create_dup(origin_id)
