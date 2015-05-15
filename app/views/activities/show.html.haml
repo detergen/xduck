@@ -5,9 +5,21 @@
     = render :partial => 'form', :locals => { :activity => @activity, :disable_activity_editing => true }
 
 .row
-  .col-md-12
-    Total:
-    = @activity.total_price
+  .col-md-6
+    %table.table
+      %thead
+        %tr
+          %th Тип Активити
+          %th Сумма
+      - @activities_grids.each do |type_line|
+        %tr
+          %td= type_line[:name]
+          %td= type_line[:total]
+
+  - if @activity.parent?
+    .col-md-6
+      = render partial: 'totals/table'
+
 - if @activity.child?
   %h3
     Activity Items
@@ -26,18 +38,6 @@
     = link_to 'Скачать СФ', activity_sf_path(@activity), class: 'btn btn-default'
 
 - if @activity.parent?
-  .row
-    .col-md-6
-      %table.table
-        %thead
-          %tr
-            %th Total
-            %th Value
-        - Total.active.each do |total|
-          %tr
-            %td= total.name
-            %td= total.value(@activity)
-
   %h3
     Child Activities
   %p

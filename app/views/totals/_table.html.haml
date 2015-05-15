@@ -1,0 +1,9 @@
+%table.table
+  %thead
+    %tr
+      %th Total
+      %th Value
+  - Total.active.each do |total|
+    %tr
+      %td= total.name
+      %td= total.value(@activity)
