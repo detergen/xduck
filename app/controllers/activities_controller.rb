@@ -24,6 +24,10 @@ class ActivitiesController < ApplicationController
           }
     else
       @activities_grid = initialize_grid(activity.children, include: [:from_organization, :to_organization, :owner, :activity_type])
+      @activities_grids =
+          activity.children.group_by(&:activity_type).map{ |(key, values)|
+            {name: key.name, total: values.sum(&:total_price)}
+          }
     end
     @activity_items_grid = initialize_grid(activity.activity_items, include: [:product])
   end
