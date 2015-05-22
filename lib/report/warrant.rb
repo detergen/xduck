@@ -18,6 +18,7 @@ class Report::Warrant < Report::General
       t.add_column (:price) {|order_line| nc.number_to_currency(order_line.price,:unit => "")}
       t.add_column(:sumprice) {|order_line| nc.number_to_currency(order_line.sum_price,:unit => "")}
       t.add_column(:sku) {|order_line| order_line.product.sku[:name]}
+      t.add_column(:uom) {|order_line| order_line.product.sku[:measure]}
     end
 
     #Warrant owner

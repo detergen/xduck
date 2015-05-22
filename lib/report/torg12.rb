@@ -23,6 +23,7 @@ class Report::Torg12 < Report::General
       t.add_column (:vat) {|activity_item| number_to_currency(activity_item.total_vat, unit: '')}
       t.add_column(:sumprice) {|activity_item| number_to_currency(activity_item.total_price, unit: '')}
       t.add_column(:sku) {|activity_item| activity_item.product.name}
+      t.add_column(:uom) {|activity_item| activity_item.product.measure}
     end
 
     #TODO add weight for ordr_lines

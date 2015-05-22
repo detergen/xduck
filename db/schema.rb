@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150503182626) do
+ActiveRecord::Schema.define(version: 20150518165414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -176,6 +176,7 @@ ActiveRecord::Schema.define(version: 20150503182626) do
     t.decimal  "purchase_price",                  precision: 10, scale: 2
     t.integer  "sale_currency_id"
     t.decimal  "sale_price",                      precision: 10, scale: 2
+    t.string   "measure"
   end
 
   add_index "products", ["articul"], name: "idx_prodcuts_articul", unique: true, using: :btree
