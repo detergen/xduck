@@ -7,6 +7,7 @@
     product_active: "Активен"
     product_forsale: "Для продажи" 
     product_sku: "Артикул"
+    measure: 'Ед. измерения'
     bom_subprod_sku: "Состоит из, артикул"
     bom_subprod_name: "Состоит из, товар"
     bom_qty: "В количестве"

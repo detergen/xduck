@@ -1,31 +1,34 @@
-= form_for @product, :html => { :class => 'form-horizontal' } do |f|
-  .control-group
-    = f.label :name, :class => 'control-label'
-    .controls
-      = f.text_field :name, :class => 'text_field'
-  .control-group
-    = f.label :articul, :class => 'control-label'
-    .controls
-      = f.text_field :articul, :class => 'text_field'
+- @product.errors.full_messages.each do |message|
+  .alert.alert-danger{role: 'alert'}
+    %span.glyphicon.glyphicon-exclamation-sign{ 'aria-hidden' => "true" }
+    %snam.sr-only
+      Error:
+    = message
 
-  .control-group
-    = f.label :sale_price, :class => 'control-label'
-    .controls
-      = f.text_field :sale_price, :class => 'text_field'
+= simple_form_for @product, defaults: { input_html: { class: 'form-control' } } do |f|
+  .row.form-group
+    .col-xs-4
+      = f.input :name
+    .col-xs-4
+      = f.input :articul
 
-  .control-group
-    = f.label :active, :class => 'control-label'
-    .controls
-      = f.check_box :active, :class => 'check_box'
-  .control-group
-    = f.label :forsale, :class => 'control-label'
-    .controls
-      = f.check_box :forsale, :class => 'check_box'
-  .control-group
-    = f.label :note, :class => 'control-label'
-    .controls
-      = f.text_area :note, :class => 'text_area'
+  .row.form-group
+    .col-xs-4
+      = f.input :sale_price
+    .col-xs-4
+      = f.input :measure, collection: Product::MEASURES
 
-  .form-actions
-    = f.submit nil, :class => 'btn btn-primary'
-    = link_to t('.cancel', :default => t("helpers.links.cancel")), products_path, :class => 'btn'
+  .row.form-group
+    .col-xs-4
+      = f.input :active, input_html: { class: nil }
+    .col-xs-4
+      = f.input :forsale, input_html: { class: nil }
+
+  .row.form-group
+    .col-xs-8
+      = f.input :note
+
+  .row.form-actions
+    .col-xs-8
+      = f.submit nil, :class => 'btn btn-primary'
+      = link_to t('.cancel', :default => t("helpers.links.cancel")), products_path, :class => 'btn'

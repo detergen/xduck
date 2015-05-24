@@ -60,23 +60,23 @@
               = grid( grid[:grid], show_filters: :when_filtered) do |g|
                 - g.action_column
 
-                - g.column :name => 'Number', attribute: 'number'
+                - g.column name: 'Number', attribute: 'number'
 
-                - g.column :name => 'Type', :attribute => 'name', :model => 'ActivityType' do |activity|
+                - g.column name: 'Type', attribute: 'name', model: 'ActivityType' do |activity|
                   - activity.activity_type.name if activity.activity_type
 
-                - g.column :name => 'Date', attribute: 'date'
+                - g.column name: 'Date', attribute: 'date'
 
-                - g.column :name => 'From Organization', :attribute => 'name', :model => 'Organization', :table_alias => 'from_organization' do |activity|
+                - g.column name: 'From Organization', attribute: 'name', model: 'Organization', :table_alias => 'from_organization' do |activity|
                   - activity.from_organization.name if activity.from_organization
 
-                - g.column :name => 'To Organization', :attribute => 'name', :model => 'Organization', :table_alias => 'to_organization' do |activity|
+                - g.column name: 'To Organization', attribute: 'name', model: 'Organization', :table_alias => 'to_organization' do |activity|
                   - activity.to_organization.name if activity.to_organization
 
-                - g.column :name => 'Owner', :attribute => 'email', :model => 'User' do |activity|
+                - g.column name: 'Owner', attribute: 'email', model: 'User' do |activity|
                   - activity.owner.email if activity.owner
 
-                - g.column :name => 'Total', :attribute => 'total'
+                - g.column name: 'Total', attribute: 'total'
 
                 - g.column do |activity|
                   - "#{link_to 'Edit', edit_activity_path(activity), class: 'btn btn-primary btn-xs'} #{link_to 'View', activity_path(activity), class: 'btn btn-primary btn-xs'} #{link_to 'Delete', activity_path(activity), method: :delete, data: { confirm: 'Вы уверены ?' }, class: 'btn btn-danger btn-xs'} #{link_to('Duplicate', new_activity_path(id:activity.id), class: 'btn btn-primary btn-xs')}".html_safe
@@ -86,25 +86,32 @@
     = grid(@activities_grid, show_filters: :when_filtered) do |g|
       - g.action_column
 
-      - g.column :name => 'Number', attribute: 'number'
+      - g.column name: 'Number', attribute: 'number'
 
-      - g.column :name => 'Type', :attribute => 'name', :model => 'ActivityType' do |activity|
+      - g.column name: 'Type', attribute: 'name', model: 'ActivityType' do |activity|
         - activity.activity_type.name if activity.activity_type
 
-      - g.column :name => 'Group', attribute: 'group_name'
+      - g.column name: 'Group', attribute: 'group_name'
 
-      - g.column :name => 'Date', attribute: 'date'
+      - g.column name: 'Date', attribute: 'date'
 
-      - g.column :name => 'From Organization', :attribute => 'name', :model => 'Organization', :table_alias => 'from_organization' do |activity|
-        - activity.from_organization.name if activity.from_organization
+      - # alias_table должна называться именно так чтобы работали фильтры
+      - g.column name: 'From Organization',
+                 attribute: 'name',
+                 model: 'Organization' do |activity|
+        - activity.from_organization.name # if activity.from_organization
 
-      - g.column :name => 'To Organization', :attribute => 'name', :model => 'Organization', :table_alias => 'to_organization' do |activity|
+      - # alias_table должна называться именно так чтобы работали фильтры
+      - g.column name: 'To Organization',
+                 attribute: 'name',
+                 model: 'Organization',
+                 table_alias: 'to_organizations_activities' do |activity|
         - activity.to_organization.name if activity.to_organization
 
-      - g.column :name => 'Owner', :attribute => 'email', :model => 'User' do |activity|
+      - g.column name: 'Owner', attribute: 'email', model: 'User' do |activity|
         - activity.owner.email if activity.owner
 
-      - g.column :name => 'Total', :attribute => 'total'
+      - g.column name: 'Total', attribute: 'total'
 
       - g.column do |activity|
         - "#{link_to 'Edit', edit_activity_path(activity), class: 'btn btn-primary btn-xs'} #{link_to 'View', activity_path(activity), class: 'btn btn-primary btn-xs'} #{link_to 'Delete', activity_path(activity), method: :delete, data: { confirm: 'Вы уверены ?' }, class: 'btn btn-danger btn-xs'} #{link_to('Duplicate', new_activity_path(id:activity.id), class: 'btn btn-primary btn-xs')}".html_safe

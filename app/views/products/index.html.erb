@@ -15,7 +15,11 @@
     g.column :name => t(:product_sku), :attribute => 'articul' do |product|
       product.articul
     end
-    
+
+    g.column :name => t(:measure), :attribute => 'measure' do |product|
+      product.measure
+    end
+
     g.column :name => t(:product_active), :attribute => 'active' do |product|
       product.active? ? t(:yes) : t(:no)
     end
