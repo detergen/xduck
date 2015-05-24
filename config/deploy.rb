@@ -2,7 +2,7 @@
 lock '3.4.0'
 
 set :application, 'xduck'
-set :repo_url, 'git@bitbucket.org:denstepa/xduck.git'
+set :repo_url, 'git@github.com:detergen/xduck.git'
 
 set :deploy_user, 'deploy'
 
