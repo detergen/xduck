@@ -7,8 +7,8 @@ class Report::Torg12 < Report::General
     @posnumber = 0 #Initial number for order lines (items)
     report.add_table("TABLE_1", activity.activity_items, header: true) do |t|
       t.add_column(:id) {@posnumber +=1}
-      t.add_column(:articul) {|activity_item| activity_item.product.articul}
-      t.add_column(:product) {|activity_item| activity_item.product.name }
+      t.add_column(:articul) {|activity_item| activity_item.product.try(:articul) }
+      t.add_column(:product) {|activity_item| activity_item.product.try(:name) }
       t.add_column (:item_qty) {|activity_item| number_with_precision(activity_item.quantity,
                                                                       :precision => 5,
                                                                       :significant => true,
@@ -22,8 +22,8 @@ class Report::Torg12 < Report::General
       t.add_column (:price_vat) {|activity_item| number_to_currency(activity_item.total_price_without_vat, unit: '')}
       t.add_column (:vat) {|activity_item| number_to_currency(activity_item.total_vat, unit: '')}
       t.add_column(:sumprice) {|activity_item| number_to_currency(activity_item.total_price, unit: '')}
-      t.add_column(:sku) {|activity_item| activity_item.product.name}
-      t.add_column(:uom) {|activity_item| activity_item.product.measure}
+      t.add_column(:sku) {|activity_item| activity_item.product.try(:name)}
+      t.add_column(:uom) {|activity_item| activity_item.product.try(:measure)}
     end
 
     #TODO add weight for ordr_lines
