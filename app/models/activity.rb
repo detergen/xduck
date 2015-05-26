@@ -34,12 +34,12 @@ class Activity < ActiveRecord::Base
     if parent?
       children.map(&:total_price).sum
     else
-      total.to_i * sum_koef.to_i
+      total.to_f * sum_koef.to_i
     end
   end
 
-  def total_price_vat
-    total_price.to_f / 118.0 * 18.0
+  def total_vat
+    total.to_f / 118.0 * 18.0
   end
 
   def type
