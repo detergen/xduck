@@ -50,10 +50,10 @@ class Report::General
       end
 
       #Totals and number to words lines
-      r.add_field :total, number_to_currency(activity.total_price, unit: '')
-      r.add_field :vat_in, number_to_currency(activity.total_price_vat, unit: '')
+      r.add_field :total, number_to_currency(activity.total, unit: '')
+      r.add_field :vat_in, number_to_currency(activity.total_vat, unit: '')
       r.add_field :pos_propisju, RuPropisju.propisju_shtuk(activity.activity_items.length, 3, ["наименование","наименования","наименований"])
-      r.add_field :total_propisju, RuPropisju.rublej(activity.total_price)
+      r.add_field :total_propisju, RuPropisju.rublej(activity.total)
 
       #Signatures
       r.add_field :sign1, from_organization.head_contact.try(:short_name)
@@ -77,7 +77,7 @@ class Report::General
   def generate_filename(type)
     "#{type}_№#{activity.number}_#{from_organization.name}-#{to_organization.name}" +
         "_#{activity.date.strftime('%d.%m.%Y')}_на_" +
-        "#{number_to_currency(activity.total_price, unit: '')}.odt"
+        "#{number_to_currency(activity.total, unit: '')}.odt"
   end
 
 end
