@@ -2,7 +2,57 @@
   Activity Details
 .row
   .col-md-8
-    = render :partial => 'form', :locals => { :activity => @activity, :disable_activity_editing => true }
+    #activity_details.container
+      .row
+        .col-xs-4
+          %b Number:
+          = @activity.number
+        .col-xs-4
+          %b Type:
+          - if @activity.parent_id.nil?
+            - disable_type_editing = true;
+            - activityTypes = ActivityType.all
+          - else
+            - disable_type_editing = disable_activity_editing
+            - activityTypes = ActivityType.where.not(:name => 'Order')
+          = @activity.activity_type.try(:name)
+
+      .row
+        .col-xs-4
+          %b From Organization:
+          = @activity.from_organization.try(:name)
+        .col-xs-4
+          %b To Organization:
+          = @activity.to_organization.try(:name)
+
+      .row
+        .col-xs-4
+          %b Date:
+          = @activity.date
+        .col-xs-4
+          %b Owner:
+          = @activity.owner.email
+
+      .row
+        .col-xs-4
+          %b Note:
+          = @activity.note
+        .col-xs-4
+          %b Tag:
+          = @activity.tag
+
+      .row
+        .col-xs-4
+          %b Group Name:
+          = @activity.group_name
+        .col-xs-4
+          %b Sort Type:
+          = @activity.sort_name
+
+      .row
+        .col-xs-4
+          %b Sum Koef:
+          = @activity.sum_koef
 
 .row
   .col-md-6
