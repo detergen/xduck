@@ -175,6 +175,8 @@
     - else
       = link_to 'View Grouped', activity_path(@activity, grouped: true), class: 'btn btn-primary'
 
+-# временно, потом сделаем buld- download
+- unless @activity.parent?
   %p
     = link_to 'Скачать счет', activity_bill_path(@activity), class: 'btn btn-default'
     = link_to 'Скачать Торг 12', activity_torg12_path(@activity), class: 'btn btn-default'
