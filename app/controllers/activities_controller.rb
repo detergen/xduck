@@ -8,7 +8,9 @@ class ActivitiesController < ApplicationController
 
   def index
     @activities_grid = initialize_grid(Activity.where(parent_id: nil),
-                                       include: [:from_organization, :to_organization, :owner, :activity_type])
+     include: [:from_organization, :to_organization, :owner, :activity_type],
+     order: 'activities.date',
+     order_direction: 'desc')
   end
 
   def show

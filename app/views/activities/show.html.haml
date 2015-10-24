@@ -158,8 +158,9 @@
                  table_alias: 'to_organizations_activities' do |activity|
         - activity.to_organization.name if activity.to_organization
 
-      - g.column name: 'Owner', attribute: 'email', model: 'User' do |activity|
-        - activity.owner.email if activity.owner
+      - g.column name: 'Note', attribute: 'note'
+
+      - g.column name: 'Tag', attribute: 'tag'
 
       - g.column name: 'Total', attribute: 'total'
 
