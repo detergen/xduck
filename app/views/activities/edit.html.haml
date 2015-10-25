@@ -41,6 +41,10 @@
       .col-xs-4
         = f.input :sort_name
 
+    .row.form-group
+      .col-xs-4
+        = f.association :activity_status #, collection: ActivityStatus.all
+
     -unless @activity.parent_id.nil?
       %h3 Activity Items
       %p
@@ -60,4 +64,3 @@
       dateFormat: 'yy-mm-dd'
     });
   });
-

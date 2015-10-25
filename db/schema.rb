@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 20151024195413) do
     t.decimal  "price"
     t.string   "group_name"
     t.string   "sort_name"
-    t.integer  "status"
+    t.integer  "activity_status_id"
   end
 
   create_table "activity_items", force: true do |t|

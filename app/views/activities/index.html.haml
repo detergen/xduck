@@ -30,6 +30,11 @@
 
   - g.column name: 'Tag', attribute: 'tag'
 
+  - g.column name: 'Status', attribute: 'name', model: 'ActivityStatus',
+    allow_multiple_selection: true,
+    custom_filter: ActivityStatus.pluck(:name) do |activity|
+    - activity.activity_status.name if activity.activity_status
+
   - g.column name: 'Total', attribute: 'total' do |activity|
     - activity.total_price
 

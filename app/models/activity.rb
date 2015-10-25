@@ -5,8 +5,8 @@ class Activity < ActiveRecord::Base
 
   has_many :activity_items
   has_many :items, through: :activity_items, source: :product
-  has_many :activity_statuses
 
+  belongs_to :activity_status
   belongs_to :activity_type
   belongs_to :from_organization, class_name: "Organization"
   belongs_to :to_organization,   class_name: "Organization"

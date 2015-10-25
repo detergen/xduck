@@ -37,7 +37,7 @@ gem "haml-rails"
 
 gem 'jquery-rails'
 gem 'jquery-validation-rails'
-gem 'wice_grid'
+gem 'wice_grid', '~> 3.5'
 
 gem 'simple_form'
 group :development, :test do

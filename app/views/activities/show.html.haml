@@ -10,10 +10,8 @@
         .col-xs-4
           %b Type:
           - if @activity.parent_id.nil?
-            - disable_type_editing = true;
             - activityTypes = ActivityType.all
           - else
-            - disable_type_editing = disable_activity_editing
             - activityTypes = ActivityType.where.not(:name => 'Order')
           = @activity.activity_type.try(:name)
 
@@ -53,6 +51,9 @@
         .col-xs-4
           %b Sum Koef:
           = @activity.sum_koef
+        .col-xs-4
+          %b Status:
+          = @activity.activity_status.try(:name)
 
 .row
   .col-md-6
@@ -82,10 +83,6 @@
   %p
     = link_to 'Edit activity', edit_activity_path(@activity), class: 'btn btn-primary'
     = link_to 'Go to parent', activity_path(@activity.parent), class: 'btn btn-primary'
-  %p
-    = link_to 'Скачать счет', activity_bill_path(@activity), class: 'btn btn-default'
-    = link_to 'Скачать Торг 12', activity_torg12_path(@activity), class: 'btn btn-default'
-    = link_to 'Скачать СФ', activity_sf_path(@activity), class: 'btn btn-default'
 
 - if @activity.parent?
   %h3
@@ -123,8 +120,12 @@
                 - g.column name: 'To Organization', attribute: 'name', model: 'Organization', :table_alias => 'to_organization' do |activity|
                   - activity.to_organization.name if activity.to_organization
 
-                - g.column name: 'Owner', attribute: 'email', model: 'User' do |activity|
-                  - activity.owner.email if activity.owner
+                - g.column name: 'Note', attribute: 'note'
+
+                - g.column name: 'Tag', attribute: 'tag'
+
+                - g.column name: 'Status', attribute: 'name', model: 'ActivityStatus' do |activity|
+                  - activity.activity_status.name if activity.activity_status
 
                 - g.column name: 'Total', attribute: 'total'
 
@@ -161,6 +162,9 @@
       - g.column name: 'Note', attribute: 'note'
 
       - g.column name: 'Tag', attribute: 'tag'
+
+      - g.column name: 'Status', attribute: 'name', model: 'ActivityStatus' do |activity|
+        - activity.activity_status.name if activity.activity_status
 
       - g.column name: 'Total', attribute: 'total'
 

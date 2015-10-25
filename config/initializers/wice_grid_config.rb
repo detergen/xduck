@@ -6,6 +6,9 @@ if defined?(Wice::Defaults)
   # Default order direction
   Wice::Defaults::ORDER_DIRECTION = 'asc'
 
+
+  Wice::Defaults::ALLOW_SHOWING_ALL_RECORDS = true
+
   # Default name for a grid. A grid name is the basis for a lot of
   # names including parameter names, DOM IDs, etc
   # The shorter the name is the shorter the request URI will be.

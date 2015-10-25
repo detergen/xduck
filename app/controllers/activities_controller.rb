@@ -8,7 +8,7 @@ class ActivitiesController < ApplicationController
 
   def index
     @activities_grid = initialize_grid(Activity.where(parent_id: nil),
-     include: [:from_organization, :to_organization, :owner, :activity_type],
+     include: [:from_organization, :to_organization, :owner, :activity_type, :activity_status],
      order: 'activities.date',
      order_direction: 'desc')
   end
@@ -201,6 +201,7 @@ class ActivitiesController < ApplicationController
         :tag,
         :sum_koef,
         :group_name,
+        :activity_status_id,
         :sort_name)
   end
 
@@ -218,6 +219,7 @@ class ActivitiesController < ApplicationController
         :group_name,
         :sum_koef,
         :sort_name,
+        :activity_status_id,
         activity_items_attributes: [:product_id, :quantity])
   end
 
