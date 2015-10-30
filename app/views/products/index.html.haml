@@ -1,0 +1,27 @@
+- model_class = Product
+
+%h2 Products
+
+%p
+  = link_to 'Add', new_product_path, class: 'btn btn-success'
+
+= grid(@products_grid, show_filters: true, class: :table) do |g|
+  - g.action_column
+
+  - g.column :name => t(:product_name), :attribute => 'name' do |product|
+    - product.name
+
+  - g.column :name => t(:product_sku), :attribute => 'articul' do |product|
+    - product.articul
+
+  - g.column :name => t(:measure), :attribute => 'measure' do |product|
+    - product.measure
+
+  - g.column :name => t(:product_active), :attribute => 'active' do |product|
+    - product.active? ? t(:yes) : t(:no)
+
+  - g.column :name => t(:product_forsale), :attribute => 'forsale' do |product|
+    - product.forsale? ? t(:yes) : t(:no)
+
+  - g.column do |product|
+    - link_to('Edit', { :controller => 'products', :action => 'edit', :id => product.id })

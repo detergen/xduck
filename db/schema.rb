@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150518165414) do
+ActiveRecord::Schema.define(version: 20151024195413) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 20150518165414) do
     t.decimal  "price"
     t.string   "group_name"
     t.string   "sort_name"
+    t.integer  "activity_status_id"
   end
 
   create_table "activity_items", force: true do |t|
@@ -58,6 +59,10 @@ ActiveRecord::Schema.define(version: 20150518165414) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "price"
+  end
+
+  create_table "activity_statuses", force: true do |t|
+    t.string "name"
   end
 
   create_table "activity_types", force: true do |t|
@@ -142,6 +147,23 @@ ActiveRecord::Schema.define(version: 20150518165414) do
     t.decimal  "exchange_rate",    precision: 10, scale: 4
     t.datetime "from_date"
     t.datetime "to_date"
+  end
+
+  create_table "old_products", id: false, force: true do |t|
+    t.integer  "id"
+    t.string   "name"
+    t.string   "articul"
+    t.boolean  "active"
+    t.boolean  "forsale"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "sizes",                limit: 30
+    t.integer  "purchase_currency_id"
+    t.decimal  "purchase_price",                  precision: 10, scale: 2
+    t.integer  "sale_currency_id"
+    t.decimal  "sale_price",                      precision: 10, scale: 2
+    t.string   "measure"
   end
 
   create_table "organizations", force: true do |t|

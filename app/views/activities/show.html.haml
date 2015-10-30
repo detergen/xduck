@@ -2,7 +2,58 @@
   Activity Details
 .row
   .col-md-8
-    = render :partial => 'form', :locals => { :activity => @activity, :disable_activity_editing => true }
+    #activity_details.container
+      .row
+        .col-xs-4
+          %b Number:
+          = @activity.number
+        .col-xs-4
+          %b Type:
+          - if @activity.parent_id.nil?
+            - activityTypes = ActivityType.all
+          - else
+            - activityTypes = ActivityType.where.not(:name => 'Order')
+          = @activity.activity_type.try(:name)
+
+      .row
+        .col-xs-4
+          %b From Organization:
+          = @activity.from_organization.try(:name)
+        .col-xs-4
+          %b To Organization:
+          = @activity.to_organization.try(:name)
+
+      .row
+        .col-xs-4
+          %b Date:
+          = @activity.date
+        .col-xs-4
+          %b Owner:
+          = @activity.owner.email
+
+      .row
+        .col-xs-4
+          %b Note:
+          = @activity.note
+        .col-xs-4
+          %b Tag:
+          = @activity.tag
+
+      .row
+        .col-xs-4
+          %b Group Name:
+          = @activity.group_name
+        .col-xs-4
+          %b Sort Type:
+          = @activity.sort_name
+
+      .row
+        .col-xs-4
+          %b Sum Koef:
+          = @activity.sum_koef
+        .col-xs-4
+          %b Status:
+          = @activity.activity_status.try(:name)
 
 .row
   .col-md-6
@@ -32,10 +83,6 @@
   %p
     = link_to 'Edit activity', edit_activity_path(@activity), class: 'btn btn-primary'
     = link_to 'Go to parent', activity_path(@activity.parent), class: 'btn btn-primary'
-  %p
-    = link_to 'Скачать счет', activity_bill_path(@activity), class: 'btn btn-default'
-    = link_to 'Скачать Торг 12', activity_torg12_path(@activity), class: 'btn btn-default'
-    = link_to 'Скачать СФ', activity_sf_path(@activity), class: 'btn btn-default'
 
 - if @activity.parent?
   %h3
@@ -73,8 +120,12 @@
                 - g.column name: 'To Organization', attribute: 'name', model: 'Organization', :table_alias => 'to_organization' do |activity|
                   - activity.to_organization.name if activity.to_organization
 
-                - g.column name: 'Owner', attribute: 'email', model: 'User' do |activity|
-                  - activity.owner.email if activity.owner
+                - g.column name: 'Note', attribute: 'note'
+
+                - g.column name: 'Tag', attribute: 'tag'
+
+                - g.column name: 'Status', attribute: 'name', model: 'ActivityStatus' do |activity|
+                  - activity.activity_status.name if activity.activity_status
 
                 - g.column name: 'Total', attribute: 'total'
 
@@ -108,8 +159,12 @@
                  table_alias: 'to_organizations_activities' do |activity|
         - activity.to_organization.name if activity.to_organization
 
-      - g.column name: 'Owner', attribute: 'email', model: 'User' do |activity|
-        - activity.owner.email if activity.owner
+      - g.column name: 'Note', attribute: 'note'
+
+      - g.column name: 'Tag', attribute: 'tag'
+
+      - g.column name: 'Status', attribute: 'name', model: 'ActivityStatus' do |activity|
+        - activity.activity_status.name if activity.activity_status
 
       - g.column name: 'Total', attribute: 'total'
 
@@ -125,6 +180,8 @@
     - else
       = link_to 'View Grouped', activity_path(@activity, grouped: true), class: 'btn btn-primary'
 
+-# временно, потом сделаем buld- download
+- unless @activity.parent?
   %p
     = link_to 'Скачать счет', activity_bill_path(@activity), class: 'btn btn-default'
     = link_to 'Скачать Торг 12', activity_torg12_path(@activity), class: 'btn btn-default'

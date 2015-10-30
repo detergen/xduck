@@ -3,15 +3,15 @@
   = link_to 'Add', new_activity_path, class: 'btn btn-success'
   = link_to 'Delete', { controller: 'activities', action: 'delete' }, id: 'delete'
 
-= grid(@activities_grid, show_filters: :when_filtered, class: :table) do |g|
+= grid(@activities_grid, show_filters: :always, class: :table) do |g|
   - g.action_column
-  - g.column name: 'ID', attribute: 'id'
+
   - g.column name: 'Number', attribute: 'number'
 
   - g.column name: 'Type', attribute: 'name', model: 'ActivityType' do |activity|
     - activity.type.name if activity.type
 
-  - g.column name: 'Date', attribute: 'date'
+  - g.column name: 'Date', attribute: 'date', class: 'date-col'
 
   - # alias_table должна называться именно так чтобы работали фильтры
   - g.column name: 'From Organization',
@@ -26,8 +26,14 @@
              table_alias: 'to_organizations_activities' do |activity|
     - activity.to_organization.name if activity.to_organization
 
-  - g.column name: 'Owner', attribute: 'email', model: 'User' do |activity|
-    - activity.owner.email if activity.owner
+  - g.column name: 'Note', attribute: 'note'
+
+  - g.column name: 'Tag', attribute: 'tag'
+
+  - g.column name: 'Status', attribute: 'name', model: 'ActivityStatus',
+    allow_multiple_selection: true,
+    custom_filter: ActivityStatus.pluck(:name) do |activity|
+    - activity.activity_status.name if activity.activity_status
 
   - g.column name: 'Total', attribute: 'total' do |activity|
     - activity.total_price

@@ -41,6 +41,10 @@
       .col-xs-4
         = f.input :sort_name
 
+    .row.form-group
+      .col-xs-4
+        = f.association :activity_status
+
     - if @activity.child?
       %h3 Activity Items
       .row
