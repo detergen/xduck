@@ -36,7 +36,8 @@ Xduck::Application.routes.draw do
   resources :products
   resources :boms
 
-
+  resources :bankaccs, only: [:index] do
+  end
 
 
   # The priority is based upon order of creation:

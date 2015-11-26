@@ -25,6 +25,12 @@
 
     .row.form-group
       .col-xs-4
+        = f.input :from_bankacc, collection: @activity.from_organization.bankaccs
+      .col-xs-4
+        = f.input :to_bankacc, collection: @activity.to_organization.bankaccs
+
+    .row.form-group
+      .col-xs-4
         = f.input :date, as: :string, required: true, input_html: { class: 'bdatepicker form-control' }
       .col-xs-4
         = f.input :owner_user_id, collection: User.all
@@ -62,5 +68,44 @@
   $(document).ready( function() {
     $('.bdatepicker').datepicker({
       dateFormat: 'yy-mm-dd'
+    });
+
+    $('.activity_from_bankacc select').select2({
+      theme: "bootstrap",
+      ajax: {
+        url: window.location.origin + '/bankaccs',
+        dataType: 'json',
+        processResults: function (data) {
+          return {
+            results: $.map(data, function(a){
+              return {id: a.id, text: a.name};
+            })
+          };
+        },
+        data: function (params) {
+          var organization_id = $('#activity_from_organization_id').val();
+          return {organization_id: organization_id};
+        }
+      }
+
+    });
+
+    $('.activity_to_bankacc select').select2({
+      theme: "bootstrap",
+      ajax: {
+        url: window.location.origin + '/bankaccs',
+        dataType: 'json',
+        processResults: function (data) {
+          return {
+            results: $.map(data, function(a){
+              return {id: a.id, text: a.name};
+            })
+          };
+        },
+        data: function (params) {
+          var organization_id = $('#activity_to_organization_id').val();
+          return {organization_id: organization_id};
+        }
+      }
     });
   });

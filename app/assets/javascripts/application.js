@@ -15,4 +15,5 @@
 //= require jquery_ujs
 //= require wice_grid
 //= require twitter/bootstrap
+//= require select2
 //= require_tree .

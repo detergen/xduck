@@ -9,7 +9,9 @@ class Activity < ActiveRecord::Base
   belongs_to :activity_status
   belongs_to :activity_type
   belongs_to :from_organization, class_name: "Organization"
-  belongs_to :to_organization,   class_name: "Organization"
+  belongs_to :to_organization, class_name: "Organization"
+  belongs_to :to_bankacc, class_name: "Bankacc"
+  belongs_to :from_bankacc, class_name: "Bankacc"
 
   belongs_to :owner, :class_name => "User", :foreign_key => "owner_user_id"
 

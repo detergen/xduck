@@ -73,4 +73,43 @@
     $('.bdatepicker').datepicker({
       dateFormat: 'yy-mm-dd'
     });
+
+    $('.activity_from_bankacc select').select2({
+      theme: "bootstrap",
+      ajax: {
+        url: window.location.origin + '/bankaccs',
+        dataType: 'json',
+        processResults: function (data) {
+          return {
+            results: $.map(data, function(a){
+              return {id: a.id, text: a.name};
+            })
+          };
+        },
+        data: function (params) {
+          var organization_id = $('#activity_from_organization_id').val();
+          return {organization_id: organization_id};
+        }
+      }
+
+    });
+
+    $('.activity_to_bankacc select').select2({
+      theme: "bootstrap",
+      ajax: {
+        url: window.location.origin + '/bankaccs',
+        dataType: 'json',
+        processResults: function (data) {
+          return {
+            results: $.map(data, function(a){
+              return {id: a.id, text: a.name};
+            })
+          };
+        },
+        data: function (params) {
+          var organization_id = $('#activity_to_organization_id').val();
+          return {organization_id: organization_id};
+        }
+      }
+    });
   });

@@ -12,5 +12,7 @@
  *= require jquery-ui
  *= require_tree .
  *= stub active_admin
+ *= require select2.css
+ *= require select2-bootstrap
  *= require_self
  */
