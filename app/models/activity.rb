@@ -93,6 +93,7 @@ class Activity < ActiveRecord::Base
     def create_dup(origin_id)
       origin = find(origin_id)
       child = origin.dup
+      child.date = Date.today
       origin.activity_items.map do |item|
         child.activity_items << item.dup
       end

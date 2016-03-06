@@ -36,8 +36,8 @@ class ActivitiesController < ApplicationController
   end
 
   def new
-    if params[:id]
-      @activity = Activity.create_dup(params[:id])
+    if params[:parent_id]
+      @activity = Activity.create_dup(params[:parent_id])
     else
       @activity = Activity.new(activity_type: ActivityType.find_by_name('Order'), owner: current_user, sum_koef: 1, parent_id: params[:parent_id])
     end
