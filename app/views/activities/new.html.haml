@@ -25,6 +25,18 @@
 
     .row.form-group
       .col-xs-4
+        - if @activity.from_organization
+          = f.input :from_bankacc_id, collection: @activity.from_organization.bankaccs, required: true, selected: @activity.from_bankacc_id || @activity.from_organization.bankaccs.first.try(:id)
+        - else
+          = f.input :from_bankacc_id, collection: [], required: true
+      .col-xs-4
+        - if @activity.to_organization
+          = f.input :to_bankacc_id, collection: @activity.to_organization.bankaccs, required: true, selected: @activity.to_bankacc_id || @activity.to_organization.bankaccs.first.try(:id)
+        - else
+          = f.input :to_bankacc_id, collection: [], required: true
+
+    .row.form-group
+      .col-xs-4
         = f.input :date, as: :string, required: true, input_html: { class: 'bdatepicker form-control' }
       .col-xs-4
         = f.input :owner_user_id, collection: User.all
@@ -74,7 +86,7 @@
       dateFormat: 'yy-mm-dd'
     });
 
-    $('.activity_from_bankacc select').select2({
+    $('.activity_from_bankacc_id select').select2({
       theme: "bootstrap",
       ajax: {
         url: window.location.origin + '/bankaccs',
@@ -94,7 +106,7 @@
 
     });
 
-    $('.activity_to_bankacc select').select2({
+    $('.activity_to_bankacc_id select').select2({
       theme: "bootstrap",
       ajax: {
         url: window.location.origin + '/bankaccs',

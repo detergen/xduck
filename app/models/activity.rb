@@ -88,6 +88,13 @@ class Activity < ActiveRecord::Base
     children.payments.map(&:total_price).sum.to_f
   end
 
+  def to_bankacc
+    super || to_organization.bankaccs.try(:first)
+  end
+
+  def from_bankacc
+    super || from_organization.bankaccs.try(:first)
+  end
 
   class << self
     def create_dup(origin_id)
