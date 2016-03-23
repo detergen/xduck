@@ -25,9 +25,9 @@
 
     .row.form-group
       .col-xs-4
-        = f.input :from_bankacc, collection: @activity.from_organization.bankaccs
+        = f.input :from_bankacc_id, collection: @activity.from_organization.bankaccs, selected: @activity.from_bankacc.try(:id)
       .col-xs-4
-        = f.input :to_bankacc, collection: @activity.to_organization.bankaccs
+        = f.input :to_bankacc_id, collection: @activity.to_organization.bankaccs, selected: @activity.to_bankacc.try(:id)
 
     .row.form-group
       .col-xs-4
@@ -70,7 +70,7 @@
       dateFormat: 'yy-mm-dd'
     });
 
-    $('.activity_from_bankacc select').select2({
+    $('.activity_from_bankacc_id select').select2({
       theme: "bootstrap",
       ajax: {
         url: window.location.origin + '/bankaccs',
@@ -90,7 +90,7 @@
 
     });
 
-    $('.activity_to_bankacc select').select2({
+    $('.activity_to_bankacc_id select').select2({
       theme: "bootstrap",
       ajax: {
         url: window.location.origin + '/bankaccs',

@@ -30,6 +30,14 @@
 
   .row
     .col-xs-4
+      From Organization
+      = collection_select(:activity, :from_organization_id, Organization.all, :id, :name, { }, { :readonly => disable_activity_editing })
+    .col-xs-4
+      To Organization
+      = collection_select(:activity, :to_organization_id, Organization.all, :id, :name, { }, { :readonly => disable_activity_editing })
+
+  .row
+    .col-xs-4
       Date
       = date_select :activity, :date, { :prompt => { :day => 'Select day', :month => 'Select month', :year => 'Select year' }}, { :class => 'date-select', :disabled => disable_activity_editing }
     .col-xs-4
@@ -56,6 +64,7 @@
     .col-xs-4
       Sum Koef
       = text_field(:activity, :sum_koef, :disabled => disable_activity_editing)
+
 :javascript
   function getActivityDetails() {
     return {

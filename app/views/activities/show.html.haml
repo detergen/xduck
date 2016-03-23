@@ -25,6 +25,15 @@
 
       .row
         .col-xs-4
+          %b From Back Account:
+          = @activity.from_bankacc.try(:name)
+        .col-xs-4
+          %b To Back Account:
+          = @activity.to_bankacc.try(:name)
+
+
+      .row
+        .col-xs-4
           %b Date:
           = @activity.date
         .col-xs-4

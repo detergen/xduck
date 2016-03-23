@@ -190,19 +190,9 @@ class ActivitiesController < ApplicationController
 
   def activity_update_params
     params.require(:activity).permit(
-        :id,
-        :number,
-        :activity_type_id,
-        :from_organization_id,
-        :to_organization_id,
-        :date,
-        :owner_user_id,
-        :note,
-        :tag,
-        :sum_koef,
-        :group_name,
-        :activity_status_id,
-        :sort_name)
+        :id, :number, :activity_type_id, :from_organization_id, :to_organization_id,
+        :date, :owner_user_id, :note, :to_bankacc_id, :from_bankacc_id,
+        :tag, :sum_koef, :group_name, :activity_status_id, :sort_name)
   end
 
   def activity_create_params
@@ -219,7 +209,7 @@ class ActivitiesController < ApplicationController
         :group_name,
         :sum_koef,
         :sort_name,
-        :activity_status_id,
+        :activity_status_id, :to_bankacc_id, :from_bankacc_id,
         activity_items_attributes: [:product_id, :quantity])
   end
 

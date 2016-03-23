@@ -33,7 +33,7 @@ class Report::General
       r.add_field :recipient, recipient
 
       # Bank acc fields
-      bank_acc_from = from_organization.bankaccs.first
+      bank_acc_from = activity.from_bankacc
       if bank_acc_from
         r.add_field :bank_ks, bank_acc_from.ks
         r.add_field :bank_rs, bank_acc_from.rs
@@ -41,7 +41,7 @@ class Report::General
         r.add_field :bank_fullname, bank_acc_from.full_name
       end
       # Bank acc fields from
-      bank_acc_to = from_organization.bankaccs.first
+      bank_acc_to = activity.to_bankacc
       if bank_acc_to
         r.add_field :bank_to_ks, bank_acc_to.ks
         r.add_field :bank_to_rs, bank_acc_to.rs
