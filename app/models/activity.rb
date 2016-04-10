@@ -106,5 +106,16 @@ class Activity < ActiveRecord::Base
       end
       child
     end
+
+    def create_child(parent_id)
+      parent = find(parent_id)
+      child = parent.dup
+      child.date = Date.today
+      child.parent = parent
+      parent.activity_items.map do |item|
+        child.activity_items << item.dup
+      end
+      child
+    end
   end
 end

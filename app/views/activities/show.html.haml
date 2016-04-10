@@ -139,7 +139,7 @@
                 - g.column name: 'Total', attribute: 'total'
 
                 - g.column do |activity|
-                  - "#{link_to 'Edit', edit_activity_path(activity), class: 'btn btn-primary btn-xs'} #{link_to 'View', activity_path(activity), class: 'btn btn-primary btn-xs'} #{link_to 'Delete', activity_path(activity), method: :delete, data: { confirm: 'Вы уверены ?' }, class: 'btn btn-danger btn-xs'} #{link_to('Duplicate', new_activity_path(id:activity.id), class: 'btn btn-primary btn-xs')}".html_safe
+                  - "#{link_to 'Edit', edit_activity_path(activity), class: 'btn btn-primary btn-xs'} #{link_to 'View', activity_path(activity), class: 'btn btn-primary btn-xs'} #{link_to 'Delete', activity_path(activity), method: :delete, data: { confirm: 'Вы уверены ?' }, class: 'btn btn-danger btn-xs'} #{link_to('Duplicate', new_activity_path(duplicate_id: activity.id), class: 'btn btn-primary btn-xs')}".html_safe
 
   - else
 
@@ -178,7 +178,7 @@
       - g.column name: 'Total', attribute: 'total'
 
       - g.column do |activity|
-        - "#{link_to 'Edit', edit_activity_path(activity), class: 'btn btn-primary btn-xs'} #{link_to 'View', activity_path(activity), class: 'btn btn-primary btn-xs'} #{link_to 'Delete', activity_path(activity), method: :delete, data: { confirm: 'Вы уверены ?' }, class: 'btn btn-danger btn-xs'} #{link_to('Duplicate', new_activity_path(id:activity.id), class: 'btn btn-primary btn-xs')}".html_safe
+        - "#{link_to 'Edit', edit_activity_path(activity), class: 'btn btn-primary btn-xs'} #{link_to 'View', activity_path(activity), class: 'btn btn-primary btn-xs'} #{link_to 'Delete', activity_path(activity), method: :delete, data: { confirm: 'Вы уверены ?' }, class: 'btn btn-danger btn-xs'} #{link_to('Duplicate', new_activity_path(duplicate_id: activity.id), class: 'btn btn-primary btn-xs')}".html_safe
 
   %p
     = link_to 'Edit', edit_activity_path(@activity), class: 'btn btn-primary'
