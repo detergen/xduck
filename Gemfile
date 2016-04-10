@@ -40,6 +40,8 @@ gem 'jquery-validation-rails'
 gem 'wice_grid', '~> 3.5'
 gem "select2-rails"
 
+gem "sentry-raven"
+
 gem 'simple_form'
 group :development, :test do
   gem 'sqlite3'

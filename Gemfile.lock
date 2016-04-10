@@ -113,6 +113,8 @@ GEM
       railties (>= 3.0.0)
     faker (1.4.3)
       i18n (~> 0.5)
+    faraday (0.9.2)
+      multipart-post (>= 1.2, < 3)
     ffi (1.9.6)
     formatador (0.2.5)
     formtastic (3.1.2)
@@ -181,6 +183,7 @@ GEM
     mini_portile (0.6.1)
     minitest (5.5.0)
     multi_json (1.10.1)
+    multipart-post (2.0.0)
     nenv (0.1.1)
     net-ldap (0.5.1)
     net-scp (1.2.1)
@@ -276,6 +279,8 @@ GEM
       tilt (~> 1.1)
     select2-rails (4.0.0)
       thor (~> 0.14)
+    sentry-raven (0.15.6)
+      faraday (>= 0.7.6)
     simple_form (3.0.2)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
@@ -363,6 +368,7 @@ DEPENDENCIES
   russian
   sass-rails
   select2-rails
+  sentry-raven
   simple_form
   sqlite3
   therubyracer
@@ -372,4 +378,4 @@ DEPENDENCIES
   wice_grid (~> 3.5)
 
 BUNDLED WITH
-   1.10.6
+   1.11.2

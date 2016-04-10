@@ -81,3 +81,8 @@ Xduck::Application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 end
+
+Raven.configure do |config|
+  config.dsn = 'https://cf58f62180a44893856713d8b0ad9240:4ad5f25aa348454698c3090907f81694@app.getsentry.com/73577'
+  config.environments = ['production']
+end
