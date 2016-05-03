@@ -23,5 +23,8 @@
   - g.column :name => t(:product_forsale), :attribute => 'forsale' do |product|
     - product.forsale? ? t(:yes) : t(:no)
 
+  - g.column :name => t(:product_price), :attribute => 'price' do |product|
+    - product.price
+
   - g.column do |product|
     - link_to('Edit', { :controller => 'products', :action => 'edit', :id => product.id })
