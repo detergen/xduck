@@ -192,9 +192,10 @@
 -# временно, потом сделаем buld- download
 - unless @activity.parent?
   %p
-    = link_to 'Скачать счет', activity_bill_path(@activity), class: 'btn btn-default'
-    = link_to 'Скачать Торг 12', activity_torg12_path(@activity), class: 'btn btn-default'
-    = link_to 'Скачать СФ', activity_sf_path(@activity), class: 'btn btn-default'
+    = link_to 'Счет', activity_bill_path(@activity), class: 'btn btn-default'
+    = link_to 'УПД', activity_upd_path(@activity), class: 'btn btn-default'
+    = link_to 'Торг 12', activity_torg12_path(@activity), class: 'btn btn-default'
+    = link_to 'СФ', activity_sf_path(@activity), class: 'btn btn-default'
 
 :javascript
   $(document).ready( function() {

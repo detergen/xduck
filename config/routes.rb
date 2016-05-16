@@ -23,6 +23,7 @@ Xduck::Application.routes.draw do
     controller :reports do
       get :bill
       get :torg12
+      get :upd
       get :sf
     end
   end

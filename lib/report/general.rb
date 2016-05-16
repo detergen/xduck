@@ -13,53 +13,62 @@ class Report::General
   # и возвращаем его для возможности заполнения специфическими полями
   def fill_general_data(template)
 
-    ODFReport::Report.new(template) do |r|
-      r.add_field :order_number, activity.number
-      r.add_field :order_document_date, activity.date.strftime("%d.%m.%Y")
-      r.add_field :order_document_date_s, Russian::strftime(activity.date, "%d %B %Y г")
+	  ODFReport::Report.new(template) do |r|
 
-      # Organization from fields
-      r.add_field :from, from_organization.short_name_with_opf
-      r.add_field :from_inn, from_organization.inn
-      r.add_field :from_kpp, from_organization.kpp
-      r.add_field :from_law_address, from_organization.legal_address.try(:string1)
+		  # Ищем головной документ на основании которого дочерние печатаем  
+		  based_on = Activity.where(:id => activity.parent_id).first
+		  r.add_field :based_on, 'Счет №' + based_on.number + ' от ' + Russian::strftime(based_on.date, "%d %B %Y г")
 
-      # Organization "to" fields
-      recipient = activity.to_organization.contacts.first.try(:short_name)
-      r.add_field :to, to_organization.short_name_with_opf
-      r.add_field :to_inn, to_organization.inn
-      r.add_field :to_kpp, to_organization.kpp
-      r.add_field :to_law_address, to_organization.legal_address.try(:string1)
-      r.add_field :recipient, recipient
+		  #Ищем активити payment к которому документ
+		  payment_on ||= Activity.where(:parent_id => activity.parent_id, :activity_type_id => 6).first
+		  r.add_field :payment_on, '№' + payment_on.number + ' от ' + Russian::strftime(payment_on.date, "%d %B %Y г") if payment_on
 
-      # Bank acc fields
-      bank_acc_from = activity.from_bankacc
-      if bank_acc_from
-        r.add_field :bank_ks, bank_acc_from.ks
-        r.add_field :bank_rs, bank_acc_from.rs
-        r.add_field :bank_bik, bank_acc_from.bik
-        r.add_field :bank_fullname, bank_acc_from.full_name
-      end
-      # Bank acc fields from
-      bank_acc_to = activity.to_bankacc
-      if bank_acc_to
-        r.add_field :bank_to_ks, bank_acc_to.ks
-        r.add_field :bank_to_rs, bank_acc_to.rs
-        r.add_field :bank_to_bik, bank_acc_to.bik
-        r.add_field :bank_to_fullname, bank_acc_to.full_name
-      end
+		  r.add_field :order_number, activity.number
+		  r.add_field :order_document_date, activity.date.strftime("%d.%m.%Y")
+		  r.add_field :order_document_date_s, Russian::strftime(activity.date, "%d %B %Y г")
 
-      #Totals and number to words lines
-      r.add_field :total, number_to_currency(activity.total, unit: '')
-      r.add_field :vat_in, number_to_currency(activity.total_vat, unit: '')
-      r.add_field :pos_propisju, RuPropisju.propisju_shtuk(activity.activity_items.length, 3, ["наименование","наименования","наименований"])
-      r.add_field :total_propisju, RuPropisju.rublej(activity.total)
+		  # Organization from fields
+		  r.add_field :from, from_organization.short_name_with_opf
+		  r.add_field :from_inn, from_organization.inn
+		  r.add_field :from_kpp, from_organization.kpp
+		  r.add_field :from_law_address, from_organization.legal_address.try(:string1)
 
-      #Signatures
-      r.add_field :sign1, from_organization.head_contact.try(:short_name)
-      r.add_field :sign2, from_organization.book_contact.try(:short_name)
-      r.add_field :post1, from_organization.head_contact.try(:post)
-    end
+		  # Organization "to" fields
+		  recipient = activity.to_organization.contacts.first.try(:short_name)
+		  r.add_field :to, to_organization.short_name_with_opf
+		  r.add_field :to_inn, to_organization.inn
+		  r.add_field :to_kpp, to_organization.kpp
+		  r.add_field :to_law_address, to_organization.legal_address.try(:string1)
+		  r.add_field :recipient, recipient
+
+		  # Bank acc fields
+		  bank_acc_from = activity.from_bankacc
+		  if bank_acc_from
+			  r.add_field :bank_ks, bank_acc_from.ks
+			  r.add_field :bank_rs, bank_acc_from.rs
+			  r.add_field :bank_bik, bank_acc_from.bik
+			  r.add_field :bank_fullname, bank_acc_from.full_name
+		  end
+		  # Bank acc fields from
+		  bank_acc_to = activity.to_bankacc
+		  if bank_acc_to
+			  r.add_field :bank_to_ks, bank_acc_to.ks
+			  r.add_field :bank_to_rs, bank_acc_to.rs
+			  r.add_field :bank_to_bik, bank_acc_to.bik
+			  r.add_field :bank_to_fullname, bank_acc_to.full_name
+		  end
+
+		  #Totals and number to words lines
+		  r.add_field :total, number_to_currency(activity.total, unit: '')
+		  r.add_field :vat_in, number_to_currency(activity.total_vat, unit: '')
+		  r.add_field :pos_propisju, RuPropisju.propisju_shtuk(activity.activity_items.length, 3, ["наименование","наименования","наименований"])
+		  r.add_field :total_propisju, RuPropisju.rublej(activity.total)
+
+		  #Signatures
+		  r.add_field :sign1, from_organization.head_contact.try(:short_name)
+		  r.add_field :sign2, from_organization.book_contact.try(:short_name)
+		  r.add_field :post1, from_organization.head_contact.try(:post)
+	  end
   end
 
   def from_organization
