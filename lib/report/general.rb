@@ -31,14 +31,14 @@ class Report::General
 		  r.add_field :from, from_organization.short_name_with_opf
 		  r.add_field :from_inn, from_organization.inn
 		  r.add_field :from_kpp, from_organization.kpp
-		  r.add_field :from_law_address, from_organization.legal_address.try(:string1)
+		  r.add_field :from_law_address, from_organization.legal_address.try(:postindex)+' '+from_organization.legal_address.try(:string1)
 
 		  # Organization "to" fields
 		  recipient = activity.to_organization.contacts.first.try(:short_name)
 		  r.add_field :to, to_organization.short_name_with_opf
 		  r.add_field :to_inn, to_organization.inn
 		  r.add_field :to_kpp, to_organization.kpp
-		  r.add_field :to_law_address, to_organization.legal_address.try(:string1)
+		  r.add_field :to_law_address, to_organization.legal_address.try(:postindex)+' '+to_organization.legal_address.try(:string1)
 		  r.add_field :recipient, recipient
 
 		  # Bank acc fields
