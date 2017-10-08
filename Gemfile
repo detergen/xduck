@@ -46,7 +46,7 @@ gem "sentry-raven"
 gem 'simple_form'
 group :development, :test do
   # gem 'sqlite3'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 3.6'
   gem 'database_cleaner'
   gem 'guard-rspec'
   gem 'capybara'
