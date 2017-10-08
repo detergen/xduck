@@ -1,7 +1,7 @@
 <%=
     grid(@activity_items_grid, show_filters: :when_filtered) do |g|
 
-      g.column :name => 'Product', :attribute => 'name', :model => 'Product' do |activity_item|
+      g.column :name => 'Product', :attribute => 'name', :assoc => :product do |activity_item|
         activity_item.product.name
       end
 

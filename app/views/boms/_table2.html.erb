@@ -7,19 +7,19 @@
 #    g.column :name => 'ID', :attribute => 'id' do |product|
 #      product.id
 #    end
-    g.column :name => t(:product_sku), :model => 'Product', :attribute => 'articul' do |bom|
+    g.column :name => t(:product_sku), :assoc => :product, :attribute => 'articul' do |bom|
       bom.product.articul if bom.product
     end
 
-    g.column :name => t(:product_name), :model => 'Product', :attribute => 'name' do |bom|
+    g.column :name => t(:product_name), :assoc => :product, :attribute => 'name' do |bom|
       bom.product.name if bom.product
     end
 
-    g.column :name => t(:bom_subprod_sku), :model => 'Product', :table_alias => 'subproducts_boms', :attribute => 'articul' do |bom|
+    g.column :name => t(:bom_subprod_sku), :assoc => :subproduct, :attribute => 'articul' do |bom|
       bom.subproduct.articul if bom.subproduct
     end
 
-    g.column :name => t(:bom_subprod_name), :model => 'Product', :table_alias => 'subproducts_boms', :attribute => 'name' do |bom|
+    g.column :name => t(:bom_subprod_name), :assoc => :subproduct, :attribute => 'name' do |bom|
       bom.subproduct.name if bom.subproduct
     end
 

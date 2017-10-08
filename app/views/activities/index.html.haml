@@ -8,29 +8,28 @@
 
   - g.column name: 'Number', attribute: 'number'
 
-  - g.column name: 'Type', attribute: 'name', model: 'ActivityType' do |activity|
+  - g.column name: 'Type', attribute: 'name', assoc: :activity_type do |activity|
     - activity.type.name if activity.type
 
   - g.column name: 'Date', attribute: 'date', class: 'date-col'
 
   - # alias_table должна называться именно так чтобы работали фильтры
   - g.column name: 'From Organization',
-             attribute: 'name',
-             model: 'Organization' do |activity|
+             assoc: :from_organization,
+             attribute: 'name' do |activity|
     - activity.from_organization.name if activity.from_organization
 
   - # alias_table должна называться именно так чтобы работали фильтры
   - g.column name: 'To Organization',
              attribute: 'name',
-             model: 'Organization',
-             table_alias: 'to_organizations_activities' do |activity|
+             assoc: :to_organization do |activity|
     - activity.to_organization.name if activity.to_organization
 
   - g.column name: 'Note', attribute: 'note'
 
   - g.column name: 'Tag', attribute: 'tag'
 
-  - g.column name: 'Status', attribute: 'name', model: 'ActivityStatus',
+  - g.column name: 'Status', attribute: 'name', assoc: :activity_status,
     allow_multiple_selection: true,
     custom_filter: ActivityStatus.pluck(:name) do |activity|
     - activity.activity_status.name if activity.activity_status

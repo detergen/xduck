@@ -1,13 +1,13 @@
 source 'https://rubygems.org'
 
-gem 'rails'
+gem 'rails', '5.1.4'
 # Use sqlite3 as the database for Active Record
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
+gem 'pg'
 
 group :production do
-  gem 'pg'
   gem 'rails_12factor' # for heroku
   gem 'unicorn'
 end
@@ -16,17 +16,17 @@ end
 #gem 'protected_attributes'
 
 #authorize
-gem 'devise' , '3.2.0'
+gem 'devise'
 gem 'devise_ldap_authenticatable'
-gem 'cancancan'
+gem 'cancancan', '~> 2.0'
 gem 'rolify'
-gem 'activeadmin', github: 'gregbell/active_admin'
+gem 'activeadmin' #, github: 'gregbell/active_admin'
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
   gem 'sass-rails'
-  gem 'coffee-rails'
+  # gem 'coffee-rails'
   gem 'uglifier', '>= 1.0.3'
 end
 
@@ -34,17 +34,18 @@ gem 'twitter-bootstrap-rails'
 gem "less-rails"
 gem "therubyracer"
 gem "haml-rails"
+gem 'jquery-ui-rails'
 
 gem 'jquery-rails'
 gem 'jquery-validation-rails'
-gem 'wice_grid', '~> 3.5'
+gem 'wice_grid', git: 'https://github.com/denstepa/wice_grid', branch: 'rails3'
 gem "select2-rails"
 
 gem "sentry-raven"
 
 gem 'simple_form'
 group :development, :test do
-  gem 'sqlite3'
+  # gem 'sqlite3'
   gem 'rspec-rails'
   gem 'database_cleaner'
   gem 'guard-rspec'

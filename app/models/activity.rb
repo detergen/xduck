@@ -16,6 +16,7 @@ class Activity < ActiveRecord::Base
   belongs_to :owner, :class_name => "User", :foreign_key => "owner_user_id"
 
   validates :activity_type, :number, :from_organization, :to_organization, :sum_koef, :owner, :presence => true
+  validates_length_of :number, maximum: 255, minimum: 1
 
   accepts_nested_attributes_for :activity_items
 
