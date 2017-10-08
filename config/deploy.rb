@@ -1,5 +1,5 @@
-# config valid only for Capistrano 3.1
-lock '3.4.0'
+# config valid only for Capistrano 3.7
+lock '3.7.2'
 
 set :application, 'xduck'
 set :repo_url, 'git@github.com:detergen/xduck.git'
@@ -12,10 +12,10 @@ set :linked_files, %w{config/database.yml}
 
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
-set :keep_releases, 5
+set :keep_releases, 15
 
 set :rbenv_type, :system
-set :rbenv_ruby, '2.1.2'
+set :rbenv_ruby, '2.2.2'
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 
