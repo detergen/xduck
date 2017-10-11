@@ -20,7 +20,8 @@ module Xduck
                        :request_specs => true
       g.fixture_replacement :factory_girl, :dir => "spec/factories"
     end
-
+    config.eager_load_paths << Rails.root.join('lib')
+    
     config.autoload_paths << "#{config.root}/lib"
     config.autoload_paths << "#{config.root}/lib/**/"
 
