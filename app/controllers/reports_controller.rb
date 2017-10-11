@@ -1,7 +1,7 @@
 class ReportsController < ApplicationController
 
   def bill
-    report = Report::Bill.new(activity)
+    report = ::Report::Bill.new(activity)
     send_data report.build,
               filename: report.filename,
               disposition: 'attachment',
@@ -9,7 +9,7 @@ class ReportsController < ApplicationController
   end
 
   def upd
-    report = Report::Upd.new(activity)
+    report = ::Report::Upd.new(activity)
     send_data report.build,
               filename: report.filename,
               disposition: 'attachment',
@@ -17,7 +17,7 @@ class ReportsController < ApplicationController
   end
 
   def torg12
-    report = Report::Torg12.new(activity)
+    report = ::Report::Torg12.new(activity)
     send_data report.build,
               filename: report.filename,
               disposition: 'attachment',
@@ -25,7 +25,7 @@ class ReportsController < ApplicationController
   end
 
   def sf
-    report = Report::SF.new(activity)
+    report = ::Report::SF.new(activity)
     send_data report.build,
               filename: report.filename,
               disposition: 'attachment',
