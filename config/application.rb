@@ -21,7 +21,8 @@ module Xduck
       g.fixture_replacement :factory_girl, :dir => "spec/factories"
     end
 
-    config.autoload_paths += Dir["#{config.root}/lib/**/"]
+    config.autoload_paths << "#{config.root}/lib"
+    config.autoload_paths << "#{config.root}/lib/**/"
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
