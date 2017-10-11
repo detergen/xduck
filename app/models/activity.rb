@@ -17,7 +17,8 @@ class Activity < ActiveRecord::Base
 
   validates :activity_type, :number, :from_organization, :to_organization, :sum_koef, :owner, :presence => true
   validates_length_of :number, maximum: 255, minimum: 1
-
+  validates_length_of :tag, maximum: 255, minimum: 0
+  
   accepts_nested_attributes_for :activity_items
 
   scope :orders,    -> { where(activity_type_id: 1) }
