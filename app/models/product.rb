@@ -8,7 +8,9 @@ class Product < ActiveRecord::Base
   validates :name, :articul, :presence => true
   validates :articul, :uniqueness => true
   validates :measure, :inclusion => MEASURES
-
+  validates_length_of :name, maximum: 255, minimum: 0
+  validates_length_of :articul, maximum: 255, minimum: 0
+  
   has_many :boms, :dependent => :delete_all
 
 
