@@ -118,23 +118,19 @@
 
                 - g.column name: 'Number', attribute: 'number'
 
-                - g.column name: 'Type', attribute: 'name', assoc: :activity_type do |activity|
-                  - activity.activity_type.name if activity.activity_type
+                - g.column name: 'Type', attribute: 'name', assoc: :activity_type
 
                 - g.column name: 'Date', attribute: 'date'
 
-                - g.column name: 'From Organization', attribute: 'name', assoc: :from_organization do |activity|
-                  - activity.from_organization.name if activity.from_organization
+                - g.column name: 'From Organization', attribute: 'name', assoc: :from_organization
 
-                - g.column name: 'To Organization', attribute: 'name', assoc: :to_organization do |activity|
-                  - activity.to_organization.name if activity.to_organization
+                - g.column name: 'To Organization', attribute: 'name', assoc: :to_organization, table_alias: 'to_organizations_activities'
 
                 - g.column name: 'Note', attribute: 'note'
 
                 - g.column name: 'Tag', attribute: 'tag'
 
-                - g.column name: 'Status', attribute: 'name', assoc: :activity_status do |activity|
-                  - activity.activity_status.name if activity.activity_status
+                - g.column name: 'Status', attribute: 'name', assoc: :activity_status
 
                 - g.column name: 'Total', attribute: 'total'
 

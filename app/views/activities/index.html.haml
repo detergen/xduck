@@ -13,17 +13,9 @@
 
   - g.column name: 'Date', attribute: 'date', class: 'date-col'
 
-  - # alias_table должна называться именно так чтобы работали фильтры
-  - g.column name: 'From Organization',
-             assoc: :from_organization,
-             attribute: 'name' do |activity|
-    - activity.from_organization.name if activity.from_organization
+  - g.column name: 'From Organization', attribute: 'name', assoc: :from_organization
 
-  - # alias_table должна называться именно так чтобы работали фильтры
-  - g.column name: 'To Organization',
-             attribute: 'name',
-             assoc: :to_organization do |activity|
-    - activity.to_organization.name if activity.to_organization
+  - g.column name: 'To Organization', attribute: 'name', table_alias: 'to_organizations_activities',  assoc: :to_organization
 
   - g.column name: 'Note', attribute: 'note'
 
