@@ -5,10 +5,6 @@ class Activity < ActiveRecord::Base
 
   has_many :activity_items
   has_many :items, through: :activity_items, source: :product
-
-  #old, to be removed soon
-  belongs_to :activity_status
-
   has_many :activity_statuses_relations
   has_many :activity_statuses, through: :activity_statuses_relations
 
