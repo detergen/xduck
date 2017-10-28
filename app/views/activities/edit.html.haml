@@ -49,7 +49,7 @@
 
     .row.form-group
       .col-xs-4
-        = f.association :activity_status #, collection: ActivityStatus.all
+        = f.association :activity_statuses, as: :check_boxes #, collection: ActivityStatus.all
 
     -unless @activity.parent_id.nil?
       %h3 Activity Items

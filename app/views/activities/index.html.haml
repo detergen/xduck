@@ -3,7 +3,7 @@
   = link_to 'Add', new_activity_path, class: 'btn btn-success'
   = link_to 'Delete', { controller: 'activities', action: 'delete' }, id: 'delete'
 
-= grid(@activities_grid, show_filters: :always, class: :table) do |g|
+= grid(@activities_grid, class: :table) do |g|
   - g.action_column
 
   - g.column name: 'Number', attribute: 'number'
@@ -21,10 +21,8 @@
 
   - g.column name: 'Tag', attribute: 'tag'
 
-  - g.column name: 'Status', attribute: 'name', assoc: :activity_status,
-    allow_multiple_selection: true,
-    custom_filter: ActivityStatus.pluck(:name) do |activity|
-    - activity.activity_status.name if activity.activity_status
+  - g.column name: 'Status', attribute: 'name', assoc: :activity_statuses, allow_multiple_selection: true, custom_filter: ActivityStatus.pluck(:name)  do |activity|
+    - activity.activity_statuses_relations.map(&:activity_status).map(&:name).join(', ')    
 
   - g.column name: 'Total', attribute: 'total' do |activity|
     - activity.children.orders.map(&:total).sum

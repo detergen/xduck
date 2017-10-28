@@ -61,8 +61,8 @@
           %b Sum Koef:
           = @activity.sum_koef
         .col-xs-4
-          %b Status:
-          = @activity.activity_status.try(:name)
+          %b Statuses:
+          = @activity.activity_statuses.map(&:name).join(', ')
 
 .row
   .col-md-6
@@ -130,8 +130,9 @@
 
                 - g.column name: 'Tag', attribute: 'tag'
 
-                - g.column name: 'Status', attribute: 'name', assoc: :activity_status
-
+                - g.column name: 'Status', attribute: 'name', assoc: :activity_statuses, allow_multiple_selection: true, custom_filter: ActivityStatus.pluck(:name)  do |activity|
+                  - activity.activity_statuses_relations.map(&:activity_status).map(&:name).join(', ')    
+              
                 - g.column name: 'Total', attribute: 'total'
 
                 - g.column do |activity|
@@ -167,9 +168,9 @@
 
       - g.column name: 'Tag', attribute: 'tag'
 
-      - g.column name: 'Status', attribute: 'name', assoc: :activity_status do |activity|
-        - activity.activity_status.name if activity.activity_status
-
+      - g.column name: 'Status', attribute: 'name', assoc: :activity_statuses, allow_multiple_selection: true, custom_filter: ActivityStatus.pluck(:name)  do |activity|
+        - activity.activity_statuses_relations.map(&:activity_status).map(&:name).join(', ')    
+    
       - g.column name: 'Total', attribute: 'total'
 
       - g.column do |activity|

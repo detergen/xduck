@@ -6,7 +6,12 @@ class Activity < ActiveRecord::Base
   has_many :activity_items
   has_many :items, through: :activity_items, source: :product
 
+  #old, to be removed soon
   belongs_to :activity_status
+
+  has_many :activity_statuses_relations
+  has_many :activity_statuses, through: :activity_statuses_relations
+
   belongs_to :activity_type
   belongs_to :from_organization, class_name: "Organization"
   belongs_to :to_organization, class_name: "Organization"
@@ -20,6 +25,7 @@ class Activity < ActiveRecord::Base
   validates_length_of :tag, maximum: 255, minimum: 0
   
   accepts_nested_attributes_for :activity_items
+  accepts_nested_attributes_for :activity_statuses
 
   scope :orders,    -> { where(activity_type_id: 1) }
   scope :leads,     -> { where(activity_type_id: 2) }

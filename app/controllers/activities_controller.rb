@@ -8,7 +8,7 @@ class ActivitiesController < ApplicationController
 
   def index
     @activities_grid = initialize_grid(Activity.where(parent_id: nil),
-     include: [:from_organization, :to_organization, :owner, :activity_type, :activity_status],
+     include: [:from_organization, :to_organization, :owner, :activity_type, :activity_statuses],
      order: 'activities.date',
      order_direction: 'desc')
   end
@@ -194,7 +194,7 @@ class ActivitiesController < ApplicationController
     params.require(:activity).permit(
         :id, :number, :activity_type_id, :from_organization_id, :to_organization_id,
         :date, :owner_user_id, :note, :to_bankacc_id, :from_bankacc_id,
-        :tag, :sum_koef, :group_name, :activity_status_id, :sort_name)
+        :tag, :sum_koef, :group_name, :activity_status_id, :sort_name, activity_status_ids: [])
   end
 
   def activity_create_params
