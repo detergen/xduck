@@ -1,0 +1,52 @@
+- model_class = Product
+.page-header
+  %h1= t '.title', :default => model_class.model_name.human
+.navbar
+  .navbar-inner
+    %ul.nav
+      - if params[:show_bom].nil?
+        %li= link_to "Show boms", product_path(@product, :show_bom=>1)
+      - else
+        %li= link_to "Hide boms", product_path(@product)
+      %li
+        %a{:href => "#"} Link
+%dl.dl-horizontal
+  %dt
+    %strong
+      = model_class.human_attribute_name(:name)
+      \:
+  %dd= @product.name
+  %dt
+    %strong
+      = model_class.human_attribute_name(:articul)
+      \:
+  %dd= @product.articul
+  %dt
+    %strong
+      = model_class.human_attribute_name(:active)
+      \:
+  %dd= @product.active
+  %dt
+    %strong
+      = model_class.human_attribute_name(:forsale)
+      \:
+  %dd= @product.forsale
+  %dt
+    %strong
+      = model_class.human_attribute_name(:note)
+      \:
+  %dd= @product.note
+.form-actions
+  = link_to t('.back', :default => t("helpers.links.back")), products_path, :class => 'btn'
+  = link_to t('.edit', :default => t("helpers.links.edit")), edit_product_path(@product), :class => 'btn'
+  = link_to t('.destroy', :default => t("helpers.links.destroy")),
+    product_path(@product),
+    :method => 'delete',
+    :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+    :class => 'btn btn-danger'
+- if !params[:show_bom].nil?
+  = render :partial => 'boms/table'
+%br
+%br
+= render :partial => 'orders'
+  

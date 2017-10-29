@@ -55,7 +55,7 @@
 
     .row.form-group
       .col-xs-4
-        = f.association :activity_status
+        = f.association :activity_statuses, as: :check_boxes
 
     - if @activity.child?
       %h3 Activity Items
@@ -71,7 +71,7 @@
                 %tr
 
                   %td= i.object.product.name
-                  %td= i.object.product.get_sale_price
+                  %td= i.input_field :price
                   %td= i.input_field :quantity
                   %td= i.input :product_id, as: :hidden
 

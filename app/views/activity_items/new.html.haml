@@ -4,21 +4,37 @@
   }
 
   #activity_item_details {
-    width: 60%;
     margin-bottom: 0px;
   }
 
 %h2
   Add new product to
   = @activity.name
-#activity_item_details
-  = simple_form_for [@activity, @activity_item] do |f|
-    .row
-      .col-md-4
-        = f.input :product_id, collection: Product.all
-      .col-md-4
-        = f.input :quantity, as: :integer
 
-    .row
-      .col-md-6
-        = f.submit 'Add', class: 'btn btn-default'
+
+#activity_item_details
+  = form_for [@activity, @activity_item], method: :post do
+    = grid(@products_grid, show_filters: true, class: :table) do |g|
+      - g.action_column
+      - g.column :name => 'Quantity' do |product|
+        - text_field "grid[activity_item][#{product.id}]", :quantity, value: 1
+      
+      - g.column :name => t(:product_sku), :attribute => 'articul'
+      - g.column :name => t(:product_name), :attribute => 'name'
+      - g.column :name => t(:measure), :attribute => 'measure'
+
+      - g.column :name => t(:product_active), :attribute => 'active' do |product|
+        - product.active? ? t(:yes) : t(:no)
+
+      - g.column :name => t(:product_forsale), :attribute => 'forsale' do |product|
+        - product.forsale? ? t(:yes) : t(:no)
+
+      - g.column :name => t(:product_sale_price), :attribute => 'sale_price'
+
+
+      - g.column do |product|
+        - "#{link_to('Edit', { :controller => 'products', :action => 'edit', :id => product.id }, class: 'btn btn-primary btn-xs')} #{link_to('Show', { :controller => 'products', :action => 'show', :id => product.id }, class: 'btn btn-primary btn-xs')}".html_safe
+    .row-fluid
+      .col-md-12
+        %p
+          %button.btn.btn-success{'type' => 'submit'} Add

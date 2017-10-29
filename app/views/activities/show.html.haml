@@ -83,12 +83,18 @@
 - if @activity.child?
   %h3
     Activity Items
-  %p
-    = link_to 'Add Item', new_activity_activity_item_path(activity_id: @activity.id), class: 'btn btn-success'
   - if @activity.items.any?
-    .row
-      .col-md-6
-        = render partial: 'activity_items/grid', locals: { activity_items_grid: @activity_items_grid }
+      
+    = form_for @activity, url: destroy_checked_activity_activity_items_path(@activity), method: :delete do
+      %p
+        = link_to 'Add Item', new_activity_activity_item_path(activity_id: @activity.id), class: 'btn btn-success'
+        %button.btn.btn-danger{'type' => 'submit'} Delete
+      .row
+        .col-md-6
+          = render partial: 'activity_items/grid', locals: { activity_items_grid: @activity_items_grid }
+  - else
+    = link_to 'Add Item', new_activity_activity_item_path(activity_id: @activity.id), class: 'btn btn-success'
+  
   %p
     = link_to 'Edit activity', edit_activity_path(@activity), class: 'btn btn-primary'
     = link_to 'Go to parent', activity_path(@activity.parent), class: 'btn btn-primary'

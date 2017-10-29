@@ -6,7 +6,7 @@ class ProductsController < ApplicationController
   #load_and_authorize_resource except: [:create]
 
   def bomlist
-    @bom = Bom.find("product_id = ?", params[:id]) 
+    @bom = Bom.find("product_id = ?", params[:id])
   end
 
   # GET /products
@@ -19,8 +19,8 @@ class ProductsController < ApplicationController
   # GET /products/1.json
   def show
     @product = Product.find(params[:id])
-	#@boms = Bom.find(:all, :conditions => "product_id = ?", params[:id]) 
-	@boms = Bom.includes(:product, :subproduct).where(product_id: [params[:id]]) 
+    @boms = Bom.includes(:product, :subproduct).where(product_id: [params[:id]])
+    @activity_items_grid = initialize_grid(@product.activity_items, include: [:activity]) 
 
     respond_to do |format|
       format.html # show.html.erb
@@ -42,6 +42,7 @@ class ProductsController < ApplicationController
   # GET /products/1/edit
   def edit
     @product = Product.find(params[:id])
+    @activity_items_grid = initialize_grid(@product.activity_items, include: [:activity]) 
   end
 
   # POST /products

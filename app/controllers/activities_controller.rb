@@ -212,7 +212,7 @@ class ActivitiesController < ApplicationController
         :sum_koef,
         :sort_name,
         :activity_status_id, :to_bankacc_id, :from_bankacc_id,
-        activity_items_attributes: [:product_id, :quantity])
+        activity_items_attributes: [:product_id, :quantity, :price])
   end
 
 end

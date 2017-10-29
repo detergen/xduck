@@ -8,6 +8,8 @@ class ActivityItem < ActiveRecord::Base
   #  product.sale_price
   #end
 
+  scope :recent, ->() { order('created_at desc') }
+
   before_create :set_price
 
 

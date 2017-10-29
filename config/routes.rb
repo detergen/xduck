@@ -16,7 +16,11 @@ Xduck::Application.routes.draw do
   get "home/index"
 
   resources :activities, only: [:index, :show, :edit, :destroy, :new, :create, :update] do
-    resources :activity_items, only: [:edit, :create, :destroy, :new, :update]
+    resources :activity_items, only: [:edit, :create, :destroy, :new, :update] do
+      collection do
+        delete :destroy_checked
+      end
+    end
     collection do
       get :new_diff
     end

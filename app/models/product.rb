@@ -12,7 +12,8 @@ class Product < ActiveRecord::Base
   validates_length_of :articul, maximum: 255, minimum: 0
   
   has_many :boms, :dependent => :delete_all
-
+  has_many :activity_items
+  has_many :activities, through: :activity_items
 
   def get_sale_price
     unless sale_price

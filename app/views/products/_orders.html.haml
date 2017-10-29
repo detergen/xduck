@@ -1,0 +1,16 @@
+%h3 Orders
+= grid(@activity_items_grid, class: :table, show_filters: :when_filtered) do |g|
+  - g.action_column
+
+  - g.column name: 'Number', assoc: :activity, attribute: 'number'
+  - g.column name: 'Date',  assoc: :activity, attribute: 'date', class: 'date-col'
+  - g.column name: 'Price', attribute: 'price'
+  - g.column name: 'Quantity', attribute: 'quantity'
+  - g.column name: 'Sum' do |activity_item|
+    - activity_item.total_price
+  
+  // - g.column name: 'Type', attribute: 'name', assoc: :activity_type do |activity|
+  //   - activity.type.name if activity.type
+
+  - g.column do |activity_item|
+    - link_to 'View', activity_path(activity_item.activity), class: 'btn btn-primary btn-xs'
