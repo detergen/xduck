@@ -1,7 +1,7 @@
 class BankaccsController < ApplicationController
 
   def index
-    render json: organization.bankaccs.sorted.as_json
+    render json: organization.bankaccs.as_json
   end
 
 
