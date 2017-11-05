@@ -8,6 +8,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, # :ldap_authenticatable, #:registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  validates_length_of :email, maximum: 255, minimum: 1
+         
+
   def to_s
     email
   end
