@@ -13,6 +13,7 @@
     .row.form-group
       .col-xs-4
         = f.input :number
+      .col-xs-1
       .col-xs-2
         = f.input :activity_type_id, collection: ActivityType.all, include_blank: false
       .col-xs-2
@@ -20,6 +21,9 @@
     .row.form-group
       .col-xs-4
         = f.input :from_organization_id, collection: Organization.all, required: true
+      .col-xs-1
+        .btn.btn-default#swith-organisations
+          <=>
       .col-xs-4
         = f.input :to_organization_id, collection: Organization.all, required: true
 
@@ -29,6 +33,7 @@
           = f.input :from_bankacc_id, collection: @activity.from_organization.bankaccs, required: true, selected: @activity.from_bankacc_id || @activity.from_organization.bankaccs.first.try(:id)
         - else
           = f.input :from_bankacc_id, collection: [], required: true
+      .col-xs-1
       .col-xs-4
         - if @activity.to_organization
           = f.input :to_bankacc_id, collection: @activity.to_organization.bankaccs, required: true, selected: @activity.to_bankacc_id || @activity.to_organization.bankaccs.first.try(:id)
@@ -38,18 +43,21 @@
     .row.form-group
       .col-xs-4
         = f.input :date, as: :string, required: true, input_html: { class: 'bdatepicker form-control' }
+      .col-xs-1
       .col-xs-4
         = f.input :owner_user_id, collection: User.all
 
     .row.form-group
       .col-xs-4
         = f.input :note, as: :text
+      .col-xs-1
       .col-xs-4
         = f.input :tag, as: :text
 
     .row.form-group
       .col-xs-4
         = f.input :group_name
+      .col-xs-1
       .col-xs-4
         = f.input :sort_name
 
