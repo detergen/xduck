@@ -20,7 +20,7 @@ class ProductsController < ApplicationController
   def show
     @product = Product.find(params[:id])
     @boms = Bom.includes(:product, :subproduct).where(product_id: [params[:id]])
-    @activity_items_grid = initialize_grid(@product.activity_items, include: [:activity]) 
+    @activity_items_grid = initialize_grid(@product.activity_items, include: [activity: [:activity_type, :from_organization, :to_organization]]) 
 
     respond_to do |format|
       format.html # show.html.erb

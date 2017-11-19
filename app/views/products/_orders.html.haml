@@ -3,14 +3,23 @@
   - g.action_column
 
   - g.column name: 'Number', assoc: :activity, attribute: 'number'
+  - g.column name: 'Type', attribute: 'name', assoc: [:activity, :activity_type]
+
   - g.column name: 'Date',  assoc: :activity, attribute: 'date', class: 'date-col'
+    
+  - g.column name: 'From Organization', attribute: 'name', assoc: [:activity, :from_organization]
+  
+  - g.column name: 'To Organization', attribute: 'name', table_alias: 'to_organizations_activities',  assoc: [:activity, :to_organization]
+  
+  - g.column name: 'Note', attribute: 'note', assoc: :activity
+
+  - g.column name: 'Tag', attribute: 'tag', assoc: :activity
+
   - g.column name: 'Price', attribute: 'price'
   - g.column name: 'Quantity', attribute: 'quantity'
   - g.column name: 'Sum' do |activity_item|
     - activity_item.total_price
   
-  // - g.column name: 'Type', attribute: 'name', assoc: :activity_type do |activity|
-  //   - activity.type.name if activity.type
 
   - g.column do |activity_item|
     - link_to 'View', activity_path(activity_item.activity), class: 'btn btn-primary btn-xs'
