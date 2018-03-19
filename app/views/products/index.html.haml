@@ -8,11 +8,11 @@
 = grid(@products_grid, show_filters: true, class: :table) do |g|
   - g.action_column
 
-  - g.column :name => t(:product_name), :attribute => 'name' do |product|
-    - product.name
-
   - g.column :name => t(:product_sku), :attribute => 'articul' do |product|
     - product.articul
+
+  - g.column :name => t(:product_name), :attribute => 'name' do |product|
+    - product.name
 
   - g.column :name => t(:measure), :attribute => 'measure' do |product|
     - product.measure
