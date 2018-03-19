@@ -23,6 +23,8 @@ class Report::General
 		  payment_on ||= Activity.where(:parent_id => activity.parent_id, :activity_type_id => 6).first
 		  r.add_field :payment_on, '№' + payment_on.number + ' от ' + Russian::strftime(payment_on.date, "%d %B %Y г") if payment_on
 
+		  r.add_field :payment_on, '' if payment_on.to_s.empty?
+
 		  r.add_field :order_number, activity.number
 		  r.add_field :order_document_date, activity.date.strftime("%d.%m.%Y")
 		  r.add_field :order_document_date_s, Russian::strftime(activity.date, "%d %B %Y г")
