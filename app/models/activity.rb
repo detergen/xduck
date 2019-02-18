@@ -46,7 +46,8 @@ class Activity < ActiveRecord::Base
   end
 
   def total_vat
-    total.to_f / 118.0 * 18.0
+    #total.to_f / 118.0 * 18.0
+    total.to_f / 6
   end
 
   def type
