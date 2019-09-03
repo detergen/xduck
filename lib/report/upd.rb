@@ -27,7 +27,7 @@ class Report::Upd < Report::General
 
     #TODO add weight for ordr_lines
     #Totals and number to words lines
-    report.add_field :total_vat, number_to_currency((activity.total_price)*(1.0-1.0/118.0*18.0), unit: '')
+    report.add_field :total_vat, number_to_currency((activity.total_price)*(1.0-1.0/6), unit: '')
     report
   end
 
