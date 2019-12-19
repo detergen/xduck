@@ -250,7 +250,7 @@ GEM
     pry-remote (0.1.7)
       pry (~> 0.9)
       slop (~> 3.0)
-    rack (2.0.3)
+    rack (2.0.8)
     rack-test (0.7.0)
       rack (>= 1.0, < 3)
     rails (5.1.4)
